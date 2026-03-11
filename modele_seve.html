@@ -430,6 +430,20 @@ body{background:var(--bg);color:var(--txt);font-family:'Segoe UI',system-ui,sans
 .field.has-error input,.field.has-error select{border-color:var(--bad)!important;box-shadow:0 0 0 2px rgba(221,68,68,.15)}
 .field .field-error{font-size:.68rem;color:var(--bad);margin-top:2px;display:none}
 .field.has-error .field-error{display:block}
+
+/* Morocco SVG Map */
+.morocco-map-container{margin:16px 0;background:var(--card);border:1px solid var(--border,rgba(255,255,255,.06));border-radius:14px;padding:16px;position:relative}
+.morocco-map-container h3{font-size:.82rem;color:var(--accent);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.morocco-map-container h3 .map-live{font-size:.6rem;padding:2px 8px;border-radius:10px;background:rgba(68,204,102,.1);color:var(--good);font-weight:700}
+.morocco-map{width:100%;max-width:400px;margin:0 auto;display:block}
+.morocco-map .region-path{fill:rgba(68,170,221,.08);stroke:rgba(255,255,255,.12);stroke-width:.5;cursor:pointer;transition:fill .2s,stroke .2s}
+.morocco-map .region-path:hover{fill:rgba(68,170,221,.2);stroke:var(--accent)}
+.morocco-map .region-path.active{fill:rgba(68,204,102,.2);stroke:var(--good);stroke-width:1.5}
+.morocco-map .region-label{font-size:3px;fill:var(--txt2);pointer-events:none;text-anchor:middle;font-weight:600;font-family:'Segoe UI',system-ui,sans-serif}
+.morocco-map .region-label.active{fill:var(--good);font-weight:800}
+.map-tooltip{position:absolute;background:rgba(15,16,32,.95);border:1px solid rgba(68,170,221,.3);border-radius:8px;padding:8px 12px;font-size:.75rem;color:var(--txt);pointer-events:none;z-index:10;display:none;box-shadow:0 4px 16px rgba(0,0,0,.4)}
+.map-tooltip .mt-name{font-weight:700;color:var(--accent);margin-bottom:3px}
+.map-tooltip .mt-info{color:var(--txt2);font-size:.7rem}
 </style>
 </head>
 <body>
@@ -789,6 +803,78 @@ body{background:var(--bg);color:var(--txt);font-family:'Segoe UI',system-ui,sans
           <option value="custom">Personnalise...</option>
         </optgroup>
       </select></div>
+
+    <!-- ===== CARTE SVG INTERACTIVE DU MAROC ===== -->
+    <div class="morocco-map-container" style="grid-column:1/-1">
+      <h3>Carte des Regions Agricoles <span class="map-live">Interactif</span></h3>
+      <div class="map-tooltip" id="mapTooltip"></div>
+      <svg class="morocco-map" id="moroccoMap" viewBox="0 0 200 280" xmlns="http://www.w3.org/2000/svg">
+        <!-- Region 1: Tanger-Tetouan-Al Hoceima (Nord) -->
+        <path class="region-path" data-region="tanger_tetouan"
+          d="M70,5 L95,2 L120,5 L135,15 L130,30 L115,35 L100,28 L85,32 L70,25 L65,15 Z"/>
+        <text class="region-label" x="100" y="20">Tanger-Tetouan</text>
+
+        <!-- Region 2: Oriental (Nord-Est) -->
+        <path class="region-path" data-region="oriental"
+          d="M135,15 L160,8 L185,20 L190,45 L185,70 L170,80 L150,75 L140,60 L135,45 L130,30 Z"/>
+        <text class="region-label" x="162" y="45">Oriental</text>
+
+        <!-- Region 3: Fes-Meknes (Centre-Nord) -->
+        <path class="region-path" data-region="fes_meknes"
+          d="M85,32 L100,28 L115,35 L130,30 L135,45 L140,60 L130,72 L110,75 L95,68 L80,60 L75,45 Z"/>
+        <text class="region-label" x="108" y="52">Fes-Meknes</text>
+
+        <!-- Region 4: Rabat-Sale-Kenitra (Cote Nord-Ouest) -->
+        <path class="region-path" data-region="rabat_sale"
+          d="M50,25 L70,25 L85,32 L75,45 L80,60 L70,68 L55,65 L45,55 L40,40 Z"/>
+        <text class="region-label" x="62" y="48">Rabat-Sale</text>
+
+        <!-- Region 5: Casablanca-Settat (Cote Centre-Ouest) -->
+        <path class="region-path" data-region="casa_settat"
+          d="M40,55 L55,65 L70,68 L75,80 L65,90 L50,92 L35,82 L30,68 Z"/>
+        <text class="region-label" x="52" y="78">Casa-Settat</text>
+
+        <!-- Region 6: Beni Mellal-Khenifra (Centre) -->
+        <path class="region-path" data-region="beni_mellal"
+          d="M80,60 L95,68 L110,75 L130,72 L140,85 L130,100 L110,105 L90,100 L75,90 L75,80 Z"/>
+        <text class="region-label" x="107" y="88">Beni Mellal</text>
+
+        <!-- Region 7: Marrakech-Safi (Centre-Ouest) -->
+        <path class="region-path" data-region="marrakech_safi"
+          d="M30,82 L50,92 L65,90 L75,90 L90,100 L85,115 L70,125 L50,130 L30,120 L20,100 Z"/>
+        <text class="region-label" x="55" y="110">Marrakech-Safi</text>
+
+        <!-- Region 8: Draa-Tafilalet (Centre-Est/Sud-Est) -->
+        <path class="region-path" data-region="draa_tafilalet"
+          d="M130,72 L150,75 L170,80 L185,70 L190,95 L185,120 L170,140 L150,148 L120,145 L100,135 L85,115 L90,100 L110,105 L130,100 L140,85 Z"/>
+        <text class="region-label" x="145" y="112">Draa-Tafilalet</text>
+
+        <!-- Region 9: Souss-Massa (Sud-Ouest cote) -->
+        <path class="region-path" data-region="souss_massa"
+          d="M20,120 L50,130 L70,125 L85,115 L100,135 L90,150 L65,155 L40,152 L15,145 Z"/>
+        <text class="region-label" x="60" y="140">Souss-Massa</text>
+
+        <!-- Region 10: Guelmim-Oued Noun -->
+        <path class="region-path" data-region="guelmim"
+          d="M15,145 L40,152 L65,155 L90,150 L100,135 L120,145 L115,165 L95,175 L60,178 L25,172 L10,160 Z"/>
+        <text class="region-label" x="65" y="165">Guelmim</text>
+
+        <!-- Region 11: Laayoune-Sakia El Hamra -->
+        <path class="region-path" data-region="laayoune"
+          d="M10,172 L25,172 L60,178 L95,175 L115,165 L130,175 L135,200 L125,220 L90,225 L50,222 L20,215 L5,195 Z"/>
+        <text class="region-label" x="72" y="200">Laayoune</text>
+
+        <!-- Region 12: Dakhla-Oued Ed Dahab -->
+        <path class="region-path" data-region="dakhla"
+          d="M5,215 L50,222 L90,225 L125,220 L135,240 L130,260 L110,272 L80,275 L50,270 L25,258 L10,240 Z"/>
+        <text class="region-label" x="72" y="250">Dakhla</text>
+
+        <!-- Decorative: Ocean indicator -->
+        <text x="8" y="90" style="font-size:3.5px;fill:rgba(68,170,221,.2);font-weight:700;letter-spacing:.5px" transform="rotate(-90,8,90)">ATLANTIQUE</text>
+        <text x="180" y="30" style="font-size:3px;fill:rgba(68,170,221,.15);font-weight:600">MEDITERRANEE</text>
+      </svg>
+    </div>
+
     <div class="field"><label>Age (ans)</label><input type="number" id="inAge" value="8" min="1" max="80"></div>
     <div class="field"><label>Densite (arbres/ha)</label><input type="number" id="inDensity" value="240" min="50" max="2000"><span class="hint">240=7x6m, 400=5x5m</span></div>
     <div class="field"><label>Irrigation</label>
@@ -15929,6 +16015,108 @@ calculate=function(){
   if(!validateInputs())return;
   _origCalculate.apply(this,arguments);
 };
+
+/* ============================================================
+   MOROCCO SVG MAP — Interactive Region Selection
+   ============================================================ */
+var MAP_REGIONS={
+  tanger_tetouan:{label:"Tanger-Tetouan-Al Hoceima",cities:["tanger","tetouan","chefchaouen","al_hoceima","larache","ouazzane"],climate:"Mediterraneen, 500-800mm",crops:"Agrumes, cannabis legal, cereales"},
+  oriental:{label:"Oriental",cities:["oujda","nador","berkane","figuig"],climate:"Semi-aride, 200-400mm",crops:"Agrumes Berkane, dattes Figuig, maraichage"},
+  fes_meknes:{label:"Fes-Meknes",cities:["fes","meknes","sefrou","ifrane","azrou","midelt","taza","taounate"],climate:"Continental, 400-700mm",crops:"Olivier, figuier, cereales, vigne"},
+  rabat_sale:{label:"Rabat-Sale-Kenitra",cities:["rabat","kenitra","sidi_kacem","sidi_slimane","khemisset"],climate:"Oceanique, 500-600mm",crops:"Riz Gharb, agrumes, maraichage"},
+  casa_settat:{label:"Casablanca-Settat",cities:["casablanca","settat","el_jadida"],climate:"Semi-aride, 350-450mm",crops:"Cereales, betterave, lait"},
+  beni_mellal:{label:"Beni Mellal-Khenifra",cities:["beni_mellal","fquih_ben_salah","khouribga","azilal"],climate:"Continental irrigue, 300-500mm",crops:"Olivier, agrumes Tadla, betterave"},
+  marrakech_safi:{label:"Marrakech-Safi",cities:["marrakech","safi","essaouira","kelaat"],climate:"Semi-aride chaud, 200-350mm",crops:"Olivier, amandier, safran, argan"},
+  draa_tafilalet:{label:"Draa-Tafilalet",cities:["errachidia","ouarzazate","zagora","tinghir"],climate:"Aride/oasis, 50-200mm",crops:"Palmier dattier, henné, rose"},
+  souss_massa:{label:"Souss-Massa",cities:["agadir","chtouka","ait_melloul","taroudant","tiznit","massa"],climate:"Semi-aride doux, 200-300mm",crops:"Primeurs export, agrumes, argan"},
+  guelmim:{label:"Guelmim-Oued Noun",cities:["guelmim","tan_tan"],climate:"Aride, 50-150mm",crops:"Cactus, elevage caprin, oasis"},
+  laayoune:{label:"Laayoune-Sakia El Hamra",cities:["laayoune"],climate:"Saharien, <50mm",crops:"Elevage camelin, culture sous serre"},
+  dakhla:{label:"Dakhla-Oued Ed Dahab",cities:["dakhla"],climate:"Saharien oceanique, <30mm",crops:"Tomate sous serre, aquaculture"}
+};
+
+function initMoroccoMap(){
+  var svg=document.getElementById("moroccoMap");
+  if(!svg)return;
+  var tooltip=document.getElementById("mapTooltip");
+  var regionSelect=document.getElementById("inRegion");
+  var paths=svg.querySelectorAll(".region-path");
+
+  /* Highlight the currently selected region */
+  function highlightActive(){
+    if(!regionSelect)return;
+    var val=regionSelect.value;
+    /* Find which map region contains this city */
+    paths.forEach(function(p){
+      var mapReg=p.getAttribute("data-region");
+      var regInfo=MAP_REGIONS[mapReg];
+      var isActive=regInfo&&regInfo.cities.indexOf(val)!==-1;
+      p.classList.toggle("active",isActive);
+      /* Also update label */
+      var label=p.nextElementSibling;
+      if(label&&label.classList.contains("region-label")){
+        label.classList.toggle("active",isActive);
+      }
+    });
+  }
+
+  /* Click handler */
+  paths.forEach(function(path){
+    path.addEventListener("click",function(){
+      var mapReg=this.getAttribute("data-region");
+      var regInfo=MAP_REGIONS[mapReg];
+      if(!regInfo||!regionSelect)return;
+      /* Select first city of this region in dropdown */
+      var firstCity=regInfo.cities[0];
+      for(var i=0;i<regionSelect.options.length;i++){
+        if(regionSelect.options[i].value===firstCity){
+          regionSelect.value=firstCity;
+          regionSelect.dispatchEvent(new Event("change"));
+          break;
+        }
+      }
+      highlightActive();
+      showToast(regInfo.label+" selectionnee","ok",1500);
+      /* Fetch live meteo */
+      if(typeof fetchLiveMeteo==="function")fetchLiveMeteo(firstCity);
+    });
+
+    /* Hover tooltip */
+    path.addEventListener("mouseenter",function(e){
+      var mapReg=this.getAttribute("data-region");
+      var regInfo=MAP_REGIONS[mapReg];
+      if(!regInfo||!tooltip)return;
+      tooltip.innerHTML='<div class="mt-name">'+regInfo.label+'</div>'+
+        '<div class="mt-info">'+regInfo.climate+'</div>'+
+        '<div class="mt-info" style="color:var(--good)">'+regInfo.crops+'</div>';
+      tooltip.style.display="block";
+    });
+
+    path.addEventListener("mousemove",function(e){
+      if(!tooltip)return;
+      var container=document.querySelector(".morocco-map-container");
+      var rect=container.getBoundingClientRect();
+      tooltip.style.left=(e.clientX-rect.left+12)+"px";
+      tooltip.style.top=(e.clientY-rect.top-10)+"px";
+    });
+
+    path.addEventListener("mouseleave",function(){
+      if(tooltip)tooltip.style.display="none";
+    });
+  });
+
+  /* Sync with dropdown changes */
+  if(regionSelect){
+    regionSelect.addEventListener("change",highlightActive);
+  }
+
+  /* Initial highlight */
+  highlightActive();
+}
+
+/* Add map init to load event */
+window.addEventListener("load",function(){
+  setTimeout(initMoroccoMap,600);
+});
 
 
 </script>
