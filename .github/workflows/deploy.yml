@@ -1,0 +1,91 @@
+name: Deploy SEVE AgTech to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    name: Validate HTML
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check critical files exist
+        run: |
+          echo "Checking critical files..."
+          for f in index.html modele_seve.html sw.js; do
+            if [ ! -f "$f" ]; then
+              echo "❌ Missing: $f"
+              exit 1
+            fi
+            echo "✅ Found: $f ($(wc -c < "$f") bytes)"
+          done
+
+      - name: Validate HTML structure
+        run: |
+          for f in index.html modele_seve.html; do
+            echo "Validating $f..."
+            if ! grep -q '<html' "$f"; then
+              echo "❌ $f: missing <html> tag"
+              exit 1
+            fi
+            if ! grep -q '</html>' "$f"; then
+              echo "❌ $f: missing </html> tag"
+              exit 1
+            fi
+            echo "✅ $f: valid structure"
+          done
+
+      - name: Check file sizes
+        run: |
+          echo "📊 File sizes:"
+          ls -lh index.html modele_seve.html sw.js
+
+          # Warn if main app is suspiciously small (< 10KB = probably broken)
+          size=$(wc -c < modele_seve.html)
+          if [ "$size" -lt 10000 ]; then
+            echo "⚠️ modele_seve.html is only $size bytes — seems too small"
+            exit 1
+          fi
+          echo "✅ All file sizes look reasonable"
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: validate
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Summary
+        run: |
+          echo "## 🌱 SEVE AgTech Deployed!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- 🌐 **URL**: ${{ steps.deployment.outputs.page_url }}" >> $GITHUB_STEP_SUMMARY
+          echo "- 📅 **Date**: $(date -u '+%Y-%m-%d %H:%M UTC')" >> $GITHUB_STEP_SUMMARY
+          echo "- 📦 **Commit**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
