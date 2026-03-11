@@ -16,14 +16,14 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#0a0a0a;--card:#161616;--accent:#3b82f6;--accent1:#3b82f6;--good:#22c55e;--bad:#ef4444;--warn:#f59e0b;--gold:#eab308;--txt:#ededed;--txt2:#888;--accent2:#22c55e;--purple:#a855f7;--border:#222;--border-light:#2a2a2a}
+:root{--bg:#0a0a0a;--card:#161616;--accent:#3b82f6;--accent1:#3b82f6;--good:#22c55e;--bad:#ef4444;--warn:#f59e0b;--gold:#eab308;--txt:#ededed;--txt2:#888;--accent2:#22c55e;--purple:#a855f7;--border:#222;--border-light:#2a2a2a;--sidebar-w:270px;--kpi-w:290px;--topbar-h:54px}
 body{background:var(--bg);color:var(--txt);font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;-webkit-font-smoothing:antialiased}
-.top-bar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,10,.9);backdrop-filter:blur(16px) saturate(180%);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;gap:16px}
+.top-bar{position:fixed;top:0;left:0;right:0;height:var(--topbar-h);z-index:100;background:rgba(10,10,10,.9);backdrop-filter:blur(16px) saturate(180%);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;gap:16px}
 .top-bar h1{font-size:1rem;font-weight:800;color:var(--txt)}
 .top-bar a{color:var(--txt2);text-decoration:none;font-size:.85rem;transition:color .2s}
 .top-bar a:hover{color:var(--txt)}
 .top-bar .tag{margin-left:auto;font-size:.78rem;padding:3px 10px;border-radius:8px;background:rgba(59,130,246,.1);color:var(--accent);border:1px solid rgba(59,130,246,.2)}
-.container{max-width:920px;margin:0 auto;padding:20px 16px 40px}
+.container{width:100%;padding:20px 24px 40px}
 
 /* Panels — collapsible */
 .panel{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:16px;transition:border-color .2s}
@@ -39,7 +39,7 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',-apple-system,Bli
 .panel.collapsed h2 .collapse-arrow{transform:rotate(-90deg)}
 .panel.collapsed>*:not(h2){display:none!important}
 /* TOC navigation */
-.toc-nav{position:sticky;top:50px;z-index:90;background:rgba(10,10,10,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:6px 0;margin:-10px -16px 16px;overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.toc-nav{position:sticky;top:0;z-index:90;background:rgba(10,10,10,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:6px 0;margin:-10px -16px 16px;overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .toc-nav::-webkit-scrollbar{display:none}
 .toc-nav .toc-inner{display:flex;gap:4px;padding:0 16px;align-items:center}
 .toc-btn{padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--txt2);cursor:pointer;font-size:.68rem;white-space:nowrap;transition:.2s;font-family:inherit}
@@ -303,18 +303,18 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',-apple-system,Bli
 .pwa-banner.show{transform:translateY(0)}
 
 /* ===== V9 LAYOUT: 3-COLUMN GRID ===== */
-.app-layout{display:grid;grid-template-columns:260px 1fr 280px;min-height:100vh;padding-top:42px}
+.app-shell{display:grid;grid-template-columns:var(--sidebar-w) 1fr var(--kpi-w);min-height:100vh;padding-top:var(--topbar-h)}
 /* Sidebar */
-.sidebar-nav{position:sticky;top:42px;height:calc(100vh - 42px);overflow-y:auto;background:var(--bg);border-right:1px solid var(--border);padding:12px 0;scrollbar-width:thin;scrollbar-color:rgba(59,130,246,.15) transparent;z-index:80}
-.sidebar-nav::-webkit-scrollbar{width:4px}
-.sidebar-nav::-webkit-scrollbar-thumb{background:rgba(59,130,246,.15);border-radius:4px}
+.sidenav{position:sticky;top:var(--topbar-h);height:calc(100vh - var(--topbar-h));overflow-y:auto;background:var(--bg);border-right:1px solid var(--border);padding:12px 0;scrollbar-width:thin;scrollbar-color:rgba(59,130,246,.15) transparent;z-index:80}
+.sidenav::-webkit-scrollbar{width:4px}
+.sidenav::-webkit-scrollbar-thumb{background:rgba(59,130,246,.15);border-radius:4px}
 .sb-brand{padding:14px 18px 8px;font-size:1.15rem;font-weight:800;color:var(--txt)}
 .sb-progress{margin:4px 16px 14px;height:4px;border-radius:4px;background:var(--border);position:relative;overflow:hidden}
 .sb-progress-bar{height:100%;border-radius:4px;background:var(--accent);transition:width .4s}
 .sb-progress span{position:absolute;right:0;top:-14px;font-size:.55rem;color:var(--txt2)}
-.sb-item{display:flex;align-items:center;gap:10px;width:100%;padding:9px 18px;border:none;background:transparent;color:var(--txt2);font-size:.78rem;cursor:pointer;text-align:left;transition:.15s;border-left:3px solid transparent;font-family:inherit}
-.sb-item:hover{background:rgba(59,130,246,.04);color:var(--txt)}
-.sb-item.sb-active{background:rgba(59,130,246,.06);color:var(--accent);border-left-color:var(--accent);font-weight:700}
+.sb-item,.sidenav-item{display:flex;align-items:center;gap:10px;width:100%;padding:9px 18px;border:none;background:transparent;color:var(--txt2);font-size:.78rem;cursor:pointer;text-align:left;transition:.15s;border-left:3px solid transparent;font-family:inherit}
+.sb-item:hover,.sidenav-item:hover{background:rgba(59,130,246,.04);color:var(--txt)}
+.sb-item.sb-active,.sidenav-item.sb-active{background:rgba(59,130,246,.06);color:var(--accent);border-left-color:var(--accent);font-weight:700}
 .sb-icon{font-size:1rem;width:22px;text-align:center;flex-shrink:0}
 .sb-label{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .sb-badge{font-size:.6rem;margin-left:auto;flex-shrink:0}
@@ -323,7 +323,7 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',-apple-system,Bli
 .sb-locked{color:var(--txt2);opacity:.5}
 .sb-sep{padding:12px 18px 6px;font-size:.6rem;text-transform:uppercase;letter-spacing:1px;color:var(--txt2);opacity:.6;border-top:1px solid var(--border);margin-top:8px}
 /* KPI Panel */
-.kpi-panel{position:sticky;top:42px;height:calc(100vh - 42px);overflow-y:auto;background:var(--bg);border-left:1px solid var(--border);padding:16px 14px;scrollbar-width:thin;scrollbar-color:rgba(59,130,246,.15) transparent}
+.kpi-panel{position:sticky;top:var(--topbar-h);height:calc(100vh - var(--topbar-h));overflow-y:auto;background:var(--bg);border-left:1px solid var(--border);padding:16px 14px;scrollbar-width:thin;scrollbar-color:rgba(59,130,246,.15) transparent}
 .kpi-panel::-webkit-scrollbar{width:4px}
 .kpi-panel::-webkit-scrollbar-thumb{background:rgba(59,130,246,.15);border-radius:4px}
 .kpi-title{font-size:.75rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--txt2);margin-bottom:12px}
@@ -341,21 +341,24 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',-apple-system,Bli
 .kpi-btn-sec{border-color:var(--border-light);color:var(--accent2)}
 .kpi-btn-sec:hover{background:rgba(34,197,94,.08);border-color:rgba(34,197,94,.3)}
 /* Main content area */
-.main-content{min-width:0;overflow-x:hidden}
+.main-scroll{min-width:0;overflow-x:hidden}
 /* Executive summary */
 .exec-summary{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:20px}
 /* Dashboard home */
 #dashboardHome{padding:20px 24px}
 /* Hamburger for mobile */
-.sidebar-toggle{display:none;position:fixed;top:48px;left:8px;z-index:85;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:6px 10px;color:var(--accent);font-size:1.1rem;cursor:pointer}
+.sidebar-toggle{display:none;position:fixed;top:calc(var(--topbar-h) + 4px);left:8px;z-index:85;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:6px 10px;color:var(--accent);font-size:1.1rem;cursor:pointer}
 /* Responsive */
-@media(max-width:1200px){
-  .app-layout{grid-template-columns:220px 1fr 240px}
+@media(min-width:1200px){
+  .app-shell{grid-template-columns:var(--sidebar-w) 1fr var(--kpi-w)}
 }
-@media(max-width:960px){
-  .app-layout{grid-template-columns:1fr}
-  .sidebar-nav{display:none;position:fixed;top:42px;left:0;bottom:0;width:280px;z-index:90;box-shadow:4px 0 24px rgba(0,0,0,.5)}
-  .sidebar-nav.open{display:block}
+@media(min-width:768px) and (max-width:1199px){
+  .app-shell{grid-template-columns:220px 1fr 240px}
+}
+@media(max-width:767px){
+  .app-shell{grid-template-columns:1fr}
+  .sidenav{display:none;position:fixed;top:var(--topbar-h);left:0;bottom:0;width:280px;z-index:90;box-shadow:4px 0 24px rgba(0,0,0,.5)}
+  .sidenav.open{display:block}
   .kpi-panel{display:none}
   .sidebar-toggle{display:block}
 }
@@ -604,16 +607,16 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',-apple-system,Bli
 <button class="sidebar-toggle" id="sidebarToggle" onclick="document.getElementById('sidebarNav').classList.toggle('open')">&#9776;</button>
 
 <!-- ===== V9 APP LAYOUT: SIDEBAR | MAIN | KPI ===== -->
-<div class="app-layout" id="appLayout">
+<div class="app-shell" id="appLayout">
 
 <!-- Sidebar Navigation -->
-<nav id="sidebarNav" class="sidebar-nav"></nav>
+<nav id="sidebarNav" class="sidenav"></nav>
 
 <!-- Main Content Area -->
-<main class="main-content">
+<main class="main-scroll">
 
 <!-- ===== ERP: COMPTABILITE SECTION ===== -->
-<div id="erpSection_compta" style="display:none;max-width:920px;margin:0 auto;padding:94px 16px 40px">
+<div id="erpSection_compta" style="display:none;width:100%;padding:20px 24px 40px">
   <div class="panel">
     <h2><span class="ico">&#128200;</span> Comptabilite — Plan Comptable Marocain (CGNC)</h2>
     <p style="font-size:.8rem;color:var(--txt2);margin-bottom:4px">Journal, Grand Livre, Bilan, CPC, Ratios financiers — conforme au PCM marocain</p>
@@ -622,7 +625,7 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',-apple-system,Bli
 </div>
 
 <!-- ===== ERP: ECOSYSTEME CRM SECTION ===== -->
-<div id="erpSection_ecosystem" style="display:none;max-width:920px;margin:0 auto;padding:94px 16px 40px">
+<div id="erpSection_ecosystem" style="display:none;width:100%;padding:20px 24px 40px">
   <div class="panel">
     <h2><span class="ico">&#127760;</span> Ecosysteme — Clients, Fournisseurs, Concurrents, Partenaires</h2>
     <p style="font-size:.8rem;color:var(--txt2);margin-bottom:4px">Gestion des relations commerciales et veille concurrentielle</p>
@@ -631,7 +634,7 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',-apple-system,Bli
 </div>
 
 <!-- ===== ERP: GRH+ SECTION ===== -->
-<div id="erpSection_grh" style="display:none;max-width:920px;margin:0 auto;padding:94px 16px 40px">
+<div id="erpSection_grh" style="display:none;width:100%;padding:20px 24px 40px">
   <div class="panel">
     <h2><span class="ico">&#128101;</span> GRH+ — Gestion des Ressources Humaines</h2>
     <p style="font-size:.8rem;color:var(--txt2);margin-bottom:4px">Personnel, Evaluation 360°, Detection conflits, Fautes, Previsions</p>
@@ -652,7 +655,7 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',-apple-system,Bli
 <div class="upgrade-banner" id="upgradeBanner" style="display:none">
   <div class="ub-text">
     Vous utilisez le plan <strong>Decouverte</strong> (5 cultures, 3 simulations/mois).
-    Passez au <strong>Pro</strong> pour debloquer les 47 cultures, l'export PDF, le dossier FDA et le business plan 10 ans.
+    Passez au <strong>Pro</strong> pour debloquer les 131 cultures, l'export PDF, le dossier FDA et le business plan 10 ans.
   </div>
   <button class="ub-btn" onclick="seveAuth.showUpgrade()">Passer au Pro — 299 DH/mois</button>
 </div>
@@ -671,7 +674,13 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',-apple-system,Bli
           <option value="cactus">Figuier de Barbarie</option>
         </optgroup>
         <optgroup label="Agrumes">
-          <option value="agrumes">Agrumes</option>
+          <option value="agrumes">Agrumes (general)</option>
+          <option value="oranger">Oranger</option>
+          <option value="mandarinier">Mandarinier</option>
+          <option value="citronnier">Citronnier</option>
+          <option value="pomelo">Pomelo</option>
+          <option value="kumquat">Kumquat</option>
+          <option value="lime">Lime / Limettier</option>
         </optgroup>
         <optgroup label="Fruits a noyau">
           <option value="prunier">Prunier</option>
@@ -684,6 +693,8 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',-apple-system,Bli
           <option value="pommier">Pommier</option>
           <option value="poirier">Poirier</option>
           <option value="cognassier">Cognassier</option>
+          <option value="neflier_japon">Neflier du Japon</option>
+          <option value="kaki">Kaki</option>
         </optgroup>
         <optgroup label="Fruits secs & oleagineux">
           <option value="olivier">Olivier</option>
@@ -691,44 +702,138 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',-apple-system,Bli
           <option value="noyer">Noyer</option>
           <option value="caroubier">Caroubier</option>
           <option value="arganier">Arganier</option>
+          <option value="pistachier">Pistachier</option>
         </optgroup>
         <optgroup label="Palmier">
           <option value="palmier">Palmier dattier</option>
         </optgroup>
-        <optgroup label="Maraicheres">
+        <optgroup label="Cultures speciales">
+          <option value="aloe_vera">Aloe vera</option>
+          <option value="moringa">Moringa</option>
+          <option value="caprier">Caprier</option>
+          <option value="jujubier">Jujubier</option>
+          <option value="paulownia">Paulownia</option>
+          <option value="murier">Murier</option>
+          <option value="manguier">Manguier</option>
+          <option value="papayer">Papayer</option>
+          <option value="goyavier">Goyavier</option>
+          <option value="fruit_passion">Fruit de la passion</option>
+        </optgroup>
+        <optgroup label="Maraicheres — Fruits">
           <option value="tomate">Tomate</option>
           <option value="poivron">Poivron</option>
+          <option value="piment_fort">Piment fort</option>
           <option value="courgette">Courgette</option>
           <option value="aubergine">Aubergine</option>
+          <option value="concombre">Concombre</option>
           <option value="melon">Melon</option>
           <option value="pasteque">Pasteque</option>
-          <option value="pomme_terre">Pomme de terre</option>
-          <option value="oignon">Oignon</option>
+          <option value="potiron">Potiron</option>
+          <option value="gombo">Gombo</option>
+          <option value="mais_doux">Mais doux</option>
+          <option value="cornichon">Cornichon</option>
+          <option value="petit_pois">Petit pois</option>
           <option value="fraisier">Fraisier</option>
           <option value="haricot">Haricot vert</option>
         </optgroup>
-        <optgroup label="Grandes cultures">
+        <optgroup label="Maraicheres — Racines & Bulbes">
+          <option value="pomme_terre">Pomme de terre</option>
+          <option value="oignon">Oignon</option>
+          <option value="ail">Ail</option>
+          <option value="carotte">Carotte</option>
+          <option value="navet">Navet</option>
+          <option value="radis">Radis</option>
+          <option value="betterave_pot">Betterave potagere</option>
+          <option value="patate_douce">Patate douce</option>
+          <option value="manioc">Manioc</option>
+          <option value="topinambour">Topinambour</option>
+        </optgroup>
+        <optgroup label="Maraicheres — Feuilles & Tiges">
+          <option value="laitue">Laitue</option>
+          <option value="epinard">Epinard</option>
+          <option value="brocoli">Brocoli</option>
+          <option value="chou_fleur">Chou-fleur</option>
+          <option value="chou_pomme">Chou pomme</option>
+          <option value="artichaut">Artichaut</option>
+          <option value="poireau">Poireau</option>
+          <option value="celeri">Celeri</option>
+          <option value="fenouil">Fenouil</option>
+          <option value="roquette">Roquette</option>
+        </optgroup>
+        <optgroup label="Aromatiques & Condiments">
+          <option value="coriandre">Coriandre</option>
+          <option value="persil">Persil</option>
+          <option value="menthe">Menthe</option>
+          <option value="basilic">Basilic</option>
+          <option value="cumin">Cumin</option>
+          <option value="fenugrec">Fenugrec</option>
+          <option value="nigelle">Nigelle (Habba Sawda)</option>
+          <option value="anis">Anis vert</option>
+          <option value="carvi">Carvi</option>
+          <option value="origan">Origan</option>
+          <option value="sauge">Sauge</option>
+          <option value="camomille">Camomille</option>
+          <option value="verveine">Verveine citronnelle</option>
+        </optgroup>
+        <optgroup label="Plantes medicinales & a parfum">
+          <option value="safran">Safran</option>
+          <option value="lavande">Lavande</option>
+          <option value="rose_damas">Rose de Damas</option>
+          <option value="romarin">Romarin</option>
+          <option value="thym">Thym</option>
+          <option value="geranium_rosat">Geranium rosat</option>
+          <option value="henne">Henne</option>
+          <option value="stevia">Stevia</option>
+        </optgroup>
+        <optgroup label="Grandes cultures — Cereales">
           <option value="ble_tendre">Ble tendre</option>
           <option value="ble_dur">Ble dur</option>
           <option value="orge">Orge</option>
           <option value="mais">Mais</option>
+          <option value="sorgho">Sorgho</option>
+          <option value="triticale">Triticale</option>
+          <option value="avoine">Avoine</option>
+        </optgroup>
+        <optgroup label="Grandes cultures — Oleagineux & Industrielles">
           <option value="tournesol">Tournesol</option>
+          <option value="colza">Colza</option>
+          <option value="soja">Soja</option>
+          <option value="sesame">Sesame</option>
+          <option value="arachide">Arachide</option>
           <option value="betterave">Betterave sucriere</option>
+          <option value="chanvre_ind">Chanvre industriel</option>
+          <option value="canne_sucre">Canne a sucre</option>
+          <option value="tabac">Tabac</option>
+          <option value="coton">Coton</option>
+        </optgroup>
+        <optgroup label="Grandes cultures — Legumineuses & Fourrageres">
           <option value="lentille">Lentille</option>
           <option value="pois_chiche">Pois chiche</option>
           <option value="feve">Feve</option>
+          <option value="luzerne">Luzerne</option>
+          <option value="quinoa">Quinoa</option>
         </optgroup>
         <optgroup label="Champignons">
           <option value="pleurote">Pleurote</option>
           <option value="champignon_paris">Champignon de Paris</option>
           <option value="shiitake">Shiitake</option>
         </optgroup>
-        <optgroup label="Elevage (Production animale)">
+        <optgroup label="Elevage — Ruminants">
           <option value="bovin_lait">Bovin laitier</option>
           <option value="ovin_viande">Ovin viande</option>
           <option value="caprin">Caprin (lait+viande)</option>
+          <option value="dromadaire">Dromadaire</option>
+        </optgroup>
+        <optgroup label="Elevage — Volailles">
           <option value="poulet_chair">Poulet de chair</option>
           <option value="poule_pondeuse">Poule pondeuse</option>
+          <option value="dindon">Dindon</option>
+        </optgroup>
+        <optgroup label="Elevage — Autres productions">
+          <option value="lapin">Lapin</option>
+          <option value="apiculture">Apiculture</option>
+          <option value="heliciculture">Heliciculture (escargots)</option>
+          <option value="truite">Truite (aquaculture)</option>
         </optgroup>
       </select></div>
     <div class="field"><label>Variete</label><select id="inVariety"></select></div>
@@ -1505,14 +1610,14 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',-apple-system,Bli
 </div><!-- /seveInputs -->
 </div><!-- /erpSection_seve -->
 
-</main><!-- /main-content -->
+</main><!-- /main-scroll -->
 
 <!-- KPI Panel (right) -->
 <aside id="kpiPanel" class="kpi-panel">
   <div class="kpi-empty"><div style="font-size:2rem;margin-bottom:8px">&#128202;</div><div>Lancez une simulation pour voir les KPIs</div></div>
 </aside>
 
-</div><!-- /app-layout -->
+</div><!-- /app-shell -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
@@ -1945,6 +2050,8 @@ var seveAuth=(function(){
 
 document.addEventListener('DOMContentLoaded',function(){
   seveAuth.init();
+  /* Build sidebar navigation */
+  if(typeof buildSideNav==="function")buildSideNav();
   /* Register Service Worker for PWA offline */
   if('serviceWorker' in navigator){
     navigator.serviceWorker.register('sw.js').then(function(reg){
@@ -2654,7 +2761,211 @@ var SPECIES={
     unit:"sujet",prod_type:"oeufs",
     feed_g_day:120,water_L_day:0.25,eggs_year:280,egg_weight:62,laying_pct:78,
     mortality_pct:5,cycle_months:18,price_egg:1.2,price_poulette:45,
-    varieties:{"Lohmann Brown":{fw:0,GDD:0,HI:0,eggs:300,price:1.2},"ISA Brown":{fw:0,GDD:0,HI:0,eggs:290,price:1.2},"Hy-Line":{fw:0,GDD:0,HI:0,eggs:295,price:1.2},"Locale/Beldi":{fw:0,GDD:0,HI:0,eggs:180,price:1.8},"Generique":{fw:0,GDD:0,HI:0,eggs:280,price:1.2}}}
+    varieties:{"Lohmann Brown":{fw:0,GDD:0,HI:0,eggs:300,price:1.2},"ISA Brown":{fw:0,GDD:0,HI:0,eggs:290,price:1.2},"Hy-Line":{fw:0,GDD:0,HI:0,eggs:295,price:1.2},"Locale/Beldi":{fw:0,GDD:0,HI:0,eggs:180,price:1.8},"Generique":{fw:0,GDD:0,HI:0,eggs:280,price:1.2}}},
+
+  /* === MARAICHERES SUPPLEMENTAIRES (annual=true) === */
+  ail:{name:"Ail",annual:true,ref_density:300000,T_base:4,Kc_mid:1.00,LUE:0.85,k_ext:0.45,resp_frac:0.38,C_fresh:0.35,dry_matter:0.40,HI_range:[0.50,0.65],max_LAI:2.5,yield_national:8,yield_potential:18,alt_factor:0,frost_limit:-10,
+    varieties:{"Violet local":{fw:50,GDD:2200,HI:0.58},"Blanc Souss":{fw:45,GDD:2000,HI:0.60},"Generique":{fw:48,GDD:2100,HI:0.58}}},
+  carotte:{name:"Carotte",annual:true,ref_density:600000,T_base:4,Kc_mid:1.05,LUE:0.95,k_ext:0.50,resp_frac:0.35,C_fresh:0.08,dry_matter:0.12,HI_range:[0.60,0.80],max_LAI:3.5,yield_national:30,yield_potential:60,alt_factor:0,frost_limit:-5,
+    varieties:{"Nantaise":{fw:150,GDD:1600,HI:0.72},"Musade":{fw:180,GDD:1800,HI:0.68},"Generique":{fw:160,GDD:1700,HI:0.70}}},
+  concombre:{name:"Concombre",annual:true,ref_density:15000,T_base:12,Kc_mid:1.00,LUE:1.10,k_ext:0.55,resp_frac:0.35,C_fresh:0.03,dry_matter:0.04,HI_range:[0.55,0.70],max_LAI:4.0,yield_national:30,yield_potential:70,alt_factor:0,frost_limit:2,
+    varieties:{"Marketmore":{fw:200,GDD:1400,HI:0.62},"Long vert":{fw:250,GDD:1500,HI:0.60},"Generique":{fw:220,GDD:1450,HI:0.62}}},
+  artichaut:{name:"Artichaut",annual:true,ref_density:8000,T_base:7,Kc_mid:1.00,LUE:0.90,k_ext:0.50,resp_frac:0.40,C_fresh:0.10,dry_matter:0.15,HI_range:[0.30,0.45],max_LAI:4.0,yield_national:15,yield_potential:30,alt_factor:0,frost_limit:-5,
+    varieties:{"Violet Hyeres":{fw:300,GDD:2000,HI:0.38},"Blanca":{fw:350,GDD:2200,HI:0.35},"Generique":{fw:320,GDD:2100,HI:0.36}}},
+  navet:{name:"Navet",annual:true,ref_density:400000,T_base:4,Kc_mid:0.95,LUE:0.85,k_ext:0.45,resp_frac:0.35,C_fresh:0.06,dry_matter:0.08,HI_range:[0.55,0.70],max_LAI:3.0,yield_national:20,yield_potential:40,alt_factor:0,frost_limit:-8,
+    varieties:{"Blanc Globe":{fw:200,GDD:1200,HI:0.62},"Violet":{fw:180,GDD:1100,HI:0.65},"Generique":{fw:190,GDD:1150,HI:0.63}}},
+  poireau:{name:"Poireau",annual:true,ref_density:150000,T_base:5,Kc_mid:1.00,LUE:0.90,k_ext:0.50,resp_frac:0.38,C_fresh:0.08,dry_matter:0.11,HI_range:[0.50,0.65],max_LAI:3.5,yield_national:20,yield_potential:45,alt_factor:0,frost_limit:-10,
+    varieties:{"Bleu Solaise":{fw:250,GDD:2000,HI:0.58},"Geant hiver":{fw:300,GDD:2200,HI:0.55},"Generique":{fw:270,GDD:2100,HI:0.56}}},
+  epinard:{name:"Epinard",annual:true,ref_density:500000,T_base:3,Kc_mid:0.95,LUE:0.90,k_ext:0.50,resp_frac:0.35,C_fresh:0.05,dry_matter:0.08,HI_range:[0.50,0.65],max_LAI:3.0,yield_national:15,yield_potential:30,alt_factor:0,frost_limit:-10,
+    varieties:{"Viking":{fw:30,GDD:900,HI:0.58},"Geant hiver":{fw:35,GDD:1000,HI:0.55},"Generique":{fw:32,GDD:950,HI:0.56}}},
+  brocoli:{name:"Brocoli",annual:true,ref_density:25000,T_base:5,Kc_mid:1.05,LUE:0.95,k_ext:0.55,resp_frac:0.38,C_fresh:0.06,dry_matter:0.10,HI_range:[0.35,0.50],max_LAI:3.5,yield_national:12,yield_potential:25,alt_factor:0,frost_limit:-5,
+    varieties:{"Calabrese":{fw:400,GDD:1400,HI:0.42},"Marathon":{fw:500,GDD:1600,HI:0.40},"Generique":{fw:450,GDD:1500,HI:0.42}}},
+  chou_fleur:{name:"Chou-fleur",annual:true,ref_density:20000,T_base:5,Kc_mid:1.05,LUE:0.95,k_ext:0.55,resp_frac:0.38,C_fresh:0.06,dry_matter:0.08,HI_range:[0.35,0.50],max_LAI:3.5,yield_national:18,yield_potential:35,alt_factor:0,frost_limit:-5,
+    varieties:{"Boule de neige":{fw:800,GDD:1600,HI:0.42},"Igloo":{fw:700,GDD:1500,HI:0.45},"Generique":{fw:750,GDD:1550,HI:0.43}}},
+  chou_pomme:{name:"Chou pomme",annual:true,ref_density:30000,T_base:5,Kc_mid:1.05,LUE:0.95,k_ext:0.55,resp_frac:0.38,C_fresh:0.06,dry_matter:0.08,HI_range:[0.45,0.60],max_LAI:3.5,yield_national:25,yield_potential:50,alt_factor:0,frost_limit:-8,
+    varieties:{"Copenhagen":{fw:1500,GDD:1800,HI:0.52},"Quintal Alsace":{fw:2000,GDD:2000,HI:0.48},"Generique":{fw:1700,GDD:1900,HI:0.50}}},
+  piment_fort:{name:"Piment fort",annual:true,ref_density:30000,T_base:12,Kc_mid:1.00,LUE:1.05,k_ext:0.55,resp_frac:0.38,C_fresh:0.10,dry_matter:0.15,HI_range:[0.40,0.55],max_LAI:3.5,yield_national:8,yield_potential:20,alt_factor:0,frost_limit:2,
+    varieties:{"Niora":{fw:15,GDD:1800,HI:0.48},"Habanero":{fw:10,GDD:2000,HI:0.45},"Generique":{fw:12,GDD:1900,HI:0.46}}},
+  coriandre:{name:"Coriandre",annual:true,ref_density:2000000,T_base:5,Kc_mid:0.85,LUE:0.80,k_ext:0.40,resp_frac:0.35,C_fresh:0.06,dry_matter:0.10,HI_range:[0.40,0.55],max_LAI:2.5,yield_national:8,yield_potential:15,alt_factor:0,frost_limit:-5,
+    varieties:{"Locale":{fw:5,GDD:900,HI:0.48},"Generique":{fw:5,GDD:900,HI:0.46}}},
+  menthe:{name:"Menthe",annual:true,ref_density:200000,T_base:5,Kc_mid:0.95,LUE:0.90,k_ext:0.50,resp_frac:0.35,C_fresh:0.05,dry_matter:0.15,HI_range:[0.50,0.65],max_LAI:3.5,yield_national:20,yield_potential:40,alt_factor:0,frost_limit:-10,
+    varieties:{"Nana":{fw:20,GDD:1000,HI:0.58},"Poivree":{fw:18,GDD:1100,HI:0.55},"Generique":{fw:19,GDD:1050,HI:0.56}}},
+  persil:{name:"Persil",annual:true,ref_density:3000000,T_base:5,Kc_mid:0.90,LUE:0.85,k_ext:0.45,resp_frac:0.35,C_fresh:0.06,dry_matter:0.12,HI_range:[0.45,0.60],max_LAI:3.0,yield_national:15,yield_potential:30,alt_factor:0,frost_limit:-8,
+    varieties:{"Frise":{fw:8,GDD:1000,HI:0.52},"Plat":{fw:10,GDD:900,HI:0.55},"Generique":{fw:9,GDD:950,HI:0.53}}},
+  radis:{name:"Radis",annual:true,ref_density:1000000,T_base:4,Kc_mid:0.80,LUE:0.75,k_ext:0.40,resp_frac:0.35,C_fresh:0.04,dry_matter:0.05,HI_range:[0.50,0.65],max_LAI:2.0,yield_national:15,yield_potential:30,alt_factor:0,frost_limit:-5,
+    varieties:{"Rond rouge":{fw:20,GDD:600,HI:0.58},"Noir gros":{fw:300,GDD:1200,HI:0.52},"Generique":{fw:25,GDD:700,HI:0.55}}},
+  betterave_pot:{name:"Betterave potagere",annual:true,ref_density:200000,T_base:4,Kc_mid:1.00,LUE:0.90,k_ext:0.50,resp_frac:0.35,C_fresh:0.06,dry_matter:0.13,HI_range:[0.55,0.70],max_LAI:3.5,yield_national:25,yield_potential:50,alt_factor:0,frost_limit:-5,
+    varieties:{"Detroit":{fw:250,GDD:1400,HI:0.62},"Chioggia":{fw:200,GDD:1300,HI:0.65},"Generique":{fw:230,GDD:1350,HI:0.63}}},
+  potiron:{name:"Potiron",annual:true,ref_density:2500,T_base:12,Kc_mid:1.00,LUE:1.05,k_ext:0.50,resp_frac:0.35,C_fresh:0.05,dry_matter:0.10,HI_range:[0.45,0.60],max_LAI:4.0,yield_national:20,yield_potential:50,alt_factor:0,frost_limit:2,
+    varieties:{"Musquee Provence":{fw:5000,GDD:2200,HI:0.52},"Butternut":{fw:1500,GDD:1800,HI:0.55},"Generique":{fw:3000,GDD:2000,HI:0.53}}},
+  gombo:{name:"Gombo",annual:true,ref_density:40000,T_base:15,Kc_mid:0.95,LUE:1.00,k_ext:0.50,resp_frac:0.35,C_fresh:0.06,dry_matter:0.10,HI_range:[0.40,0.55],max_LAI:3.5,yield_national:10,yield_potential:20,alt_factor:0,frost_limit:5,
+    varieties:{"Clemson":{fw:15,GDD:1600,HI:0.48},"Local":{fw:12,GDD:1500,HI:0.50},"Generique":{fw:13,GDD:1550,HI:0.48}}},
+  roquette:{name:"Roquette",annual:true,ref_density:2000000,T_base:5,Kc_mid:0.80,LUE:0.80,k_ext:0.40,resp_frac:0.35,C_fresh:0.05,dry_matter:0.08,HI_range:[0.45,0.60],max_LAI:2.5,yield_national:12,yield_potential:25,alt_factor:0,frost_limit:-5,
+    varieties:{"Cultivee":{fw:8,GDD:700,HI:0.52},"Sauvage":{fw:5,GDD:800,HI:0.48},"Generique":{fw:7,GDD:750,HI:0.50}}},
+  basilic:{name:"Basilic",annual:true,ref_density:200000,T_base:12,Kc_mid:0.85,LUE:0.85,k_ext:0.45,resp_frac:0.35,C_fresh:0.06,dry_matter:0.10,HI_range:[0.40,0.55],max_LAI:3.0,yield_national:10,yield_potential:20,alt_factor:0,frost_limit:2,
+    varieties:{"Grand vert":{fw:15,GDD:1200,HI:0.48},"Genovese":{fw:12,GDD:1100,HI:0.50},"Generique":{fw:13,GDD:1150,HI:0.48}}},
+  fenouil:{name:"Fenouil",annual:true,ref_density:80000,T_base:5,Kc_mid:0.95,LUE:0.85,k_ext:0.45,resp_frac:0.38,C_fresh:0.06,dry_matter:0.08,HI_range:[0.45,0.60],max_LAI:3.0,yield_national:15,yield_potential:30,alt_factor:0,frost_limit:-5,
+    varieties:{"Florence":{fw:300,GDD:1400,HI:0.52},"Doux":{fw:250,GDD:1300,HI:0.55},"Generique":{fw:280,GDD:1350,HI:0.53}}},
+  laitue:{name:"Laitue",annual:true,ref_density:80000,T_base:4,Kc_mid:0.95,LUE:0.85,k_ext:0.50,resp_frac:0.35,C_fresh:0.04,dry_matter:0.05,HI_range:[0.60,0.80],max_LAI:3.0,yield_national:20,yield_potential:40,alt_factor:0,frost_limit:-3,
+    varieties:{"Batavia":{fw:300,GDD:1000,HI:0.70},"Romaine":{fw:350,GDD:1100,HI:0.68},"Generique":{fw:320,GDD:1050,HI:0.70}}},
+  celeri:{name:"Celeri",annual:true,ref_density:50000,T_base:5,Kc_mid:1.00,LUE:0.90,k_ext:0.50,resp_frac:0.38,C_fresh:0.06,dry_matter:0.06,HI_range:[0.50,0.65],max_LAI:3.5,yield_national:25,yield_potential:50,alt_factor:0,frost_limit:-5,
+    varieties:{"Branche":{fw:500,GDD:1800,HI:0.58},"Rave":{fw:600,GDD:2000,HI:0.55},"Generique":{fw:550,GDD:1900,HI:0.56}}},
+
+  /* === AROMATIQUES & MEDICINALES (annual=true sauf indication) === */
+  safran:{name:"Safran",annual:true,ref_density:500000,T_base:5,Kc_mid:0.70,LUE:0.50,k_ext:0.35,resp_frac:0.45,C_fresh:0.80,dry_matter:0.92,HI_range:[0.02,0.05],max_LAI:1.5,yield_national:0.003,yield_potential:0.008,alt_factor:0.30,frost_limit:-15,
+    varieties:{"Taliouine":{fw:0.01,GDD:1500,HI:0.03},"Generique":{fw:0.01,GDD:1500,HI:0.03}}},
+  lavande:{name:"Lavande",T_base:5,Kc_mid:0.55,LUE:0.65,k_ext:0.40,resp_frac:0.45,C_fresh:0.30,dry_matter:0.40,HI_range:[0.15,0.25],max_LAI:2.5,yield_national:2,yield_potential:5,alt_factor:0.15,frost_limit:-15,
+    varieties:{"Vraie":{fw:5,GDD:1800,HI:0.20},"Lavandin":{fw:8,GDD:1600,HI:0.22},"Generique":{fw:6,GDD:1700,HI:0.20}}},
+  rose_damas:{name:"Rose de Damas",T_base:5,Kc_mid:0.65,LUE:0.70,k_ext:0.45,resp_frac:0.45,C_fresh:0.15,dry_matter:0.25,HI_range:[0.10,0.20],max_LAI:3.0,yield_national:3,yield_potential:8,alt_factor:0.20,frost_limit:-12,
+    varieties:{"Kelaat M'gouna":{fw:4,GDD:1600,HI:0.15},"Generique":{fw:4,GDD:1600,HI:0.15}}},
+  romarin:{name:"Romarin",T_base:5,Kc_mid:0.50,LUE:0.60,k_ext:0.35,resp_frac:0.45,C_fresh:0.25,dry_matter:0.35,HI_range:[0.20,0.35],max_LAI:2.5,yield_national:3,yield_potential:8,alt_factor:0.10,frost_limit:-10,
+    varieties:{"Officinal":{fw:5,GDD:1400,HI:0.28},"Prostratus":{fw:4,GDD:1300,HI:0.25},"Generique":{fw:5,GDD:1350,HI:0.26}}},
+  thym:{name:"Thym",T_base:5,Kc_mid:0.50,LUE:0.55,k_ext:0.35,resp_frac:0.45,C_fresh:0.30,dry_matter:0.40,HI_range:[0.20,0.35],max_LAI:2.0,yield_national:2,yield_potential:5,alt_factor:0.10,frost_limit:-15,
+    varieties:{"Vulgaris":{fw:3,GDD:1200,HI:0.28},"Satureoides":{fw:2.5,GDD:1100,HI:0.30},"Generique":{fw:3,GDD:1150,HI:0.28}}},
+  geranium_rosat:{name:"Geranium rosat",T_base:8,Kc_mid:0.70,LUE:0.75,k_ext:0.45,resp_frac:0.40,C_fresh:0.10,dry_matter:0.20,HI_range:[0.15,0.25],max_LAI:3.0,yield_national:15,yield_potential:35,alt_factor:0.10,frost_limit:-2,
+    varieties:{"Bourbon":{fw:20,GDD:1800,HI:0.20},"Egypte":{fw:22,GDD:1700,HI:0.22},"Generique":{fw:20,GDD:1750,HI:0.20}}},
+  henne:{name:"Henne",T_base:15,Kc_mid:0.60,LUE:0.65,k_ext:0.40,resp_frac:0.45,C_fresh:0.25,dry_matter:0.90,HI_range:[0.20,0.35],max_LAI:3.0,yield_national:1.5,yield_potential:4,alt_factor:0.05,frost_limit:0,
+    varieties:{"Local Zagora":{fw:3,GDD:3000,HI:0.28},"Generique":{fw:3,GDD:3000,HI:0.26}}},
+  stevia:{name:"Stevia",annual:true,ref_density:80000,T_base:10,Kc_mid:0.80,LUE:0.85,k_ext:0.50,resp_frac:0.35,C_fresh:0.10,dry_matter:0.20,HI_range:[0.35,0.50],max_LAI:3.5,yield_national:4,yield_potential:10,alt_factor:0,frost_limit:0,
+    varieties:{"Rebaudiana":{fw:10,GDD:1600,HI:0.42},"Generique":{fw:10,GDD:1600,HI:0.40}}},
+  fenugrec:{name:"Fenugrec",annual:true,ref_density:400000,T_base:5,Kc_mid:0.85,LUE:0.80,k_ext:0.45,resp_frac:0.38,C_fresh:0.35,dry_matter:0.88,HI_range:[0.25,0.40],max_LAI:2.5,yield_national:1.5,yield_potential:3.5,alt_factor:0,frost_limit:-5,
+    varieties:{"Local":{fw:0.03,GDD:1400,HI:0.32},"Generique":{fw:0.03,GDD:1400,HI:0.30}}},
+  cumin:{name:"Cumin",annual:true,ref_density:600000,T_base:8,Kc_mid:0.80,LUE:0.70,k_ext:0.40,resp_frac:0.40,C_fresh:0.40,dry_matter:0.92,HI_range:[0.20,0.35],max_LAI:2.0,yield_national:0.5,yield_potential:1.5,alt_factor:0.10,frost_limit:-3,
+    varieties:{"Local Rissani":{fw:0.02,GDD:1500,HI:0.28},"Generique":{fw:0.02,GDD:1500,HI:0.26}}},
+
+  /* === GRANDES CULTURES SUPPLEMENTAIRES (annual=true) === */
+  soja:{name:"Soja",annual:true,ref_density:400000,T_base:10,Kc_mid:1.15,LUE:1.10,k_ext:0.55,resp_frac:0.35,C_fresh:0.38,dry_matter:0.90,HI_range:[0.30,0.45],max_LAI:4.5,yield_national:2.0,yield_potential:4.5,alt_factor:0,frost_limit:0,
+    varieties:{"Williams":{fw:0.15,GDD:2200,HI:0.38},"Generique":{fw:0.15,GDD:2200,HI:0.36}}},
+  luzerne:{name:"Luzerne",annual:true,ref_density:20000000,T_base:5,Kc_mid:1.15,LUE:1.20,k_ext:0.55,resp_frac:0.30,C_fresh:0.08,dry_matter:0.22,HI_range:[0.45,0.60],max_LAI:5.0,yield_national:10,yield_potential:25,alt_factor:0,frost_limit:-15,
+    varieties:{"Demnat":{fw:0.002,GDD:800,HI:0.52},"Africaine":{fw:0.002,GDD:750,HI:0.55},"Generique":{fw:0.002,GDD:780,HI:0.53}}},
+  chanvre_ind:{name:"Chanvre industriel",annual:true,ref_density:150000,T_base:6,Kc_mid:1.00,LUE:1.30,k_ext:0.60,resp_frac:0.30,C_fresh:0.30,dry_matter:0.85,HI_range:[0.25,0.40],max_LAI:5.0,yield_national:1.5,yield_potential:4.0,alt_factor:0,frost_limit:-3,
+    varieties:{"Futura 75":{fw:0.02,GDD:2000,HI:0.32},"Generique":{fw:0.02,GDD:2000,HI:0.30}}},
+  sorgho:{name:"Sorgho",annual:true,ref_density:150000,T_base:10,Kc_mid:1.10,LUE:1.50,k_ext:0.60,resp_frac:0.30,C_fresh:0.35,dry_matter:0.88,HI_range:[0.30,0.45],max_LAI:5.0,yield_national:2.5,yield_potential:8.0,alt_factor:0,frost_limit:0,
+    varieties:{"Grain local":{fw:0.03,GDD:2200,HI:0.38},"Fourrager":{fw:0.03,GDD:1800,HI:0.35},"Generique":{fw:0.03,GDD:2000,HI:0.36}}},
+  quinoa:{name:"Quinoa",annual:true,ref_density:300000,T_base:3,Kc_mid:0.90,LUE:0.85,k_ext:0.45,resp_frac:0.35,C_fresh:0.40,dry_matter:0.88,HI_range:[0.25,0.40],max_LAI:3.0,yield_national:1.5,yield_potential:4.0,alt_factor:0.10,frost_limit:-5,
+    varieties:{"Titicaca":{fw:0.003,GDD:1400,HI:0.32},"Regalona":{fw:0.003,GDD:1300,HI:0.35},"Generique":{fw:0.003,GDD:1350,HI:0.33}}},
+  colza:{name:"Colza",annual:true,ref_density:600000,T_base:5,Kc_mid:1.10,LUE:1.10,k_ext:0.55,resp_frac:0.32,C_fresh:0.42,dry_matter:0.92,HI_range:[0.25,0.35],max_LAI:4.5,yield_national:1.5,yield_potential:4.0,alt_factor:0,frost_limit:-10,
+    varieties:{"DK Exception":{fw:0.004,GDD:1800,HI:0.30},"Generique":{fw:0.004,GDD:1800,HI:0.28}}},
+  sesame:{name:"Sesame",annual:true,ref_density:300000,T_base:15,Kc_mid:0.90,LUE:0.85,k_ext:0.45,resp_frac:0.38,C_fresh:0.45,dry_matter:0.95,HI_range:[0.20,0.35],max_LAI:3.0,yield_national:0.5,yield_potential:1.8,alt_factor:0,frost_limit:5,
+    varieties:{"Local blanc":{fw:0.003,GDD:2200,HI:0.28},"Generique":{fw:0.003,GDD:2200,HI:0.26}}},
+  arachide:{name:"Arachide",annual:true,ref_density:180000,T_base:12,Kc_mid:1.05,LUE:1.00,k_ext:0.50,resp_frac:0.35,C_fresh:0.40,dry_matter:0.92,HI_range:[0.30,0.45],max_LAI:3.5,yield_national:1.5,yield_potential:4.0,alt_factor:0,frost_limit:2,
+    varieties:{"Valencia":{fw:1.5,GDD:2000,HI:0.38},"Generique":{fw:1.5,GDD:2000,HI:0.36}}},
+  triticale:{name:"Triticale",annual:true,ref_density:3500000,T_base:0,Kc_mid:1.15,LUE:1.35,k_ext:0.55,resp_frac:0.30,C_fresh:0.40,dry_matter:0.87,HI_range:[0.35,0.48],max_LAI:4.5,yield_national:2.0,yield_potential:6.0,alt_factor:0,frost_limit:-20,
+    varieties:{"Juanillo":{fw:0.04,GDD:1700,HI:0.42},"Generique":{fw:0.04,GDD:1700,HI:0.40}}},
+  avoine:{name:"Avoine",annual:true,ref_density:3500000,T_base:0,Kc_mid:1.10,LUE:1.25,k_ext:0.50,resp_frac:0.30,C_fresh:0.38,dry_matter:0.88,HI_range:[0.30,0.45],max_LAI:4.0,yield_national:1.5,yield_potential:5.0,alt_factor:0,frost_limit:-20,
+    varieties:{"Locale":{fw:0.03,GDD:1500,HI:0.38},"Generique":{fw:0.03,GDD:1500,HI:0.36}}},
+
+  /* === ARBRES FRUITIERS SUPPLEMENTAIRES === */
+  pistachier:{name:"Pistachier",T_base:7,Kc_mid:0.65,LUE:0.75,k_ext:0.45,resp_frac:0.50,C_fresh:0.45,dry_matter:0.95,HI_range:[0.08,0.18],max_LAI:3.0,yield_national:1.5,yield_potential:5.0,alt_factor:0.25,frost_limit:-15,
+    varieties:{"Kerman":{fw:1.5,GDD:3200,HI:0.14},"Mateur":{fw:1.2,GDD:3000,HI:0.15},"Generique":{fw:1.3,GDD:3100,HI:0.14}}},
+  kaki:{name:"Kaki",T_base:8,Kc_mid:0.70,LUE:0.85,k_ext:0.50,resp_frac:0.45,C_fresh:0.12,dry_matter:0.20,HI_range:[0.25,0.40],max_LAI:4.0,yield_national:10,yield_potential:25,alt_factor:0.15,frost_limit:-10,
+    varieties:{"Hachiya":{fw:250,GDD:2800,HI:0.32},"Fuyu":{fw:200,GDD:2600,HI:0.35},"Generique":{fw:220,GDD:2700,HI:0.33}}},
+  aloe_vera:{name:"Aloe vera",T_base:12,Kc_mid:0.35,LUE:0.50,k_ext:0.30,resp_frac:0.50,C_fresh:0.01,dry_matter:0.03,HI_range:[0.50,0.70],max_LAI:2.0,yield_national:30,yield_potential:80,alt_factor:0,frost_limit:0,
+    varieties:{"Barbadensis":{fw:600,GDD:2500,HI:0.60},"Generique":{fw:600,GDD:2500,HI:0.58}}},
+  moringa:{name:"Moringa",T_base:15,Kc_mid:0.60,LUE:0.90,k_ext:0.50,resp_frac:0.40,C_fresh:0.10,dry_matter:0.22,HI_range:[0.30,0.50],max_LAI:3.5,yield_national:5,yield_potential:15,alt_factor:0,frost_limit:2,
+    varieties:{"Oleifera":{fw:50,GDD:2800,HI:0.40},"Generique":{fw:50,GDD:2800,HI:0.38}}},
+  caprier:{name:"Caprier",T_base:10,Kc_mid:0.40,LUE:0.55,k_ext:0.35,resp_frac:0.50,C_fresh:0.15,dry_matter:0.20,HI_range:[0.15,0.30],max_LAI:2.0,yield_national:3,yield_potential:8,alt_factor:0.10,frost_limit:-5,
+    varieties:{"Spinosa":{fw:5,GDD:2000,HI:0.22},"Local Safi":{fw:4,GDD:1800,HI:0.25},"Generique":{fw:4.5,GDD:1900,HI:0.23}}},
+  jujubier:{name:"Jujubier",T_base:10,Kc_mid:0.55,LUE:0.70,k_ext:0.40,resp_frac:0.45,C_fresh:0.15,dry_matter:0.25,HI_range:[0.20,0.35],max_LAI:3.0,yield_national:8,yield_potential:20,alt_factor:0.10,frost_limit:-8,
+    varieties:{"Li":{fw:30,GDD:2400,HI:0.28},"Local":{fw:15,GDD:2200,HI:0.30},"Generique":{fw:20,GDD:2300,HI:0.28}}},
+  paulownia:{name:"Paulownia",T_base:8,Kc_mid:0.70,LUE:1.20,k_ext:0.55,resp_frac:0.40,C_fresh:0.40,dry_matter:0.50,HI_range:[0.10,0.20],max_LAI:5.0,yield_national:15,yield_potential:40,alt_factor:0.10,frost_limit:-10,
+    varieties:{"Tomentosa":{fw:0,GDD:2600,HI:0.15},"Elongata":{fw:0,GDD:2400,HI:0.18},"Generique":{fw:0,GDD:2500,HI:0.16}}},
+  neflier_japon:{name:"Neflier du Japon",T_base:8,Kc_mid:0.65,LUE:0.80,k_ext:0.50,resp_frac:0.45,C_fresh:0.10,dry_matter:0.15,HI_range:[0.20,0.35],max_LAI:4.0,yield_national:8,yield_potential:20,alt_factor:0.15,frost_limit:-8,
+    varieties:{"Tanaka":{fw:40,GDD:2000,HI:0.28},"Algerie":{fw:35,GDD:1800,HI:0.30},"Generique":{fw:38,GDD:1900,HI:0.28}}},
+
+  /* === AGRUMES SUPPLEMENTAIRES === */
+  oranger:{name:"Oranger",T_base:13,Kc_mid:0.70,LUE:0.90,k_ext:0.60,resp_frac:0.45,C_fresh:0.10,dry_matter:0.14,HI_range:[0.35,0.50],max_LAI:5.0,yield_national:20,yield_potential:45,alt_factor:0.10,frost_limit:-3,
+    varieties:{"Maroc Late":{fw:200,GDD:3500,HI:0.42},"Navel":{fw:220,GDD:3200,HI:0.40},"Sanguinelli":{fw:180,GDD:3000,HI:0.44},"Generique":{fw:200,GDD:3300,HI:0.42}}},
+  mandarinier:{name:"Mandarinier",T_base:13,Kc_mid:0.65,LUE:0.88,k_ext:0.58,resp_frac:0.45,C_fresh:0.10,dry_matter:0.14,HI_range:[0.35,0.50],max_LAI:4.5,yield_national:18,yield_potential:40,alt_factor:0.10,frost_limit:-3,
+    varieties:{"Nadorcott":{fw:90,GDD:3000,HI:0.44},"Clementine Nour":{fw:80,GDD:2800,HI:0.46},"Ortanique":{fw:120,GDD:3200,HI:0.42},"Generique":{fw:95,GDD:3000,HI:0.44}}},
+  citronnier:{name:"Citronnier",T_base:13,Kc_mid:0.65,LUE:0.85,k_ext:0.55,resp_frac:0.45,C_fresh:0.08,dry_matter:0.12,HI_range:[0.35,0.50],max_LAI:4.5,yield_national:18,yield_potential:40,alt_factor:0.10,frost_limit:-2,
+    varieties:{"Eureka":{fw:120,GDD:3200,HI:0.42},"Verna":{fw:150,GDD:3400,HI:0.40},"Generique":{fw:130,GDD:3300,HI:0.42}}},
+  pomelo:{name:"Pomelo",T_base:13,Kc_mid:0.70,LUE:0.90,k_ext:0.60,resp_frac:0.45,C_fresh:0.08,dry_matter:0.12,HI_range:[0.35,0.50],max_LAI:5.0,yield_national:22,yield_potential:50,alt_factor:0.10,frost_limit:-2,
+    varieties:{"Star Ruby":{fw:350,GDD:3600,HI:0.42},"Marsh":{fw:400,GDD:3800,HI:0.40},"Generique":{fw:370,GDD:3700,HI:0.42}}},
+  kumquat:{name:"Kumquat",T_base:10,Kc_mid:0.60,LUE:0.80,k_ext:0.50,resp_frac:0.45,C_fresh:0.12,dry_matter:0.18,HI_range:[0.30,0.45],max_LAI:3.5,yield_national:8,yield_potential:18,alt_factor:0.15,frost_limit:-5,
+    varieties:{"Nagami":{fw:15,GDD:2800,HI:0.38},"Marumi":{fw:12,GDD:2600,HI:0.40},"Generique":{fw:13,GDD:2700,HI:0.38}}},
+  lime:{name:"Lime / Limettier",T_base:14,Kc_mid:0.65,LUE:0.85,k_ext:0.55,resp_frac:0.45,C_fresh:0.08,dry_matter:0.10,HI_range:[0.35,0.50],max_LAI:4.5,yield_national:15,yield_potential:35,alt_factor:0.10,frost_limit:-1,
+    varieties:{"Tahiti":{fw:70,GDD:3000,HI:0.42},"Mexican":{fw:30,GDD:2800,HI:0.45},"Generique":{fw:50,GDD:2900,HI:0.43}}},
+
+  /* === ELEVAGE & AQUACULTURE SUPPLEMENTAIRES (livestock=true) === */
+  lapin:{name:"Lapin",livestock:true,T_base:10,Kc_mid:0,LUE:0,k_ext:0,resp_frac:0,C_fresh:0,dry_matter:0,HI_range:[0,0],max_LAI:0,yield_national:0,yield_potential:0,alt_factor:0,frost_limit:0,
+    unit:"tete",prod_type:"viande",
+    feed_kg_day:0.15,water_L_day:0.5,growth_g_day:35,slaughter_weight:2.5,carcass_pct:0.58,
+    gestation:31,portees_year:6,petits_portee:8,age_slaughter:3,price_unit:35,price_animal:80,
+    varieties:{"Neo-Zelandais":{fw:0,GDD:0,HI:0,weight:2.8,price:38},"Californien":{fw:0,GDD:0,HI:0,weight:2.5,price:35},"Local":{fw:0,GDD:0,HI:0,weight:2.0,price:30},"Generique":{fw:0,GDD:0,HI:0,weight:2.5,price:35}}},
+  apiculture:{name:"Apiculture",livestock:true,T_base:10,Kc_mid:0,LUE:0,k_ext:0,resp_frac:0,C_fresh:0,dry_matter:0,HI_range:[0,0],max_LAI:0,yield_national:0,yield_potential:0,alt_factor:0,frost_limit:-5,
+    unit:"ruche",prod_type:"miel",
+    honey_kg_year:12,wax_kg_year:0.5,pollen_kg_year:2,price_honey:120,price_wax:200,price_pollen:250,
+    colonies_start:10,swarm_rate:0.3,mortality_pct:10,price_ruche:800,
+    varieties:{"Saharienne":{fw:0,GDD:0,HI:0,honey:15,price:150},"Intermissa":{fw:0,GDD:0,HI:0,honey:10,price:100},"Locale Atlas":{fw:0,GDD:0,HI:0,honey:12,price:120},"Generique":{fw:0,GDD:0,HI:0,honey:12,price:120}}},
+  truite:{name:"Truite",livestock:true,T_base:5,Kc_mid:0,LUE:0,k_ext:0,resp_frac:0,C_fresh:0,dry_matter:0,HI_range:[0,0],max_LAI:0,yield_national:0,yield_potential:0,alt_factor:0,frost_limit:0,
+    unit:"bassin",prod_type:"poisson",
+    feed_IC:1.3,water_L_kg:5000,growth_g_day:3,harvest_weight:0.35,density_m3:25,
+    cycle_months:12,mortality_pct:10,price_unit:50,price_alevin:3,
+    varieties:{"Arc-en-ciel":{fw:0,GDD:0,HI:0,weight:0.4,price:55},"Fario":{fw:0,GDD:0,HI:0,weight:0.3,price:60},"Generique":{fw:0,GDD:0,HI:0,weight:0.35,price:50}}},
+  heliciculture:{name:"Heliciculture",livestock:true,T_base:10,Kc_mid:0,LUE:0,k_ext:0,resp_frac:0,C_fresh:0,dry_matter:0,HI_range:[0,0],max_LAI:0,yield_national:0,yield_potential:0,alt_factor:0,frost_limit:0,
+    unit:"parc",prod_type:"escargot",
+    density_m2:100,cycles_year:2,harvest_weight:0.012,feed_kg_day:0.01,
+    mortality_pct:20,price_unit:80,price_naissain:15,
+    varieties:{"Helix aspersa":{fw:0,GDD:0,HI:0,weight:0.015,price:90},"Petit-gris":{fw:0,GDD:0,HI:0,weight:0.010,price:70},"Generique":{fw:0,GDD:0,HI:0,weight:0.012,price:80}}},
+  dindon:{name:"Dindon",livestock:true,T_base:15,Kc_mid:0,LUE:0,k_ext:0,resp_frac:0,C_fresh:0,dry_matter:0,HI_range:[0,0],max_LAI:0,yield_national:0,yield_potential:0,alt_factor:0,frost_limit:2,
+    unit:"sujet",prod_type:"viande",
+    feed_kg_total:15,water_L_day:0.6,growth_g_day:80,slaughter_weight:8.0,carcass_pct:0.75,
+    cycles_year:3,duration_days:90,mortality_pct:6,price_unit:40,price_poussin:12,
+    varieties:{"Bronze":{fw:0,GDD:0,HI:0,weight:10,IC:2.8},"Blanc large":{fw:0,GDD:0,HI:0,weight:12,IC:2.6},"Local/Beldi":{fw:0,GDD:0,HI:0,weight:6,IC:3.5},"Generique":{fw:0,GDD:0,HI:0,weight:8,IC:3.0}}},
+  dromadaire:{name:"Dromadaire",livestock:true,T_base:15,Kc_mid:0,LUE:0,k_ext:0,resp_frac:0,C_fresh:0,dry_matter:0,HI_range:[0,0],max_LAI:0,yield_national:0,yield_potential:0,alt_factor:0,frost_limit:-5,
+    unit:"tete",prod_type:"mixte",
+    feed_kg_day:8,water_L_day:20,milk_L_day:5,lactation_days:365,slaughter_weight:250,
+    gestation:390,age_prod:[4,25],price_milk:15,price_meat:45,price_animal:25000,
+    varieties:{"Marmouri":{fw:0,GDD:0,HI:0,milk:8,price:18},"Guerzni":{fw:0,GDD:0,HI:0,milk:4,price:12},"Sahraoui":{fw:0,GDD:0,HI:0,milk:6,price:15},"Generique":{fw:0,GDD:0,HI:0,milk:5,price:15}}},
+
+  /* === COMPLEMENT — MARAICHERES === */
+  petit_pois:{name:"Petit pois",annual:true,ref_density:800000,T_base:4,Kc_mid:1.05,LUE:0.95,k_ext:0.50,resp_frac:0.35,C_fresh:0.20,dry_matter:0.25,HI_range:[0.40,0.55],max_LAI:3.5,yield_national:5,yield_potential:12,alt_factor:0,frost_limit:-8,
+    varieties:{"Merveille Kelvedon":{fw:8,GDD:1200,HI:0.48},"Generique":{fw:8,GDD:1200,HI:0.46}}},
+  mais_doux:{name:"Mais doux",annual:true,ref_density:70000,T_base:10,Kc_mid:1.15,LUE:1.50,k_ext:0.60,resp_frac:0.30,C_fresh:0.10,dry_matter:0.25,HI_range:[0.40,0.55],max_LAI:5.0,yield_national:10,yield_potential:25,alt_factor:0,frost_limit:0,
+    varieties:{"Golden Bantam":{fw:300,GDD:1800,HI:0.48},"Generique":{fw:300,GDD:1800,HI:0.46}}},
+  cornichon:{name:"Cornichon",annual:true,ref_density:25000,T_base:12,Kc_mid:1.00,LUE:1.05,k_ext:0.55,resp_frac:0.35,C_fresh:0.03,dry_matter:0.04,HI_range:[0.50,0.65],max_LAI:3.5,yield_national:15,yield_potential:30,alt_factor:0,frost_limit:2,
+    varieties:{"Vert Petit Paris":{fw:30,GDD:1300,HI:0.58},"Generique":{fw:30,GDD:1300,HI:0.56}}},
+  patate_douce:{name:"Patate douce",annual:true,ref_density:40000,T_base:15,Kc_mid:1.05,LUE:1.10,k_ext:0.55,resp_frac:0.35,C_fresh:0.06,dry_matter:0.30,HI_range:[0.55,0.70],max_LAI:4.0,yield_national:15,yield_potential:35,alt_factor:0,frost_limit:5,
+    varieties:{"Beauregard":{fw:300,GDD:2200,HI:0.62},"Locale":{fw:250,GDD:2000,HI:0.65},"Generique":{fw:280,GDD:2100,HI:0.63}}},
+  manioc:{name:"Manioc",annual:true,ref_density:10000,T_base:15,Kc_mid:0.80,LUE:0.90,k_ext:0.50,resp_frac:0.40,C_fresh:0.06,dry_matter:0.35,HI_range:[0.50,0.65],max_LAI:3.5,yield_national:10,yield_potential:25,alt_factor:0,frost_limit:5,
+    varieties:{"Local":{fw:1000,GDD:3500,HI:0.58},"Generique":{fw:1000,GDD:3500,HI:0.56}}},
+  topinambour:{name:"Topinambour",annual:true,ref_density:40000,T_base:5,Kc_mid:0.95,LUE:1.00,k_ext:0.50,resp_frac:0.35,C_fresh:0.08,dry_matter:0.20,HI_range:[0.55,0.70],max_LAI:4.0,yield_national:20,yield_potential:40,alt_factor:0,frost_limit:-15,
+    varieties:{"Violet Rennes":{fw:80,GDD:1800,HI:0.62},"Generique":{fw:80,GDD:1800,HI:0.60}}},
+
+  /* === COMPLEMENT — AROMATIQUES & INDUSTRIELLES === */
+  nigelle:{name:"Nigelle (Habba Sawda)",annual:true,ref_density:500000,T_base:8,Kc_mid:0.75,LUE:0.70,k_ext:0.40,resp_frac:0.40,C_fresh:0.40,dry_matter:0.92,HI_range:[0.20,0.35],max_LAI:2.0,yield_national:0.8,yield_potential:2.0,alt_factor:0,frost_limit:-5,
+    varieties:{"Locale":{fw:0.003,GDD:1400,HI:0.28},"Generique":{fw:0.003,GDD:1400,HI:0.26}}},
+  anis:{name:"Anis vert",annual:true,ref_density:600000,T_base:8,Kc_mid:0.80,LUE:0.70,k_ext:0.40,resp_frac:0.38,C_fresh:0.40,dry_matter:0.90,HI_range:[0.20,0.30],max_LAI:2.0,yield_national:0.6,yield_potential:1.5,alt_factor:0,frost_limit:-3,
+    varieties:{"Local":{fw:0.002,GDD:1500,HI:0.25},"Generique":{fw:0.002,GDD:1500,HI:0.24}}},
+  carvi:{name:"Carvi",annual:true,ref_density:500000,T_base:5,Kc_mid:0.80,LUE:0.70,k_ext:0.40,resp_frac:0.38,C_fresh:0.38,dry_matter:0.90,HI_range:[0.20,0.32],max_LAI:2.0,yield_national:0.8,yield_potential:2.0,alt_factor:0.10,frost_limit:-10,
+    varieties:{"Local Atlas":{fw:0.003,GDD:1600,HI:0.26},"Generique":{fw:0.003,GDD:1600,HI:0.25}}},
+  verveine:{name:"Verveine citronnelle",T_base:8,Kc_mid:0.60,LUE:0.70,k_ext:0.40,resp_frac:0.42,C_fresh:0.15,dry_matter:0.25,HI_range:[0.20,0.35],max_LAI:2.5,yield_national:3,yield_potential:8,alt_factor:0.10,frost_limit:-5,
+    varieties:{"Locale":{fw:5,GDD:1400,HI:0.28},"Generique":{fw:5,GDD:1400,HI:0.26}}},
+  camomille:{name:"Camomille",annual:true,ref_density:1000000,T_base:5,Kc_mid:0.75,LUE:0.70,k_ext:0.40,resp_frac:0.35,C_fresh:0.12,dry_matter:0.20,HI_range:[0.20,0.35],max_LAI:2.5,yield_national:2,yield_potential:5,alt_factor:0,frost_limit:-10,
+    varieties:{"Romaine":{fw:3,GDD:1000,HI:0.28},"Generique":{fw:3,GDD:1000,HI:0.26}}},
+  origan:{name:"Origan",T_base:5,Kc_mid:0.55,LUE:0.60,k_ext:0.38,resp_frac:0.42,C_fresh:0.25,dry_matter:0.35,HI_range:[0.20,0.35],max_LAI:2.0,yield_national:2.5,yield_potential:6,alt_factor:0.10,frost_limit:-12,
+    varieties:{"Compactum":{fw:4,GDD:1200,HI:0.28},"Generique":{fw:4,GDD:1200,HI:0.26}}},
+  sauge:{name:"Sauge",T_base:5,Kc_mid:0.55,LUE:0.60,k_ext:0.38,resp_frac:0.42,C_fresh:0.20,dry_matter:0.30,HI_range:[0.20,0.35],max_LAI:2.5,yield_national:3,yield_potential:7,alt_factor:0.10,frost_limit:-10,
+    varieties:{"Officinale":{fw:5,GDD:1300,HI:0.28},"Generique":{fw:5,GDD:1300,HI:0.26}}},
+
+  /* === COMPLEMENT — ARBRES & CULTURES SPECIALES === */
+  murier:{name:"Murier",T_base:8,Kc_mid:0.65,LUE:0.85,k_ext:0.50,resp_frac:0.45,C_fresh:0.10,dry_matter:0.15,HI_range:[0.25,0.40],max_LAI:4.0,yield_national:8,yield_potential:20,alt_factor:0.10,frost_limit:-15,
+    varieties:{"Noir":{fw:6,GDD:1800,HI:0.32},"Blanc":{fw:5,GDD:1600,HI:0.35},"Generique":{fw:5.5,GDD:1700,HI:0.33}}},
+  manguier:{name:"Manguier",T_base:15,Kc_mid:0.80,LUE:0.90,k_ext:0.60,resp_frac:0.45,C_fresh:0.10,dry_matter:0.18,HI_range:[0.20,0.35],max_LAI:5.0,yield_national:8,yield_potential:20,alt_factor:0,frost_limit:2,
+    varieties:{"Kent":{fw:500,GDD:4000,HI:0.28},"Keitt":{fw:600,GDD:4200,HI:0.26},"Generique":{fw:550,GDD:4100,HI:0.27}}},
+  papayer:{name:"Papayer",T_base:15,Kc_mid:0.85,LUE:0.95,k_ext:0.55,resp_frac:0.40,C_fresh:0.08,dry_matter:0.12,HI_range:[0.30,0.50],max_LAI:4.0,yield_national:20,yield_potential:50,alt_factor:0,frost_limit:5,
+    varieties:{"Solo":{fw:400,GDD:3500,HI:0.40},"Generique":{fw:400,GDD:3500,HI:0.38}}},
+  goyavier:{name:"Goyavier",T_base:12,Kc_mid:0.75,LUE:0.85,k_ext:0.55,resp_frac:0.45,C_fresh:0.08,dry_matter:0.15,HI_range:[0.25,0.40],max_LAI:4.0,yield_national:10,yield_potential:25,alt_factor:0,frost_limit:0,
+    varieties:{"Locale":{fw:150,GDD:3000,HI:0.32},"Generique":{fw:150,GDD:3000,HI:0.30}}},
+  fruit_passion:{name:"Fruit de la passion",T_base:14,Kc_mid:0.80,LUE:0.85,k_ext:0.50,resp_frac:0.42,C_fresh:0.10,dry_matter:0.16,HI_range:[0.25,0.40],max_LAI:4.0,yield_national:8,yield_potential:20,alt_factor:0,frost_limit:2,
+    varieties:{"Pourpre":{fw:40,GDD:3200,HI:0.32},"Generique":{fw:40,GDD:3200,HI:0.30}}},
+  canne_sucre:{name:"Canne a sucre",annual:true,ref_density:15000,T_base:15,Kc_mid:1.25,LUE:1.80,k_ext:0.65,resp_frac:0.25,C_fresh:0.05,dry_matter:0.28,HI_range:[0.60,0.80],max_LAI:6.0,yield_national:60,yield_potential:120,alt_factor:0,frost_limit:0,
+    varieties:{"NCO 376":{fw:1500,GDD:4500,HI:0.70},"Generique":{fw:1500,GDD:4500,HI:0.68}}},
+  tabac:{name:"Tabac",annual:true,ref_density:20000,T_base:10,Kc_mid:1.10,LUE:1.10,k_ext:0.55,resp_frac:0.35,C_fresh:0.15,dry_matter:0.20,HI_range:[0.35,0.50],max_LAI:4.5,yield_national:2.5,yield_potential:5.0,alt_factor:0,frost_limit:0,
+    varieties:{"Virginia":{fw:50,GDD:2200,HI:0.42},"Burley":{fw:45,GDD:2000,HI:0.45},"Generique":{fw:48,GDD:2100,HI:0.43}}},
+  coton:{name:"Coton",annual:true,ref_density:80000,T_base:12,Kc_mid:1.15,LUE:1.00,k_ext:0.55,resp_frac:0.35,C_fresh:0.40,dry_matter:0.90,HI_range:[0.30,0.45],max_LAI:4.0,yield_national:1.5,yield_potential:4.0,alt_factor:0,frost_limit:2,
+    varieties:{"Locale":{fw:4,GDD:2800,HI:0.38},"Generique":{fw:4,GDD:2800,HI:0.36}}}
 };
 
 var REGIONS={
@@ -5295,7 +5606,7 @@ loadHistory();
 loadParcelles();
 
 /* V9 Layout: init sidebar + dashboard home */
-if(typeof renderSidebar==="function")renderSidebar();
+if(typeof buildSideNav==="function")buildSideNav();
 if(typeof renderDashboardHome==="function")renderDashboardHome();
 /* Show ERP tabs bar on mobile only */
 (function(){var tb=document.querySelector(".erp-tabs-bar");if(tb&&window.innerWidth<=960)tb.style.display="flex";})();
@@ -5978,8 +6289,8 @@ calculate=function(){
   if(typeof applySeveMode==="function")applySeveMode();
 
   /* V9 Layout hooks */
-  if(typeof updateSidebarStatus==="function")updateSidebarStatus();
-  if(typeof updateKPIPanel==="function")updateKPIPanel();
+  if(typeof updateSideNavStatus==="function")updateSideNavStatus();
+  if(typeof fillKpiPanel==="function")fillKpiPanel();
   if(typeof renderExecSummary==="function")renderExecSummary();
   if(typeof renderScenarios3Col==="function")renderScenarios3Col();
   if(typeof injectPrintCSS==="function")injectPrintCSS();
@@ -13736,7 +14047,7 @@ function switchERPModule(mod){
   var outSec=document.getElementById("outputSection");
   if(outSec&&mod!=="seve")outSec.classList.add("hidden");
   /* Update sidebar */
-  if(typeof renderSidebar==="function")renderSidebar();
+  if(typeof buildSideNav==="function")buildSideNav();
   /* Close mobile sidebar */
   var sb=document.getElementById("sidebarNav");
   if(sb)sb.classList.remove("open");
@@ -14731,7 +15042,7 @@ switchERPModule=function(mod){_origSwitch(mod);onERPTabSwitch();};
 /* ---- SIDEBAR NAVIGATION ---- */
 /* sidebarSections & activeSideSection declared at top of script (hoisting fix) */
 
-function renderSidebar(){
+function buildSideNav(){
   var el=document.getElementById("sidebarNav");
   if(!el)return;
   var h="<div class='sb-brand'>SEVE <span style='color:var(--accent2)'>AgTech</span> <span style='font-size:.55rem;color:var(--txt2)'>v9 ERP</span></div>";
@@ -14744,7 +15055,7 @@ function renderSidebar(){
     var s=sidebarSections[i];
     var act=activeSideSection===s.id?" sb-active":"";
     var badge=s.status==="done"?"<span class='sb-badge sb-done'>&#10003;</span>":s.status==="pending"?"<span class='sb-badge sb-pending'>&#9203;</span>":s.status==="locked"?"<span class='sb-badge sb-locked'>&#128274;</span>":"";
-    h+="<button class='sb-item"+act+"' onclick='navigateSection(\""+s.id+"\")'>"+
+    h+="<button class='sb-item"+act+"' onclick='scrollToSection(\""+s.id+"\")'>"+
       "<span class='sb-icon'>"+s.icon+"</span>"+
       "<span class='sb-label'>"+s.label+"</span>"+badge+"</button>";
   }
@@ -14756,11 +15067,11 @@ function renderSidebar(){
   el.innerHTML=h;
 }
 
-function navigateSection(id){
+function scrollToSection(id){
   activeSideSection=id;
   /* Switch to SEVE if needed */
   if(erpActiveModule!=="seve")switchERPModule("seve");
-  renderSidebar();
+  buildSideNav();
   /* Scroll to relevant section */
   var targets={
     dashboard:"dashboardHome",params:"seveInputs",biophys:"results",
@@ -14782,21 +15093,21 @@ function navigateSection(id){
       }
     }
   }
-  updateKPIPanel();
+  fillKpiPanel();
 }
 
 /* Update sidebar status after calculation */
-function updateSidebarStatus(){
+function updateSideNavStatus(){
   for(var i=0;i<sidebarSections.length;i++){
     var s=sidebarSections[i];
     if(s.id==="dashboard"||s.id==="params"||s.id==="parcelles"||s.id==="history")s.status="ready";
     else s.status=typeof lastCalc!=="undefined"&&lastCalc&&lastCalc.yieldNum?"done":"locked";
   }
-  renderSidebar();
+  buildSideNav();
 }
 
 /* ---- KPI PANEL (right) ---- */
-function updateKPIPanel(){
+function fillKpiPanel(){
   var el=document.getElementById("kpiPanel");
   if(!el)return;
   if(typeof lastCalc==="undefined"||!lastCalc||!lastCalc.yieldNum){
@@ -14875,50 +15186,139 @@ function computeFiabilite(){
   return Math.min(100,score);
 }
 
-/* ---- RADAR SVG 6 AXES ---- */
-function renderRadarSVG(){
+/* ---- RADAR SVG 6 AXES (hexagonal) ---- */
+/* Axes: Eau / Sol / Chaleur / Rentabilite / Securite / Durabilite */
+function buildRadarSVG(){
   if(typeof lastCalc==="undefined"||!lastCalc||!lastCalc.yieldNum)return "";
   var lc=lastCalc;
-  /* 6 axes normalized 0-1 */
+  /* Compute axis scores 0-1 */
+  var scoreEau=Math.min(1,lc.Ks||0.7);
+  var scoreSol=Math.min(1,(lc.soilQI||0.7));
+  var scoreChaleur=Math.min(1,lc.fT||0.8);
+  var scoreRent=Math.min(1,Math.max(0,(lc.margeNum||0)/200000+0.5));
+  var riskLvl=lc.riskLevel||"Moyen";
+  var scoreSecu=riskLvl==="Faible"?0.9:riskLvl==="Modere"||riskLvl==="Moyen"?0.6:riskLvl==="Eleve"?0.35:0.15;
+  var scoreDurab=Math.min(1,((lc.efficiency||60)/100*0.5)+((lc.liebig||0.8)*0.3)+(scoreEau*0.2));
   var axes=[
-    {l:"Eau",v:Math.min(1,lc.Ks||0.7)},
-    {l:"Temp",v:Math.min(1,lc.fT||0.8)},
-    {l:"Sol",v:Math.min(1,(lc.soilQI||0.7))},
-    {l:"NPK",v:Math.min(1,lc.liebig||0.8)},
-    {l:"Profit",v:Math.min(1,Math.max(0,(lc.margeNum||0)/200000+0.5))},
-    {l:"Rendt",v:Math.min(1,(lc.efficiency||60)/100)}
+    {l:"Eau",v:scoreEau,col:"#3b82f6"},
+    {l:"Sol",v:scoreSol,col:"#a855f7"},
+    {l:"Chaleur",v:scoreChaleur,col:"#f59e0b"},
+    {l:"Rentabilite",v:scoreRent,col:"#22c55e"},
+    {l:"Securite",v:scoreSecu,col:"#ef4444"},
+    {l:"Durabilite",v:scoreDurab,col:"#06b6d4"}
   ];
-  var cx=75,cy=75,R=55;
-  var svg="<svg viewBox='0 0 150 150' style='width:100%;max-width:200px;margin:12px auto;display:block'>";
-  /* Grid circles */
+  var cx=80,cy=80,R=58;
+  var svg="<svg viewBox='0 0 160 160' style='width:100%;max-width:220px;margin:12px auto;display:block'>";
+  /* Hexagonal grid rings */
   for(var r=1;r<=4;r++){
-    svg+="<circle cx='"+cx+"' cy='"+cy+"' r='"+(R*r/4)+"' fill='none' stroke='rgba(255,255,255,.06)' stroke-width='.5'/>";
+    var ring=[];
+    for(var i=0;i<6;i++){
+      var a=(Math.PI*2*i/6)-Math.PI/2;
+      ring.push((cx+Math.cos(a)*(R*r/4)).toFixed(1)+","+(cy+Math.sin(a)*(R*r/4)).toFixed(1));
+    }
+    svg+="<polygon points='"+ring.join(" ")+"' fill='none' stroke='rgba(255,255,255,.06)' stroke-width='.5'/>";
   }
-  /* Axes + labels */
-  var pts=[];var vals=[];
+  /* Axes lines + labels */
+  var vals=[];
   for(var i=0;i<6;i++){
     var angle=(Math.PI*2*i/6)-Math.PI/2;
     var ex=cx+Math.cos(angle)*R;
     var ey=cy+Math.sin(angle)*R;
     svg+="<line x1='"+cx+"' y1='"+cy+"' x2='"+ex+"' y2='"+ey+"' stroke='rgba(255,255,255,.08)' stroke-width='.5'/>";
-    var lx=cx+Math.cos(angle)*(R+12);
-    var ly=cy+Math.sin(angle)*(R+12);
-    svg+="<text x='"+lx+"' y='"+ly+"' fill='var(--txt2)' font-size='6' text-anchor='middle' dominant-baseline='middle'>"+axes[i].l+"</text>";
+    var lx=cx+Math.cos(angle)*(R+14);
+    var ly=cy+Math.sin(angle)*(R+14);
+    svg+="<text x='"+lx+"' y='"+ly+"' fill='"+axes[i].col+"' font-size='5.5' font-weight='600' text-anchor='middle' dominant-baseline='middle'>"+axes[i].l+"</text>";
     var vx=cx+Math.cos(angle)*(R*axes[i].v);
     var vy=cy+Math.sin(angle)*(R*axes[i].v);
-    vals.push(vx+","+vy);
+    vals.push(vx.toFixed(1)+","+vy.toFixed(1));
   }
   /* Value polygon */
-  svg+="<polygon points='"+vals.join(" ")+"' fill='rgba(68,170,221,.15)' stroke='var(--accent)' stroke-width='1.5'/>";
-  /* Value dots */
+  svg+="<polygon points='"+vals.join(" ")+"' fill='rgba(59,130,246,.12)' stroke='var(--accent)' stroke-width='1.5' stroke-linejoin='round'/>";
+  /* Value dots + score labels */
   for(var i=0;i<6;i++){
     var angle=(Math.PI*2*i/6)-Math.PI/2;
     var vx=cx+Math.cos(angle)*(R*axes[i].v);
     var vy=cy+Math.sin(angle)*(R*axes[i].v);
-    svg+="<circle cx='"+vx+"' cy='"+vy+"' r='2.5' fill='var(--accent)'/>";
+    svg+="<circle cx='"+vx.toFixed(1)+"' cy='"+vy.toFixed(1)+"' r='3' fill='"+axes[i].col+"' stroke='var(--bg)' stroke-width='1'/>";
   }
+  /* Center score */
+  var avg=0;for(var i=0;i<6;i++)avg+=axes[i].v;avg=Math.round(avg/6*100);
+  svg+="<text x='"+cx+"' y='"+(cy-4)+"' fill='var(--accent)' font-size='14' font-weight='900' text-anchor='middle'>"+avg+"</text>";
+  svg+="<text x='"+cx+"' y='"+(cy+6)+"' fill='var(--txt2)' font-size='5' text-anchor='middle'>/100</text>";
   svg+="</svg>";
   return svg;
+}
+/* Backward compat */
+var renderRadarSVG=buildRadarSVG;
+
+/* ---- VERDICT SYSTEM ---- */
+function buildVerdict(){
+  if(typeof lastCalc==="undefined"||!lastCalc||!lastCalc.yieldNum)return "";
+  var lc=lastCalc;
+  var marge=lc.margeNum||0;
+  var yld=lc.yieldNum||0;
+  var fiab=calcReliability();
+  var bottleneck=lc.bottleneck||"Non identifie";
+  var riskLvl=lc.riskLevel||"Moyen";
+
+  /* Determine verdict level */
+  var level,icon,label,col;
+  if(marge>=50000&&riskLvl==="Faible"){level="excellent";icon="&#128640;";label="Excellent — Projet tres porteur";col="var(--good)";}
+  else if(marge>=20000&&(riskLvl==="Faible"||riskLvl==="Moyen"||riskLvl==="Modere")){level="viable";icon="&#10003;";label="Viable — Culture rentable";col="var(--good)";}
+  else if(marge>=0){level="prudent";icon="&#9888;";label="Prudent — Rentabilite fragile";col="var(--warn)";}
+  else{level="risque";icon="&#10007;";label="Non rentable — A reconsiderer";col="var(--bad)";}
+
+  var h="<div style='margin-top:12px;padding:12px 16px;background:rgba("+(level==="risque"?"239,68,68":level==="prudent"?"245,158,11":"34,197,94")+",.06);border:1px solid rgba("+(level==="risque"?"239,68,68":level==="prudent"?"245,158,11":"34,197,94")+",.15);border-radius:10px'>";
+  h+="<div style='display:flex;align-items:center;gap:8px;margin-bottom:6px'>";
+  h+="<span style='font-size:1.2rem'>"+icon+"</span>";
+  h+="<strong style='color:"+col+";font-size:.88rem'>"+label+"</strong>";
+  h+="<span style='margin-left:auto;font-size:.65rem;padding:3px 8px;border-radius:6px;background:rgba(255,255,255,.05);color:var(--txt2)'>Fiabilite: "+fiab+"%</span>";
+  h+="</div>";
+  h+="<div style='font-size:.75rem;color:var(--txt2);line-height:1.5'>";
+  h+="Rendement estime <strong style='color:var(--txt)'>"+yld.toFixed(1)+" t/ha</strong> &bull; ";
+  h+="Marge nette <strong style='color:"+(marge>=0?"var(--good)":"var(--bad)")+"'>"+marge.toLocaleString()+" DH/ha</strong> &bull; ";
+  h+="Facteur limitant: <strong style='color:var(--txt)'>"+bottleneck+"</strong>";
+  h+="</div></div>";
+  return h;
+}
+
+/* ---- RELIABILITY CALCULATOR ---- */
+function calcReliability(){
+  return computeFiabilite();
+}
+
+/* ---- KPI MINI CARDS ---- */
+function buildKpiMini(lc,surface){
+  if(!lc||!lc.yieldNum)return "";
+  var marge=lc.margeNum||0;
+  var margeTotal=Math.round(marge*surface);
+  var van5=0;for(var y=1;y<=5;y++)van5+=margeTotal/Math.pow(1.08,y);van5=Math.round(van5);
+  var riskLvl=lc.riskLevel||"Moyen";
+  var riskCol=riskLvl==="Faible"?"var(--good)":riskLvl==="Eleve"||riskLvl==="Critique"?"var(--bad)":"var(--warn)";
+  var fiab=calcReliability();
+  var eff=lc.efficiency||0;
+  var waterUse=lc.waterUse||0;
+
+  var kpis=[
+    {icon:"&#128176;",l:"Marge nette/ha",v:marge.toLocaleString()+" DH",c:marge>=0?"var(--good)":"var(--bad)"},
+    {icon:"&#128200;",l:"Marge totale ("+surface+" ha)",v:margeTotal.toLocaleString()+" DH",c:margeTotal>=0?"var(--good)":"var(--bad)"},
+    {icon:"&#127919;",l:"VAN 5 ans (8%)",v:van5.toLocaleString()+" DH",c:van5>=0?"var(--good)":"var(--bad)"},
+    {icon:"&#9888;",l:"Risque global",v:riskLvl,c:riskCol},
+    {icon:"&#128202;",l:"Fiabilite",v:fiab+"%",c:fiab>=70?"var(--good)":fiab>=40?"var(--warn)":"var(--bad)"},
+    {icon:"&#9889;",l:"Efficience",v:eff+"%",c:eff>=70?"var(--good)":"var(--warn)"}
+  ];
+  if(waterUse>0)kpis.push({icon:"&#128167;",l:"Eau utilisee",v:waterUse.toLocaleString()+" m3/ha",c:"var(--accent)"});
+
+  var h="<div style='display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;margin-top:12px'>";
+  for(var i=0;i<kpis.length;i++){
+    var k=kpis[i];
+    h+="<div style='padding:10px 12px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:8px'>";
+    h+="<div style='font-size:.6rem;color:var(--txt2);display:flex;align-items:center;gap:4px'><span>"+k.icon+"</span> "+k.l+"</div>";
+    h+="<div style='font-size:.95rem;font-weight:800;color:"+k.c+";margin-top:4px'>"+k.v+"</div>";
+    h+="</div>";
+  }
+  h+="</div>";
+  return h;
 }
 
 /* ---- DASHBOARD HOME ---- */
@@ -15058,7 +15458,7 @@ function renderTopCultures(){
 function quickSelectCulture(spKey){
   var sp=document.getElementById("inSpecies");
   if(sp){sp.value=spKey;if(typeof onSpeciesChange==="function")onSpeciesChange();}
-  navigateSection("params");
+  scrollToSection("params");
 }
 
 /* Meteo locale simulee */
@@ -15108,54 +15508,43 @@ function renderExploitResume(){
     h+="<div style='font-size:.8rem;color:var(--txt2)'>"+(lastSim.yield||"—")+" &mdash; "+(lastSim.marge||"—")+"</div>";
   }else{
     h+="<div style='font-size:.85rem;color:var(--txt2)'>Aucune simulation</div>";
-    h+="<button class='btn-sm' onclick='navigateSection(\"params\")' style='margin-top:6px'>Demarrer</button>";
+    h+="<button class='btn-sm' onclick='scrollToSection(\"params\")' style='margin-top:6px'>Demarrer</button>";
   }
   h+="</div></div>";
   return h;
 }
 
 /* ---- EXECUTIVE SUMMARY (en tete des resultats) ---- */
-function renderExecSummary(){
+function buildExecSummary(){
   var el=document.getElementById("execSummaryContent");
   if(!el||typeof lastCalc==="undefined"||!lastCalc||!lastCalc.yieldNum)return;
   var lc=lastCalc;
   var yld=lc.yieldNum||0;
   var surface=parseFloat(document.getElementById("inSurface")?document.getElementById("inSurface").value:1)||1;
-  var marge=lc.margeNum||0;
-  var margeTotal=Math.round(marge*surface);
-  var van5=0;for(var y=1;y<=5;y++)van5+=margeTotal/Math.pow(1.08,y);van5=Math.round(van5);
-  var riskLvl=lc.riskLevel||"Moyen";
-  var riskCol=riskLvl==="Faible"?"var(--good)":riskLvl==="Eleve"||riskLvl==="Critique"?"var(--bad)":"var(--warn)";
-  var fiab=computeFiabilite();
-  var bottleneck=lc.bottleneck||"Non identifie";
 
   var h="<div class='exec-summary'>";
-  h+="<div style='display:grid;grid-template-columns:1fr 2fr 1fr;gap:16px;align-items:center'>";
-  /* Chiffre central */
-  h+="<div style='text-align:center'><div style='font-size:2.8rem;font-weight:900;color:var(--accent);line-height:1'>"+yld.toFixed(1)+"</div>";
-  h+="<div style='font-size:.8rem;color:var(--txt2)'>t/ha</div>";
-  h+="<div style='font-size:.72rem;color:var(--txt2);margin-top:4px'>"+(lc.species||"")+"</div>";
-  h+="<div style='font-size:.65rem;color:var(--txt2)'>"+(lc.region||"")+"</div></div>";
-  /* KPIs */
-  h+="<div style='display:grid;grid-template-columns:1fr 1fr;gap:8px'>";
-  h+="<div style='padding:8px;background:rgba(255,255,255,.02);border-radius:8px'><div style='font-size:.6rem;color:var(--txt2)'>Marge nette</div><div style='font-weight:800;color:"+(marge>=0?"var(--good)":"var(--bad)")+"'>"+marge.toLocaleString()+" DH/ha</div></div>";
-  h+="<div style='padding:8px;background:rgba(255,255,255,.02);border-radius:8px'><div style='font-size:.6rem;color:var(--txt2)'>VAN 5 ans</div><div style='font-weight:800;color:"+(van5>=0?"var(--good)":"var(--bad)")+"'>"+van5.toLocaleString()+" DH</div></div>";
-  h+="<div style='padding:8px;background:rgba(255,255,255,.02);border-radius:8px'><div style='font-size:.6rem;color:var(--txt2)'>Risque</div><div style='font-weight:800;color:"+riskCol+"'>"+riskLvl+"</div></div>";
-  h+="<div style='padding:8px;background:rgba(255,255,255,.02);border-radius:8px'><div style='font-size:.6rem;color:var(--txt2)'>Fiabilite</div><div style='font-weight:800;color:"+(fiab>=70?"var(--good)":"var(--warn)")+"'>"+fiab+"%</div></div>";
+  /* Header row: Yield badge | Radar | Title */
+  h+="<div style='display:grid;grid-template-columns:auto 1fr auto;gap:20px;align-items:center'>";
+  /* Left: yield badge */
+  h+="<div style='text-align:center;min-width:100px'>";
+  h+="<div style='font-size:2.8rem;font-weight:900;color:var(--accent);line-height:1'>"+yld.toFixed(1)+"</div>";
+  h+="<div style='font-size:.78rem;color:var(--txt2);font-weight:600'>t/ha</div>";
+  h+="<div style='font-size:.72rem;color:var(--txt2);margin-top:6px'>"+(lc.species||"")+"</div>";
+  h+="<div style='font-size:.65rem;color:var(--txt2)'>"+(lc.region||"")+" &bull; "+surface+" ha</div>";
   h+="</div>";
-  /* Radar */
-  h+="<div>"+renderRadarSVG()+"</div>";
+  /* Center: KPI mini cards */
+  h+=buildKpiMini(lc,surface);
+  /* Right: Radar SVG */
+  h+="<div>"+buildRadarSVG()+"</div>";
   h+="</div>";
-  /* Verdict */
-  var viable=marge>=0&&yld>0;
-  h+="<div style='margin-top:12px;padding:10px 14px;background:rgba("+(viable?"68,204,102":"221,68,68")+",.06);border:1px solid rgba("+(viable?"68,204,102":"221,68,68")+",.15);border-radius:8px;font-size:.78rem'>";
-  h+="<strong style='color:"+(viable?"var(--good)":"var(--bad)")+"'>"+(viable?"&#10003; Culture viable":"&#10007; Culture non rentable")+"</strong> pour cette region. ";
-  h+="Facteur limitant : <strong>"+bottleneck+"</strong>. ";
-  h+="Fiabilite de la simulation : <strong>"+fiab+"%</strong>.";
-  h+="</div></div>";
+  /* Verdict bar */
+  h+=buildVerdict();
+  h+="</div>";
 
   el.innerHTML=h;
 }
+/* Backward compat */
+var renderExecSummary=buildExecSummary;
 
 /* ---- SCENARIOS 3 COLONNES ---- */
 function renderScenarios3Col(){
@@ -15202,8 +15591,8 @@ function injectPrintCSS(){
   var style=document.createElement("style");
   style.id="sevePrintCSS";
   style.textContent="@media print{body{background:#fff!important;color:#222!important}"+
-    ".top-bar,.erp-tabs-bar,.sidebar-nav,.kpi-panel,.toc-nav,.btn-sm,button,.toast,.pwa-banner,.about-overlay{display:none!important}"+
-    ".main-content{max-width:100%!important;padding:0!important;margin:0!important}"+
+    ".top-bar,.erp-tabs-bar,.sidenav,.kpi-panel,.toc-nav,.btn-sm,button,.toast,.pwa-banner,.about-overlay{display:none!important}"+
+    ".main-scroll{max-width:100%!important;padding:0!important;margin:0!important}"+
     ".panel{background:#fff!important;border:1px solid #ddd!important;page-break-inside:avoid;margin-bottom:12px!important}"+
     ".panel h2{color:#1a5276!important;font-size:13px!important}"+
     ":root{--accent:#1a5276;--good:#27ae60;--bad:#c0392b;--warn:#f39c12;--txt:#222;--txt2:#666;--card:#fff;--bg:#fff}"+
