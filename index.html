@@ -3,640 +3,540 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="SEVE AgTech — Plateforme professionnelle de simulation technico-economique agricole au Maroc. 47 cultures, 48 regions, modeles FAO-56, financement FDA.">
-<meta name="keywords" content="agriculture Maroc, simulation agricole, FDA, plan financement, rendement, technico-economique, SEVE">
+<meta name="description" content="SEVE AgTech — Plateforme de simulation technico-économique agricole au Maroc. 47 cultures, 48 régions, modèles FAO-56, financement FDA.">
+<meta name="keywords" content="agriculture Maroc, simulation agricole, FDA, plan financement, rendement, technico-économique, SEVE">
 <meta name="author" content="SEVE AgTech">
-<meta name="theme-color" content="#08080f">
+<meta name="theme-color" content="#0a0a0a">
+<meta property="og:title" content="SEVE AgTech — Simulation Agricole Professionnelle">
+<meta property="og:description" content="Le premier simulateur techno-économique agricole 100% marocain. 47 cultures, 48 régions, modèles FAO-56.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://simobouzarki.github.io/seve-agtech/">
 <title>SEVE AgTech — Simulation Agricole Professionnelle Maroc</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#08080f;--bg2:#0a0a16;--card:rgba(15,16,32,.65);--card-solid:#0f1020;
-  --accent:#44aadd;--accent2:#44cc66;--good:#44cc66;--bad:#dd4444;
-  --warn:#ddaa33;--gold:#ffcc00;--purple:#aa66dd;
-  --txt:#e8eef4;--txt2:#8899aa;--txt3:#556677;
-  --border:rgba(255,255,255,.06);--glow:rgba(68,170,221,.15);
-  --glass:rgba(15,16,32,.55);--glass-border:rgba(255,255,255,.08)
+  --bg:#0a0a0a;
+  --bg2:#111;
+  --bg3:#161616;
+  --card:#161616;
+  --card-hover:#1a1a1a;
+  --border:#222;
+  --border-light:#2a2a2a;
+  --text:#ededed;
+  --text-secondary:#888;
+  --text-tertiary:#555;
+  --accent:#3b82f6;
+  --accent-hover:#60a5fa;
+  --green:#22c55e;
+  --green-dim:rgba(34,197,94,.1);
+  --amber:#f59e0b;
+  --amber-dim:rgba(245,158,11,.1);
+  --purple:#a855f7;
+  --purple-dim:rgba(168,85,247,.1);
+  --red:#ef4444;
+  --gradient:linear-gradient(135deg,#3b82f6,#22c55e);
+  --gradient-text:linear-gradient(135deg,#60a5fa,#34d399);
+  --radius:12px;
+  --radius-lg:16px;
+  --radius-xl:20px
 }
 
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{
-  background:var(--bg);color:var(--txt);
-  font-family:'Inter',system-ui,-apple-system,sans-serif;
-  overflow-x:hidden;-webkit-font-smoothing:antialiased;
-  position:relative
+  background:var(--bg);color:var(--text);
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  line-height:1.6;overflow-x:hidden
 }
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
 
-/* Grain texture overlay */
-body::before{
-  content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;
-  opacity:.035;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-repeat:repeat;background-size:128px 128px
+/* ===== UTILITY ===== */
+.container{max-width:1140px;margin:0 auto;padding:0 24px}
+.badge{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:6px 14px;border-radius:100px;
+  font-size:.75rem;font-weight:600;letter-spacing:.02em;
+  border:1px solid var(--border)
 }
+.badge-green{color:var(--green);background:var(--green-dim);border-color:rgba(34,197,94,.2)}
+.badge-blue{color:var(--accent);background:rgba(59,130,246,.1);border-color:rgba(59,130,246,.2)}
+.badge-amber{color:var(--amber);background:var(--amber-dim);border-color:rgba(245,158,11,.2)}
 
-a{color:var(--accent);text-decoration:none;transition:color .25s}
-a:hover{color:var(--accent2)}
-
-/* ===== SCROLL PROGRESS BAR ===== */
-.scroll-progress{
-  position:fixed;top:0;left:0;height:3px;z-index:1001;
-  background:linear-gradient(90deg,var(--accent),var(--accent2),var(--gold));
-  width:0;transition:width .1s linear
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:12px 24px;border-radius:var(--radius);
+  font-size:.875rem;font-weight:600;cursor:pointer;
+  transition:all .2s ease;border:none;font-family:inherit
 }
+.btn-primary{
+  background:#fff;color:#0a0a0a;
+  box-shadow:0 0 0 1px rgba(255,255,255,.1),0 2px 4px rgba(0,0,0,.2)
+}
+.btn-primary:hover{background:#e5e5e5;transform:translateY(-1px);box-shadow:0 0 0 1px rgba(255,255,255,.15),0 4px 12px rgba(0,0,0,.3)}
+.btn-secondary{
+  background:transparent;color:var(--text);
+  border:1px solid var(--border-light)
+}
+.btn-secondary:hover{background:var(--bg2);border-color:var(--text-tertiary)}
 
 /* ===== NAVBAR ===== */
-.navbar{
-  position:fixed;top:3px;left:0;right:0;z-index:1000;
-  padding:0 40px;display:flex;align-items:center;height:64px;
-  transition:background .4s,backdrop-filter .4s,box-shadow .4s,border-color .4s;
-  border-bottom:1px solid transparent
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  border-bottom:1px solid transparent;
+  transition:all .3s ease
 }
-.navbar.scrolled{
-  background:rgba(8,8,15,.8);backdrop-filter:blur(24px);
-  border-bottom:1px solid var(--glass-border);
-  box-shadow:0 8px 32px rgba(0,0,0,.4)
+.nav.scrolled{background:rgba(10,10,10,.85);backdrop-filter:blur(16px) saturate(180%);border-color:var(--border)}
+.nav-inner{
+  display:flex;align-items:center;height:64px;
+  max-width:1140px;margin:0 auto;padding:0 24px
 }
-.nav-brand{display:flex;align-items:center;gap:12px}
+.nav-brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:.95rem}
 .nav-logo{
-  width:38px;height:38px;border-radius:10px;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  width:32px;height:32px;border-radius:8px;
+  background:var(--gradient);
   display:flex;align-items:center;justify-content:center;
-  font-size:1.1rem;font-weight:900;color:#fff;
-  box-shadow:0 4px 16px rgba(68,170,221,.25)
+  font-size:.85rem;font-weight:900;color:#fff
 }
-.nav-title{font-size:1rem;font-weight:900;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.nav-sub{font-size:.6rem;color:var(--txt2);margin-top:1px;letter-spacing:.3px}
-.nav-links{display:flex;gap:28px;margin-left:auto;align-items:center}
-.nav-links a{color:var(--txt2);font-size:.8rem;font-weight:500;padding:6px 0;position:relative;transition:color .25s}
-.nav-links a:hover{color:var(--txt)}
-.nav-links a:not(.nav-cta):not(.nav-login)::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));transform:scaleX(0);transition:transform .3s;border-radius:1px}
-.nav-links a:not(.nav-cta):not(.nav-login):hover::after{transform:scaleX(1)}
-.nav-cta{padding:9px 22px!important;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff!important;font-weight:700;border:none;cursor:pointer;font-size:.8rem;transition:transform .25s,box-shadow .25s}
-.nav-cta:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(68,170,221,.35)}
-.nav-cta::after{display:none!important}
-.nav-login{padding:8px 18px!important;border-radius:10px;border:1px solid var(--glass-border)!important;color:var(--txt)!important;font-weight:600;transition:border-color .25s,background .25s}
-.nav-login:hover{border-color:var(--accent)!important;background:rgba(68,170,221,.08)}
-.nav-login::after{display:none!important}
-.nav-mobile{display:none;background:none;border:none;color:var(--txt);font-size:1.4rem;cursor:pointer}
+.nav-links{display:flex;align-items:center;gap:8px;margin-left:auto}
+.nav-link{padding:8px 14px;font-size:.84rem;color:var(--text-secondary);font-weight:500;border-radius:8px;transition:color .2s}
+.nav-link:hover{color:var(--text)}
+.nav-cta{
+  margin-left:8px;padding:8px 18px;border-radius:8px;
+  background:#fff;color:#0a0a0a;font-size:.84rem;font-weight:600;
+  transition:background .2s
+}
+.nav-cta:hover{background:#e5e5e5}
+.nav-mobile{display:none;background:none;border:none;color:var(--text);font-size:1.3rem;cursor:pointer;padding:8px}
 
 /* ===== HERO ===== */
-.hero{position:relative;min-height:100vh;display:flex;align-items:center;padding:100px 40px 80px;overflow:hidden}
-
-/* Animated gradient mesh background */
-.hero-mesh{position:absolute;inset:0;overflow:hidden}
-.hero-mesh .blob{position:absolute;border-radius:50%;filter:blur(100px);opacity:.12;animation:blobMove 20s ease-in-out infinite alternate}
-.hero-mesh .blob-1{width:600px;height:600px;background:var(--accent);top:-15%;left:-10%;animation-duration:22s}
-.hero-mesh .blob-2{width:500px;height:500px;background:var(--accent2);bottom:-10%;right:-5%;animation-delay:-7s;animation-duration:25s}
-.hero-mesh .blob-3{width:400px;height:400px;background:var(--purple);top:20%;right:20%;animation-delay:-14s;animation-duration:28s}
-.hero-mesh .blob-4{width:350px;height:350px;background:var(--gold);bottom:10%;left:25%;animation-delay:-4s;animation-duration:20s;opacity:.06}
-@keyframes blobMove{
-  0%{transform:translate(0,0) scale(1)}
-  33%{transform:translate(40px,-30px) scale(1.05)}
-  66%{transform:translate(-20px,40px) scale(.95)}
-  100%{transform:translate(30px,20px) scale(1.02)}
+.hero{
+  position:relative;padding:160px 24px 100px;text-align:center;
+  overflow:hidden
 }
-
-/* Animated grid lines */
-.hero-grid{
-  position:absolute;inset:0;
-  background-image:
-    linear-gradient(rgba(68,170,221,.04) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(68,170,221,.04) 1px,transparent 1px);
-  background-size:80px 80px;
-  mask-image:radial-gradient(ellipse 70% 60% at 50% 50%,black 10%,transparent 70%);
-  animation:gridShift 30s linear infinite
-}
-@keyframes gridShift{0%{background-position:0 0}100%{background-position:80px 80px}}
-
-/* Floating decorative elements */
-.hero-float{position:absolute;border-radius:50%;border:1px solid rgba(68,170,221,.1);animation:heroFloat 15s ease-in-out infinite}
-.hero-float-1{width:200px;height:200px;top:15%;left:5%;animation-delay:0s}
-.hero-float-2{width:120px;height:120px;bottom:20%;right:8%;animation-delay:-5s;animation-duration:12s}
-.hero-float-3{width:80px;height:80px;top:60%;left:15%;animation-delay:-8s;animation-duration:18s;border-color:rgba(68,204,102,.1)}
-@keyframes heroFloat{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-30px) rotate(180deg)}}
-
-.hero-inner{position:relative;z-index:1;max-width:1200px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
-.hero-content{max-width:580px}
-.hero-badge{
-  display:inline-flex;align-items:center;gap:10px;
-  padding:7px 18px;border-radius:24px;
-  background:rgba(68,170,221,.06);
-  border:1px solid rgba(68,170,221,.15);
-  font-size:.72rem;color:var(--accent);font-weight:600;
-  margin-bottom:28px;letter-spacing:.5px;
-  backdrop-filter:blur(8px)
-}
-.hero-badge .pulse{width:7px;height:7px;border-radius:50%;background:var(--good);animation:pulse 2s ease-in-out infinite}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.8)}}
-
-.hero h1{font-size:clamp(2.4rem,4.5vw,4.2rem);font-weight:900;line-height:1.1;margin-bottom:24px;letter-spacing:-.02em}
-.hero h1 .gradient{background:linear-gradient(135deg,var(--accent) 0%,var(--accent2) 50%,var(--gold) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;background-size:200% 200%;animation:gradText 5s ease-in-out infinite}
-@keyframes gradText{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
-.hero h1 .line2{display:block;font-size:.38em;color:var(--txt2);font-weight:400;-webkit-text-fill-color:var(--txt2);margin-top:12px;line-height:1.6;letter-spacing:0}
-.hero-desc{font-size:1rem;color:var(--txt2);max-width:520px;margin:0 0 40px;line-height:1.8}
-.hero-actions{display:flex;gap:14px;flex-wrap:wrap}
-.btn-primary{
-  padding:15px 36px;border-radius:12px;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  color:#fff;font-size:.92rem;font-weight:700;border:none;cursor:pointer;
-  transition:transform .3s,box-shadow .3s;letter-spacing:.3px;
-  box-shadow:0 4px 20px rgba(68,170,221,.2)
-}
-.btn-primary:hover{transform:translateY(-3px);box-shadow:0 10px 40px rgba(68,170,221,.35)}
-.btn-secondary{
-  padding:15px 36px;border-radius:12px;background:transparent;
-  color:var(--txt);font-size:.92rem;font-weight:600;
-  border:1px solid var(--glass-border);cursor:pointer;
-  transition:transform .3s,border-color .3s,background .3s;
-  backdrop-filter:blur(8px)
-}
-.btn-secondary:hover{border-color:var(--accent);background:rgba(68,170,221,.06);transform:translateY(-2px)}
-
-/* Hero Mockup Dashboard */
-.hero-mockup{position:relative}
-.mockup-window{
-  background:rgba(12,12,24,.85);
-  border:1px solid var(--glass-border);
-  border-radius:16px;padding:0;
-  backdrop-filter:blur(20px);
-  box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 80px rgba(68,170,221,.06);
-  overflow:hidden;
-  transform:perspective(1000px) rotateY(-5deg) rotateX(2deg);
-  transition:transform .6s
-}
-.mockup-window:hover{transform:perspective(1000px) rotateY(0deg) rotateX(0deg)}
-.mockup-titlebar{display:flex;align-items:center;gap:8px;padding:14px 18px;border-bottom:1px solid var(--border);background:rgba(0,0,0,.3)}
-.mockup-dot{width:10px;height:10px;border-radius:50%}
-.mockup-dot.r{background:#dd4444}.mockup-dot.y{background:#ddaa33}.mockup-dot.g{background:#44cc66}
-.mockup-tab{margin-left:16px;font-size:.65rem;color:var(--txt2);padding:4px 12px;background:rgba(255,255,255,.04);border-radius:6px}
-.mockup-body{padding:20px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.mock-card{
-  background:rgba(255,255,255,.03);border:1px solid var(--border);
-  border-radius:10px;padding:14px
-}
-.mock-card-label{font-size:.58rem;color:var(--txt3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
-.mock-card-val{font-size:1.4rem;font-weight:800}
-.mock-card-val.blue{color:var(--accent)}
-.mock-card-val.green{color:var(--good)}
-.mock-card-val.gold{color:var(--gold)}
-.mock-card-val.purple{color:var(--purple)}
-.mock-card-sub{font-size:.6rem;color:var(--txt3);margin-top:4px}
-.mock-bar-row{display:flex;gap:3px;align-items:flex-end;height:40px;margin-top:8px}
-.mock-bar{width:100%;border-radius:3px 3px 0 0;animation:mockBarGrow 2s ease-out forwards}
-@keyframes mockBarGrow{from{height:0}to{height:var(--h)}}
-.mock-chart-area{grid-column:1/-1;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:10px;padding:14px}
-.mock-chart-label{font-size:.58rem;color:var(--txt3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px}
-.mock-sparkline{display:flex;align-items:flex-end;gap:2px;height:50px}
-.mock-spark{width:100%;border-radius:2px;background:linear-gradient(to top,var(--accent),rgba(68,170,221,.3));animation:mockBarGrow 2.5s ease-out forwards}
-
-/* ===== CREDIBILITY BAR ===== */
-.credibility{
-  padding:32px 40px;
-  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
-  background:rgba(68,170,221,.02)
-}
-.credibility-inner{
-  max-width:900px;margin:0 auto;
-  display:flex;align-items:center;justify-content:center;
-  gap:40px;flex-wrap:wrap
-}
-.credibility-label{font-size:.68rem;color:var(--txt3);text-transform:uppercase;letter-spacing:1px;font-weight:600}
-.credibility-items{display:flex;align-items:center;gap:32px;flex-wrap:wrap}
-.cred-item{
-  font-size:.82rem;font-weight:700;color:var(--txt2);
-  padding:6px 16px;border-radius:8px;
-  border:1px solid var(--border);
-  background:rgba(255,255,255,.02);
-  white-space:nowrap;
-  transition:border-color .3s,color .3s
-}
-.cred-item:hover{border-color:rgba(68,170,221,.2);color:var(--txt)}
-
-/* ===== SECTIONS ===== */
-section{padding:100px 40px;position:relative}
-.section-header{text-align:center;max-width:640px;margin:0 auto 64px}
-.section-header .tag{
-  display:inline-block;font-size:.7rem;padding:6px 18px;
-  border-radius:24px;
-  background:rgba(68,170,221,.06);color:var(--accent);
-  border:1px solid rgba(68,170,221,.12);
-  font-weight:700;margin-bottom:20px;letter-spacing:.8px;text-transform:uppercase;
-  backdrop-filter:blur(8px)
-}
-.section-header h2{font-size:clamp(1.8rem,3.2vw,2.6rem);font-weight:900;margin-bottom:16px;letter-spacing:-.01em}
-.section-header p{font-size:.95rem;color:var(--txt2);line-height:1.8}
-
-/* Section divider glow */
-.section-divider{
-  height:1px;max-width:600px;margin:0 auto;
-  background:linear-gradient(90deg,transparent,rgba(68,170,221,.2),rgba(68,204,102,.15),transparent);
-  border:none
-}
-
-/* ===== FEATURES ===== */
-#features{background:var(--bg2);position:relative;overflow:hidden}
-#features::before{
-  content:'';position:absolute;inset:0;
-  background-image:
-    linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);
-  background-size:60px 60px;
-  mask-image:linear-gradient(to bottom,transparent 0%,black 30%,black 70%,transparent 100%);
+/* Subtle radial glow */
+.hero::before{
+  content:'';position:absolute;top:-200px;left:50%;transform:translateX(-50%);
+  width:800px;height:600px;border-radius:50%;
+  background:radial-gradient(ellipse,rgba(59,130,246,.08) 0%,rgba(34,197,94,.04) 40%,transparent 70%);
   pointer-events:none
 }
-.features-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;max-width:1100px;margin:0 auto;position:relative;z-index:1}
-.feature-card{
-  background:var(--card);
-  border:1px solid var(--glass-border);border-radius:18px;
-  padding:32px;transition:transform .35s,border-color .35s,box-shadow .35s;
-  position:relative;overflow:hidden;
-  backdrop-filter:blur(12px)
+.hero-badge{margin-bottom:32px}
+.hero-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+.hero h1{
+  font-size:clamp(2.5rem,5.5vw,4.5rem);font-weight:900;
+  line-height:1.08;letter-spacing:-.03em;
+  max-width:800px;margin:0 auto 24px
 }
-.feature-card:hover{
-  border-color:rgba(68,170,221,.2);transform:translateY(-6px);
-  box-shadow:0 16px 48px rgba(0,0,0,.35),0 0 40px rgba(68,170,221,.04)
+.hero h1 .grad{
+  background:var(--gradient-text);-webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;background-clip:text
 }
-.feature-card .fc-icon{
-  width:52px;height:52px;border-radius:14px;
-  display:flex;align-items:center;justify-content:center;font-size:1.5rem;
-  margin-bottom:18px;position:relative;
-  transition:transform .3s,box-shadow .3s
+.hero-sub{
+  font-size:clamp(1rem,1.8vw,1.2rem);color:var(--text-secondary);
+  max-width:580px;margin:0 auto 40px;line-height:1.7
 }
-.feature-card:hover .fc-icon{transform:scale(1.08);box-shadow:0 4px 16px rgba(0,0,0,.2)}
-.feature-card:nth-child(1) .fc-icon{background:linear-gradient(135deg,rgba(68,170,221,.15),rgba(68,170,221,.05))}
-.feature-card:nth-child(2) .fc-icon{background:linear-gradient(135deg,rgba(68,204,102,.15),rgba(68,204,102,.05))}
-.feature-card:nth-child(3) .fc-icon{background:linear-gradient(135deg,rgba(221,170,51,.15),rgba(221,170,51,.05))}
-.feature-card:nth-child(4) .fc-icon{background:linear-gradient(135deg,rgba(170,102,221,.15),rgba(170,102,221,.05))}
-.feature-card:nth-child(5) .fc-icon{background:linear-gradient(135deg,rgba(221,68,68,.15),rgba(221,68,68,.05))}
-.feature-card:nth-child(6) .fc-icon{background:linear-gradient(135deg,rgba(255,204,0,.15),rgba(255,204,0,.05))}
-.feature-card h3{font-size:1.05rem;font-weight:800;margin-bottom:10px}
-.feature-card p{font-size:.84rem;color:var(--txt2);line-height:1.7}
-.feature-card .fc-tag{
-  position:absolute;top:18px;right:18px;
-  font-size:.62rem;padding:4px 10px;border-radius:8px;
-  background:rgba(68,204,102,.08);color:var(--good);
-  font-weight:700;letter-spacing:.3px;
-  border:1px solid rgba(68,204,102,.12)
+.hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:64px}
+
+/* Hero stats */
+.hero-stats{
+  display:flex;justify-content:center;gap:48px;flex-wrap:wrap;
+  padding-top:48px;border-top:1px solid var(--border)
+}
+.hero-stat{text-align:center}
+.hero-stat-num{font-size:2rem;font-weight:900;letter-spacing:-.02em}
+.hero-stat-num.blue{color:var(--accent)}
+.hero-stat-num.green{color:var(--green)}
+.hero-stat-num.amber{color:var(--amber)}
+.hero-stat-num.purple{color:var(--purple)}
+.hero-stat-label{font-size:.78rem;color:var(--text-secondary);margin-top:4px}
+
+/* ===== DASHBOARD PREVIEW ===== */
+.preview{padding:0 24px 120px}
+.preview-window{
+  max-width:1000px;margin:0 auto;
+  border:1px solid var(--border);border-radius:var(--radius-xl);
+  overflow:hidden;background:var(--bg2);
+  box-shadow:0 24px 80px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.03)
+}
+.preview-bar{
+  display:flex;align-items:center;gap:8px;padding:14px 18px;
+  border-bottom:1px solid var(--border);background:var(--bg)
+}
+.preview-dot{width:12px;height:12px;border-radius:50%}
+.preview-dot.r{background:#ff5f57}.preview-dot.y{background:#febc2e}.preview-dot.g{background:#28c840}
+.preview-url{
+  flex:1;margin-left:12px;padding:6px 14px;border-radius:6px;
+  background:var(--bg3);font-size:.72rem;color:var(--text-secondary);
+  border:1px solid var(--border)
+}
+.preview-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border)}
+.preview-card{background:var(--bg2);padding:20px}
+.preview-card-label{font-size:.65rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+.preview-card-val{font-size:1.6rem;font-weight:800;letter-spacing:-.01em}
+.preview-card-val.c-blue{color:var(--accent)}
+.preview-card-val.c-green{color:var(--green)}
+.preview-card-val.c-amber{color:var(--amber)}
+.preview-card-val.c-purple{color:var(--purple)}
+.preview-card-sub{font-size:.7rem;color:var(--text-tertiary);margin-top:6px}
+.preview-chart{
+  grid-column:1/-1;background:var(--bg2);padding:20px;
+  display:flex;flex-direction:column;gap:12px
+}
+.preview-chart-label{font-size:.65rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.08em}
+.preview-bars{display:flex;align-items:flex-end;gap:4px;height:60px}
+.preview-bar-item{
+  flex:1;border-radius:3px 3px 0 0;
+  background:linear-gradient(to top,var(--accent),rgba(59,130,246,.4));
+  animation:barUp 1.5s ease-out forwards;opacity:0
+}
+@keyframes barUp{from{height:0;opacity:0}to{height:var(--h);opacity:1}}
+
+/* ===== SECTIONS ===== */
+.section{padding:120px 24px}
+.section-alt{background:var(--bg2)}
+.section-header{text-align:center;max-width:600px;margin:0 auto 64px}
+.section-header h2{font-size:clamp(1.8rem,3.2vw,2.5rem);font-weight:900;letter-spacing:-.02em;margin-bottom:16px}
+.section-header p{font-size:.95rem;color:var(--text-secondary);line-height:1.7}
+.section-divider{
+  height:1px;border:none;max-width:200px;margin:0 auto;
+  background:linear-gradient(90deg,transparent,var(--border-light),transparent)
+}
+
+/* ===== FEATURES GRID ===== */
+.features-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+  border:1px solid var(--border);border-radius:var(--radius-xl);
+  overflow:hidden;background:var(--border);
+  max-width:1000px;margin:0 auto
+}
+.feature{
+  background:var(--bg);padding:36px;
+  transition:background .2s
+}
+.feature:hover{background:var(--bg2)}
+.feature-icon{
+  width:44px;height:44px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;margin-bottom:20px
+}
+.feature-icon.blue{background:rgba(59,130,246,.1)}
+.feature-icon.green{background:var(--green-dim)}
+.feature-icon.amber{background:var(--amber-dim)}
+.feature-icon.purple{background:var(--purple-dim)}
+.feature-icon.red{background:rgba(239,68,68,.1)}
+.feature h3{font-size:.95rem;font-weight:700;margin-bottom:8px}
+.feature p{font-size:.84rem;color:var(--text-secondary);line-height:1.65}
+.feature-tag{
+  display:inline-block;margin-top:14px;
+  font-size:.68rem;font-weight:600;padding:3px 10px;
+  border-radius:6px;color:var(--green);
+  background:var(--green-dim);border:1px solid rgba(34,197,94,.15)
 }
 
 /* ===== HOW IT WORKS ===== */
-.steps-container{max-width:800px;margin:0 auto}
-.step-row{display:flex;gap:28px;margin-bottom:36px;align-items:flex-start}
-.step-num{
-  width:52px;height:52px;border-radius:50%;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  display:flex;align-items:center;justify-content:center;
-  font-size:1.1rem;font-weight:900;color:#fff;flex-shrink:0;
-  box-shadow:0 4px 20px rgba(68,170,221,.25)
+.steps{max-width:680px;margin:0 auto;position:relative}
+.steps::before{
+  content:'';position:absolute;left:23px;top:52px;bottom:52px;
+  width:1px;background:linear-gradient(to bottom,var(--accent),var(--green),var(--amber));opacity:.2
 }
-.step-body h3{font-size:1.05rem;font-weight:800;margin-bottom:8px}
-.step-body p{font-size:.88rem;color:var(--txt2);line-height:1.7}
-.step-connector{width:2px;height:28px;background:linear-gradient(to bottom,rgba(68,170,221,.25),transparent);margin-left:25px}
+.step{display:flex;gap:24px;margin-bottom:40px;position:relative}
+.step:last-child{margin-bottom:0}
+.step-num{
+  width:48px;height:48px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;font-weight:800;color:#fff;
+  background:var(--bg3);border:1px solid var(--border-light);
+  position:relative;z-index:1
+}
+.step:nth-child(1) .step-num{border-color:rgba(59,130,246,.3);color:var(--accent)}
+.step:nth-child(2) .step-num{border-color:rgba(34,197,94,.3);color:var(--green)}
+.step:nth-child(3) .step-num{border-color:rgba(245,158,11,.3);color:var(--amber)}
+.step-content{padding-top:4px}
+.step-content h3{font-size:1.05rem;font-weight:700;margin-bottom:8px}
+.step-content p{font-size:.88rem;color:var(--text-secondary);line-height:1.7}
 
 /* ===== PRICING ===== */
-#pricing{background:var(--bg2)}
-.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;max-width:1040px;margin:0 auto}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:1000px;margin:0 auto}
 .price-card{
-  background:var(--card);
-  border:1px solid var(--glass-border);border-radius:22px;
-  padding:40px 30px;text-align:center;
-  transition:transform .35s,box-shadow .35s;
-  position:relative;backdrop-filter:blur(12px)
+  background:var(--bg);
+  border:1px solid var(--border);border-radius:var(--radius-xl);
+  padding:36px 28px;position:relative;
+  transition:border-color .3s,transform .2s
 }
-.price-card:hover{transform:translateY(-6px);box-shadow:0 16px 48px rgba(0,0,0,.35)}
-
-/* Pro card animated glow border */
-.price-card.popular{
-  border-color:transparent;
-  background:linear-gradient(var(--card-solid),var(--card-solid)) padding-box,
-             linear-gradient(135deg,var(--accent),var(--accent2),var(--purple),var(--accent)) border-box;
-  background-size:100% 100%,300% 300%;
-  animation:glowBorder 4s ease-in-out infinite
+.price-card:hover{border-color:var(--border-light);transform:translateY(-2px)}
+.price-card.featured{border-color:rgba(59,130,246,.3)}
+.price-card.featured::before{
+  content:'Populaire';position:absolute;top:-11px;left:50%;transform:translateX(-50%);
+  padding:4px 16px;border-radius:100px;
+  background:var(--accent);color:#fff;font-size:.7rem;font-weight:700;white-space:nowrap
 }
-@keyframes glowBorder{
-  0%,100%{background-position:100% 100%,0% 50%}
-  50%{background-position:100% 100%,100% 50%}
+.price-name{font-size:1rem;font-weight:700;margin-bottom:4px}
+.price-desc{font-size:.8rem;color:var(--text-secondary);margin-bottom:24px}
+.price-amount{font-size:3rem;font-weight:900;letter-spacing:-.03em;margin-bottom:4px}
+.price-amount span{font-size:.9rem;font-weight:400;color:var(--text-secondary)}
+.price-period{font-size:.75rem;color:var(--text-tertiary);margin-bottom:28px}
+.price-features{list-style:none;margin-bottom:28px}
+.price-features li{
+  font-size:.84rem;padding:10px 0;
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:10px
 }
-.price-card.popular::before{
-  content:'Le Plus Populaire';position:absolute;top:-13px;left:50%;transform:translateX(-50%);
-  padding:5px 20px;border-radius:24px;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  color:#fff;font-size:.68rem;font-weight:700;letter-spacing:.5px;white-space:nowrap;
-  box-shadow:0 4px 16px rgba(68,170,221,.3)
-}
-/* Layered shadow for depth */
-.price-card.popular{box-shadow:0 4px 16px rgba(68,170,221,.08),0 16px 48px rgba(0,0,0,.25)}
-.price-card.popular:hover{box-shadow:0 8px 32px rgba(68,170,221,.15),0 24px 64px rgba(0,0,0,.35)}
-
-.price-card .pc-name{font-size:1.15rem;font-weight:800;margin-bottom:6px}
-.price-card .pc-desc{font-size:.8rem;color:var(--txt2);margin-bottom:24px}
-.price-card .pc-price{font-size:3rem;font-weight:900;margin-bottom:4px;letter-spacing:-.02em}
-.price-card .pc-price span{font-size:.85rem;font-weight:400;color:var(--txt2)}
-.price-card .pc-period{font-size:.72rem;color:var(--txt2);margin-bottom:28px}
-.price-card ul{list-style:none;text-align:left;margin-bottom:32px}
-.price-card li{font-size:.84rem;padding:10px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
-.price-card li:last-child{border-bottom:none}
-.price-card li .check{color:var(--good);font-weight:700;font-size:.9rem}
-.price-card li .cross{color:var(--txt3);font-size:.9rem}
-.price-card li.disabled{color:var(--txt3)}
+.price-features li:last-child{border-bottom:none}
+.price-features .ck{color:var(--green);font-size:.85rem;font-weight:700}
+.price-features .no{color:var(--text-tertiary);font-size:.85rem}
+.price-features li.dim{color:var(--text-tertiary)}
 .price-btn{
-  display:block;width:100%;padding:14px;border-radius:12px;
-  border:1px solid rgba(68,170,221,.2);
-  background:rgba(68,170,221,.06);color:var(--accent);
-  cursor:pointer;font-size:.9rem;font-weight:700;
-  transition:transform .3s,background .3s,box-shadow .3s
+  display:block;width:100%;padding:12px;border-radius:var(--radius);
+  text-align:center;font-size:.875rem;font-weight:600;cursor:pointer;
+  border:1px solid var(--border-light);background:transparent;
+  color:var(--text);transition:all .2s;font-family:inherit
 }
-.price-btn:hover{background:rgba(68,170,221,.14);transform:translateY(-2px)}
-.price-card.popular .price-btn{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none}
-.price-card.popular .price-btn:hover{box-shadow:0 6px 24px rgba(68,170,221,.35);transform:translateY(-2px)}
+.price-btn:hover{background:var(--bg3);border-color:var(--text-tertiary)}
+.price-card.featured .price-btn{
+  background:#fff;color:#0a0a0a;border-color:transparent
+}
+.price-card.featured .price-btn:hover{background:#e5e5e5}
 
 /* ===== AUDIENCE ===== */
-.audience-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;max-width:1040px;margin:0 auto}
+.audience-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:1000px;margin:0 auto}
 .audience-card{
-  background:var(--card);border:1px solid var(--glass-border);
-  border-radius:16px;padding:28px;text-align:center;
-  transition:transform .35s,border-color .35s,box-shadow .35s;
-  backdrop-filter:blur(12px)
+  background:var(--bg);border:1px solid var(--border);
+  border-radius:var(--radius-lg);padding:28px;
+  transition:border-color .2s
 }
-.audience-card:hover{border-color:rgba(68,170,221,.15);transform:translateY(-4px);box-shadow:0 12px 36px rgba(0,0,0,.3)}
-.audience-card .ac-icon{font-size:2.2rem;margin-bottom:14px;display:block}
-.audience-card h3{font-size:.95rem;font-weight:800;margin-bottom:8px}
-.audience-card p{font-size:.8rem;color:var(--txt2);line-height:1.6}
+.audience-card:hover{border-color:var(--border-light)}
+.audience-icon{font-size:1.6rem;margin-bottom:16px;display:block}
+.audience-card h3{font-size:.92rem;font-weight:700;margin-bottom:8px}
+.audience-card p{font-size:.82rem;color:var(--text-secondary);line-height:1.65}
 
 /* ===== FAQ ===== */
-#faq{background:var(--bg2)}
-.faq-list{max-width:720px;margin:0 auto}
-.faq-item{border-bottom:1px solid var(--border);padding:0}
+.faq-list{max-width:680px;margin:0 auto}
+.faq-item{border-bottom:1px solid var(--border)}
 .faq-q{
-  font-size:.95rem;font-weight:700;cursor:pointer;
+  font-size:.92rem;font-weight:600;cursor:pointer;
   display:flex;align-items:center;justify-content:space-between;gap:16px;
-  user-select:none;padding:22px 0;transition:color .25s
+  padding:20px 0;transition:color .2s;user-select:none
 }
 .faq-q:hover{color:var(--accent)}
-.faq-q .faq-arrow{
-  transition:transform .35s;color:var(--txt3);font-size:.65rem;
-  flex-shrink:0;width:24px;height:24px;
-  display:flex;align-items:center;justify-content:center;
-  border-radius:50%;border:1px solid var(--border);
-  transition:transform .35s,border-color .35s,color .35s
+.faq-arrow{
+  font-size:.55rem;color:var(--text-tertiary);transition:transform .3s;
+  flex-shrink:0;width:28px;height:28px;display:flex;align-items:center;justify-content:center;
+  border-radius:50%;border:1px solid var(--border)
 }
-.faq-item.open .faq-arrow{transform:rotate(180deg);border-color:var(--accent);color:var(--accent)}
+.faq-item.open .faq-arrow{transform:rotate(180deg);color:var(--accent);border-color:rgba(59,130,246,.3)}
 .faq-a{
-  max-height:0;overflow:hidden;
-  transition:max-height .4s ease,padding .4s ease;
-  font-size:.88rem;color:var(--txt2);line-height:1.8;
-  padding:0 0 0
+  max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s ease;
+  font-size:.88rem;color:var(--text-secondary);line-height:1.75
 }
-.faq-item.open .faq-a{max-height:300px;padding:0 0 22px}
+.faq-item.open .faq-a{max-height:300px;padding-bottom:20px}
 
 /* ===== CTA ===== */
-.cta-section{
-  text-align:center;padding:120px 40px;position:relative;overflow:hidden
-}
-.cta-section::before{
-  content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse 60% 50% at 50% 50%,rgba(68,170,221,.06),transparent 70%);
+.cta{text-align:center;padding:120px 24px;position:relative}
+.cta::before{
+  content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+  width:600px;height:400px;border-radius:50%;
+  background:radial-gradient(ellipse,rgba(59,130,246,.06),transparent 70%);
   pointer-events:none
 }
-.cta-section h2{font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:900;margin-bottom:16px;position:relative}
-.cta-section p{font-size:1rem;color:var(--txt2);margin-bottom:36px;max-width:520px;margin-left:auto;margin-right:auto;line-height:1.8;position:relative}
-.cta-section .hero-actions{position:relative;justify-content:center}
+.cta h2{font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:900;letter-spacing:-.02em;margin-bottom:16px;position:relative}
+.cta p{font-size:1rem;color:var(--text-secondary);margin-bottom:36px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.7;position:relative}
+.cta .hero-actions{position:relative}
 
 /* ===== FOOTER ===== */
-.footer{padding:56px 40px 36px;position:relative}
-.footer::before{
-  content:'';position:absolute;top:0;left:10%;right:10%;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(68,170,221,.2),rgba(68,204,102,.15),rgba(170,102,221,.1),transparent)
-}
-.footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;gap:48px;flex-wrap:wrap}
-.footer-brand .fb-title{font-size:1.05rem;font-weight:900;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
-.footer-brand p{font-size:.78rem;color:var(--txt2);max-width:280px;line-height:1.6}
-.footer-col h4{font-size:.75rem;font-weight:700;margin-bottom:14px;color:var(--txt);text-transform:uppercase;letter-spacing:.8px}
-.footer-col a{display:block;font-size:.8rem;color:var(--txt2);padding:5px 0;transition:color .25s}
-.footer-col a:hover{color:var(--accent)}
+.footer{border-top:1px solid var(--border);padding:56px 24px 36px}
+.footer-inner{max-width:1140px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px}
+.footer-brand-title{font-size:.95rem;font-weight:800;margin-bottom:10px}
+.footer-brand p{font-size:.8rem;color:var(--text-secondary);line-height:1.6;max-width:280px}
+.footer-col h4{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-secondary);margin-bottom:16px}
+.footer-col a{display:block;font-size:.84rem;color:var(--text-secondary);padding:5px 0;transition:color .2s}
+.footer-col a:hover{color:var(--text)}
 .footer-bottom{
-  max-width:1100px;margin:36px auto 0;padding-top:28px;
+  max-width:1140px;margin:36px auto 0;padding-top:28px;
   border-top:1px solid var(--border);
   display:flex;justify-content:space-between;align-items:center;
-  font-size:.72rem;color:var(--txt3);flex-wrap:wrap;gap:12px
+  font-size:.75rem;color:var(--text-tertiary);flex-wrap:wrap;gap:12px
 }
-
-/* ===== COUNTER ANIMATION ===== */
-.stat-counter{display:inline-block}
 
 /* ===== RESPONSIVE ===== */
 @media(max-width:1024px){
-  .hero-inner{grid-template-columns:1fr;text-align:center}
-  .hero-content{max-width:640px;margin:0 auto}
-  .hero-desc{margin:0 auto 40px}
-  .hero-actions{justify-content:center}
-  .hero-mockup{max-width:500px;margin:0 auto}
-  .mockup-window{transform:perspective(1000px) rotateY(0deg) rotateX(3deg)}
+  .features-grid{grid-template-columns:repeat(2,1fr)}
+  .pricing-grid{grid-template-columns:repeat(2,1fr)}
+  .audience-grid{grid-template-columns:repeat(2,1fr)}
+  .footer-inner{grid-template-columns:1fr 1fr}
+  .preview-grid{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:768px){
-  .navbar{padding:0 20px}
   .nav-links{
-    display:none;position:absolute;top:67px;left:0;right:0;
-    background:rgba(8,8,15,.96);backdrop-filter:blur(24px);
-    flex-direction:column;padding:24px;gap:12px;
-    border-bottom:1px solid var(--glass-border)
+    display:none;position:fixed;top:64px;left:0;right:0;
+    background:rgba(10,10,10,.96);backdrop-filter:blur(16px);
+    flex-direction:column;padding:16px 24px;gap:4px;
+    border-bottom:1px solid var(--border)
   }
   .nav-links.open{display:flex}
   .nav-mobile{display:block}
-  .hero{padding:100px 20px 60px;min-height:auto}
-  .hero h1{font-size:2rem}
-  section{padding:72px 20px}
+  .hero{padding:120px 24px 80px}
+  .section{padding:80px 24px}
+  .features-grid{grid-template-columns:1fr}
   .pricing-grid{grid-template-columns:1fr}
-  .step-row{flex-direction:column;align-items:center;text-align:center}
-  .footer-inner{flex-direction:column;gap:28px}
-  .credibility-inner{flex-direction:column;gap:16px}
-  .credibility-items{justify-content:center}
-  .mockup-body{grid-template-columns:1fr}
-  .mock-chart-area{grid-column:auto}
+  .audience-grid{grid-template-columns:1fr}
+  .footer-inner{grid-template-columns:1fr;gap:32px}
+  .hero-stats{gap:28px}
+  .preview-grid{grid-template-columns:1fr}
+  .preview-chart{grid-column:auto}
+  .steps::before{display:none}
 }
 @media(max-width:480px){
-  .hero h1{font-size:1.7rem}
-  .features-grid{grid-template-columns:1fr}
-  .audience-grid{grid-template-columns:1fr}
+  .hero h1{font-size:2rem}
+  .hero-actions{flex-direction:column;align-items:center}
+  .btn{width:100%;justify-content:center}
 }
 </style>
 </head>
 <body>
 
-<!-- Scroll Progress Bar -->
-<div class="scroll-progress" id="scrollProgress"></div>
-
 <!-- ===== NAVBAR ===== -->
-<nav class="navbar" id="navbar">
-  <div class="nav-brand">
-    <div class="nav-logo">S</div>
-    <div>
-      <div class="nav-title">SEVE AgTech</div>
-      <div class="nav-sub">Simulation Agricole Maroc</div>
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-brand">
+      <div class="nav-logo">S</div>
+      SEVE AgTech
+    </a>
+    <button class="nav-mobile" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">&#9776;</button>
+    <div class="nav-links">
+      <a href="#features" class="nav-link">Fonctionnalités</a>
+      <a href="#how" class="nav-link">Comment ça marche</a>
+      <a href="#pricing" class="nav-link">Tarifs</a>
+      <a href="#faq" class="nav-link">FAQ</a>
+      <a href="modele_seve.html" class="nav-link">Connexion</a>
+      <a href="modele_seve.html" class="nav-cta">Essai gratuit</a>
     </div>
-  </div>
-  <button class="nav-mobile" onclick="document.querySelector('.nav-links').classList.toggle('open')">&#9776;</button>
-  <div class="nav-links">
-    <a href="#features">Fonctionnalites</a>
-    <a href="#how">Comment ca marche</a>
-    <a href="#pricing">Tarifs</a>
-    <a href="#audience">Pour qui</a>
-    <a href="#faq">FAQ</a>
-    <a href="modele_seve.html" class="nav-login">Se connecter</a>
-    <a href="modele_seve.html#signup" class="nav-cta">Essai gratuit</a>
   </div>
 </nav>
 
 <!-- ===== HERO ===== -->
 <section class="hero">
-  <div class="hero-mesh">
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
-    <div class="blob blob-3"></div>
-    <div class="blob blob-4"></div>
-  </div>
-  <div class="hero-grid"></div>
-  <div class="hero-float hero-float-1"></div>
-  <div class="hero-float hero-float-2"></div>
-  <div class="hero-float hero-float-3"></div>
-
-  <div class="hero-inner">
-    <div class="hero-content">
-      <div class="hero-badge">
-        <span class="pulse"></span>
-        Plateforme 100% Marocaine
-      </div>
-      <h1>
-        Simulez. Planifiez.<br><span class="gradient">Rentabilisez.</span>
-        <span class="line2">L'outil de simulation technico-economique pour l'agriculture marocaine</span>
-      </h1>
-      <p class="hero-desc">
-        SEVE calcule vos rendements, optimise votre irrigation, genere vos dossiers FDA
-        et projette votre business plan sur 10 ans. Le tout base sur les modeles
-        scientifiques FAO-56 et les donnees regionales du Maroc.
-      </p>
-      <div class="hero-actions">
-        <a href="modele_seve.html#signup" class="btn-primary">Commencer gratuitement</a>
-        <a href="#features" class="btn-secondary">Decouvrir les fonctionnalites</a>
-      </div>
+  <div class="container" style="position:relative;z-index:1">
+    <div class="hero-badge">
+      <span class="badge badge-green"><span class="dot"></span> Plateforme 100% marocaine</span>
     </div>
-
-    <!-- Animated Dashboard Mockup -->
-    <div class="hero-mockup">
-      <div class="mockup-window">
-        <div class="mockup-titlebar">
-          <div class="mockup-dot r"></div>
-          <div class="mockup-dot y"></div>
-          <div class="mockup-dot g"></div>
-          <span class="mockup-tab">SEVE AgTech v2</span>
-        </div>
-        <div class="mockup-body">
-          <div class="mock-card">
-            <div class="mock-card-label">Rendement prevu</div>
-            <div class="mock-card-val blue" data-target="12.4" data-suffix=" T/ha">0</div>
-            <div class="mock-card-sub">Olivier -- Meknes-Fes</div>
-          </div>
-          <div class="mock-card">
-            <div class="mock-card-label">Marge nette</div>
-            <div class="mock-card-val green" data-target="48500" data-suffix=" DH">0</div>
-            <div class="mock-card-sub">+23% vs moyenne</div>
-          </div>
-          <div class="mock-card">
-            <div class="mock-card-label">Besoin hydrique</div>
-            <div class="mock-card-val gold" data-target="4200" data-suffix=" m3">0</div>
-            <div class="mock-bar-row">
-              <div class="mock-bar" style="--h:18px;background:var(--accent)"></div>
-              <div class="mock-bar" style="--h:28px;background:var(--accent)"></div>
-              <div class="mock-bar" style="--h:38px;background:var(--accent2)"></div>
-              <div class="mock-bar" style="--h:35px;background:var(--accent2)"></div>
-              <div class="mock-bar" style="--h:22px;background:var(--accent)"></div>
-              <div class="mock-bar" style="--h:12px;background:var(--accent)"></div>
-            </div>
-          </div>
-          <div class="mock-card">
-            <div class="mock-card-label">Score Risque</div>
-            <div class="mock-card-val purple" data-target="72" data-suffix="/100">0</div>
-            <div class="mock-card-sub">Risque modere</div>
-          </div>
-          <div class="mock-chart-area">
-            <div class="mock-chart-label">Projection sur 10 ans -- Cash-flow cumule</div>
-            <div class="mock-sparkline">
-              <div class="mock-spark" style="--h:8px"></div>
-              <div class="mock-spark" style="--h:14px"></div>
-              <div class="mock-spark" style="--h:18px"></div>
-              <div class="mock-spark" style="--h:24px"></div>
-              <div class="mock-spark" style="--h:28px"></div>
-              <div class="mock-spark" style="--h:32px"></div>
-              <div class="mock-spark" style="--h:35px"></div>
-              <div class="mock-spark" style="--h:40px"></div>
-              <div class="mock-spark" style="--h:44px"></div>
-              <div class="mock-spark" style="--h:50px"></div>
-            </div>
-          </div>
-        </div>
+    <h1>
+      Simulez votre<br>exploitation.<br><span class="grad">Maximisez vos rendements.</span>
+    </h1>
+    <p class="hero-sub">
+      L'outil de simulation technico-économique qui calcule vos rendements, optimise votre irrigation,
+      et génère vos dossiers FDA — basé sur les modèles FAO-56 et les données régionales du Maroc.
+    </p>
+    <div class="hero-actions">
+      <a href="modele_seve.html" class="btn btn-primary">Commencer gratuitement &rarr;</a>
+      <a href="#features" class="btn btn-secondary">Découvrir les fonctionnalités</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num blue" data-count="47">47</div>
+        <div class="hero-stat-label">Cultures</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num green" data-count="48">48</div>
+        <div class="hero-stat-label">Régions du Maroc</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num amber" data-count="30">30+</div>
+        <div class="hero-stat-label">Panneaux d'analyse</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num purple">100%</div>
+        <div class="hero-stat-label">Hors-ligne</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ===== CREDIBILITY BAR ===== -->
-<div class="credibility">
-  <div class="credibility-inner">
-    <span class="credibility-label">Donnees validees par</span>
-    <div class="credibility-items">
-      <span class="cred-item">FAO-56</span>
-      <span class="cred-item">INRA Meknes</span>
-      <span class="cred-item">ONCA</span>
-      <span class="cred-item">47 Cultures</span>
-      <span class="cred-item">48 Regions</span>
+<!-- ===== DASHBOARD PREVIEW ===== -->
+<div class="preview">
+  <div class="preview-window">
+    <div class="preview-bar">
+      <div class="preview-dot r"></div>
+      <div class="preview-dot y"></div>
+      <div class="preview-dot g"></div>
+      <div class="preview-url">simobouzarki.github.io/seve-agtech/modele_seve.html</div>
+    </div>
+    <div class="preview-grid">
+      <div class="preview-card">
+        <div class="preview-card-label">Rendement prévu</div>
+        <div class="preview-card-val c-blue" data-target="12.4" data-suffix=" T/ha">0</div>
+        <div class="preview-card-sub">Olivier — Meknès-Fès</div>
+      </div>
+      <div class="preview-card">
+        <div class="preview-card-label">Marge nette</div>
+        <div class="preview-card-val c-green" data-target="48500" data-suffix=" DH">0</div>
+        <div class="preview-card-sub">+23% vs moyenne régionale</div>
+      </div>
+      <div class="preview-card">
+        <div class="preview-card-label">Besoin hydrique</div>
+        <div class="preview-card-val c-amber" data-target="4200" data-suffix=" m³">0</div>
+        <div class="preview-card-sub">Irrigation goutte-à-goutte</div>
+      </div>
+      <div class="preview-card">
+        <div class="preview-card-label">Score risque</div>
+        <div class="preview-card-val c-purple" data-target="72" data-suffix="/100">0</div>
+        <div class="preview-card-sub">Risque modéré</div>
+      </div>
+      <div class="preview-chart">
+        <div class="preview-chart-label">Projection cash-flow sur 10 ans</div>
+        <div class="preview-bars" id="previewBars"></div>
+      </div>
     </div>
   </div>
 </div>
 
+<hr class="section-divider">
+
 <!-- ===== FEATURES ===== -->
-<section id="features">
+<section class="section" id="features">
   <div class="section-header">
-    <div class="tag">Fonctionnalites</div>
-    <h2>Tout ce qu'il faut pour piloter votre exploitation</h2>
-    <p>De la simulation du rendement au montage du dossier bancaire -- un seul outil integre.</p>
+    <span class="badge badge-blue">Fonctionnalités</span>
+    <h2 style="margin-top:20px">Tout ce qu'il faut pour piloter votre exploitation</h2>
+    <p>De la simulation du rendement au montage du dossier bancaire — un seul outil intégré.</p>
   </div>
   <div class="features-grid">
-    <div class="feature-card">
-      <div class="fc-icon">&#127793;</div>
-      <h3>Simulation de Rendement</h3>
-      <p>Modele biophysique complet : interception lumineuse, LUE, GDD, stress hydrique, courbe de maturite. 47 especes avec varietes locales.</p>
-      <span class="fc-tag">47 cultures</span>
+    <div class="feature">
+      <div class="feature-icon blue">&#127793;</div>
+      <h3>Simulation de rendement</h3>
+      <p>Modèle biophysique complet : interception lumineuse, LUE, GDD, stress hydrique, courbe de maturité. 47 espèces avec variétés locales.</p>
+      <span class="feature-tag">47 cultures</span>
     </div>
-    <div class="feature-card">
-      <div class="fc-icon">&#128167;</div>
-      <h3>Bilan Hydrique FAO-56</h3>
-      <p>ET0, ETc par stade Kc, pluie efficace, deficit hydrique, coefficient de stress Ks. Calendrier d'irrigation mensuel automatique.</p>
-      <span class="fc-tag">FAO-56</span>
+    <div class="feature">
+      <div class="feature-icon green">&#128167;</div>
+      <h3>Bilan hydrique FAO-56</h3>
+      <p>ET0, ETc par stade Kc, pluie efficace, déficit hydrique, coefficient de stress Ks. Calendrier d'irrigation mensuel automatique.</p>
+      <span class="feature-tag">FAO-56</span>
     </div>
-    <div class="feature-card">
-      <div class="fc-icon">&#129716;</div>
-      <h3>Nutrition NPK -- Loi de Liebig</h3>
-      <p>Bilan nutritif complet : exportations vs apports, facteur limitant, programme de fertigation par stade phenologique.</p>
-      <span class="fc-tag">Liebig</span>
+    <div class="feature">
+      <div class="feature-icon amber">&#129716;</div>
+      <h3>Nutrition NPK — Liebig</h3>
+      <p>Bilan nutritif complet : exportations vs apports, facteur limitant, programme de fertigation par stade phénologique.</p>
+      <span class="feature-tag">Liebig</span>
     </div>
-    <div class="feature-card">
-      <div class="fc-icon">&#128176;</div>
-      <h3>Plan de Financement & FDA</h3>
-      <p>CAPEX, OPEX, BFR, echeancier credit, subventions FDA/Generation Green. Dossier technique complet pret pour la banque.</p>
-      <span class="fc-tag">FDA</span>
+    <div class="feature">
+      <div class="feature-icon purple">&#128176;</div>
+      <h3>Plan de financement & FDA</h3>
+      <p>CAPEX, OPEX, BFR, échéancier crédit, subventions FDA / Génération Green. Dossier technique complet prêt pour la banque.</p>
+      <span class="feature-tag">FDA</span>
     </div>
-    <div class="feature-card">
-      <div class="fc-icon">&#128200;</div>
-      <h3>Business Plan 10 Ans</h3>
-      <p>Projection multi-annuelle avec variabilite climatique, courbe de maturite des arbres, seuil de rentabilite et ROI.</p>
+    <div class="feature">
+      <div class="feature-icon red">&#128200;</div>
+      <h3>Business Plan 10 ans</h3>
+      <p>Projection multi-annuelle avec variabilité climatique, courbe de maturité des arbres, seuil de rentabilité et ROI.</p>
     </div>
-    <div class="feature-card">
-      <div class="fc-icon">&#128202;</div>
-      <h3>Analyse de Risques</h3>
-      <p>Scoring multi-facteurs : climat, marche, phytosanitaire, financier. Scenarios changement climatique GIEC. Aide a la decision.</p>
+    <div class="feature">
+      <div class="feature-icon blue">&#128202;</div>
+      <h3>Analyse de risques</h3>
+      <p>Scoring multi-facteurs : climat, marché, phytosanitaire, financier. Scénarios changement climatique GIEC. Aide à la décision.</p>
     </div>
   </div>
 </section>
@@ -644,34 +544,32 @@ section{padding:100px 40px;position:relative}
 <hr class="section-divider">
 
 <!-- ===== HOW IT WORKS ===== -->
-<section id="how">
+<section class="section section-alt" id="how">
   <div class="section-header">
-    <div class="tag">Comment ca marche</div>
-    <h2>Du champ au business plan en 3 etapes</h2>
-    <p>Aucune connaissance technique requise. Selectionnez, simulez, exportez.</p>
+    <span class="badge badge-amber">Comment ça marche</span>
+    <h2 style="margin-top:20px">Du champ au business plan en 3 étapes</h2>
+    <p>Aucune connaissance technique requise. Sélectionnez, simulez, exportez.</p>
   </div>
-  <div class="steps-container">
-    <div class="step-row">
+  <div class="steps">
+    <div class="step">
       <div class="step-num">1</div>
-      <div class="step-body">
+      <div class="step-content">
         <h3>Configurez votre exploitation</h3>
-        <p>Choisissez votre culture parmi 47 especes, selectionnez votre region, renseignez la superficie, le type de sol et le systeme d'irrigation. Des presets Maroc sont disponibles pour demarrer rapidement.</p>
+        <p>Choisissez votre culture parmi 47 espèces, sélectionnez votre région, renseignez la superficie, le type de sol et le système d'irrigation. Des presets Maroc sont disponibles.</p>
       </div>
     </div>
-    <div class="step-connector"></div>
-    <div class="step-row">
+    <div class="step">
       <div class="step-num">2</div>
-      <div class="step-body">
+      <div class="step-content">
         <h3>Lancez la simulation</h3>
-        <p>SEVE calcule automatiquement : rendement previsionnel, besoins en eau et fertilisants, couts d'exploitation, tresorerie mensuelle, et projections sur 10 ans. 30+ panneaux d'analyse detaillee.</p>
+        <p>SEVE calcule automatiquement : rendement prévisionnel, besoins en eau et fertilisants, coûts d'exploitation, trésorerie mensuelle, et projections sur 10 ans. 30+ panneaux d'analyse détaillée.</p>
       </div>
     </div>
-    <div class="step-connector"></div>
-    <div class="step-row">
+    <div class="step">
       <div class="step-num">3</div>
-      <div class="step-body">
+      <div class="step-content">
         <h3>Exportez vos rapports</h3>
-        <p>Generez un dossier technique FDA complet, un business plan pour la banque, un rapport PDF professionnel. Comparez vos scenarios et prenez les bonnes decisions.</p>
+        <p>Générez un dossier technique FDA complet, un business plan pour la banque, un rapport PDF professionnel. Comparez vos scénarios et prenez les bonnes décisions.</p>
       </div>
     </div>
   </div>
@@ -680,64 +578,61 @@ section{padding:100px 40px;position:relative}
 <hr class="section-divider">
 
 <!-- ===== PRICING ===== -->
-<section id="pricing">
+<section class="section" id="pricing">
   <div class="section-header">
-    <div class="tag">Tarifs</div>
-    <h2>Un plan adapte a chaque besoin</h2>
-    <p>Commencez gratuitement, evoluez quand vous etes pret.</p>
+    <span class="badge badge-green">Tarifs</span>
+    <h2 style="margin-top:20px">Un plan adapté à chaque besoin</h2>
+    <p>Commencez gratuitement, évoluez quand vous êtes prêt.</p>
   </div>
   <div class="pricing-grid">
-    <!-- FREE -->
     <div class="price-card">
-      <div class="pc-name">Decouverte</div>
-      <div class="pc-desc">Pour explorer et apprendre</div>
-      <div class="pc-price">0 <span>DH</span></div>
-      <div class="pc-period">Gratuit pour toujours</div>
-      <ul>
-        <li><span class="check">&#10003;</span> 5 cultures disponibles</li>
-        <li><span class="check">&#10003;</span> 1 parcelle</li>
-        <li><span class="check">&#10003;</span> Simulation de rendement</li>
-        <li><span class="check">&#10003;</span> Bilan hydrique de base</li>
-        <li><span class="check">&#10003;</span> 3 simulations / mois</li>
-        <li class="disabled"><span class="cross">&#10005;</span> Export PDF</li>
-        <li class="disabled"><span class="cross">&#10005;</span> Dossier FDA</li>
-        <li class="disabled"><span class="cross">&#10005;</span> Business Plan 10 ans</li>
+      <div class="price-name">Découverte</div>
+      <div class="price-desc">Pour explorer et apprendre</div>
+      <div class="price-amount">0 <span>DH</span></div>
+      <div class="price-period">Gratuit pour toujours</div>
+      <ul class="price-features">
+        <li><span class="ck">&#10003;</span> 5 cultures disponibles</li>
+        <li><span class="ck">&#10003;</span> 1 parcelle</li>
+        <li><span class="ck">&#10003;</span> Simulation de rendement</li>
+        <li><span class="ck">&#10003;</span> Bilan hydrique de base</li>
+        <li><span class="ck">&#10003;</span> 3 simulations / mois</li>
+        <li class="dim"><span class="no">&#10005;</span> Export PDF</li>
+        <li class="dim"><span class="no">&#10005;</span> Dossier FDA</li>
+        <li class="dim"><span class="no">&#10005;</span> Business Plan 10 ans</li>
       </ul>
-      <a href="modele_seve.html#signup" class="price-btn">S'inscrire gratuitement</a>
+      <a href="modele_seve.html" class="price-btn">S'inscrire gratuitement</a>
     </div>
-    <!-- PRO -->
-    <div class="price-card popular">
-      <div class="pc-name">Professionnel</div>
-      <div class="pc-desc">Pour les agriculteurs et techniciens</div>
-      <div class="pc-price">299 <span>DH/mois</span></div>
-      <div class="pc-period">Soit 2 990 DH/an (economisez 17%)</div>
-      <ul>
-        <li><span class="check">&#10003;</span> 47 cultures completes</li>
-        <li><span class="check">&#10003;</span> Parcelles illimitees</li>
-        <li><span class="check">&#10003;</span> Simulations illimitees</li>
-        <li><span class="check">&#10003;</span> Bilan FAO-56 complet</li>
-        <li><span class="check">&#10003;</span> NPK Liebig + Fertigation</li>
-        <li><span class="check">&#10003;</span> Export PDF professionnel</li>
-        <li><span class="check">&#10003;</span> Dossier FDA / Banque</li>
-        <li><span class="check">&#10003;</span> Business Plan 10 ans</li>
+    <div class="price-card featured">
+      <div class="price-name">Professionnel</div>
+      <div class="price-desc">Pour agriculteurs et techniciens</div>
+      <div class="price-amount">299 <span>DH/mois</span></div>
+      <div class="price-period">Soit 2 990 DH/an (économisez 17%)</div>
+      <ul class="price-features">
+        <li><span class="ck">&#10003;</span> 47 cultures complètes</li>
+        <li><span class="ck">&#10003;</span> Parcelles illimitées</li>
+        <li><span class="ck">&#10003;</span> Simulations illimitées</li>
+        <li><span class="ck">&#10003;</span> Bilan FAO-56 complet</li>
+        <li><span class="ck">&#10003;</span> NPK Liebig + Fertigation</li>
+        <li><span class="ck">&#10003;</span> Export PDF professionnel</li>
+        <li><span class="ck">&#10003;</span> Dossier FDA / Banque</li>
+        <li><span class="ck">&#10003;</span> Business Plan 10 ans</li>
       </ul>
-      <a href="modele_seve.html#signup-pro" class="price-btn">Commencer l'essai Pro</a>
+      <a href="modele_seve.html" class="price-btn">Commencer l'essai Pro</a>
     </div>
-    <!-- ENTERPRISE -->
     <div class="price-card">
-      <div class="pc-name">Entreprise</div>
-      <div class="pc-desc">Pour cooperatives et institutions</div>
-      <div class="pc-price">Sur devis</div>
-      <div class="pc-period">Tarification personnalisee</div>
-      <ul>
-        <li><span class="check">&#10003;</span> Tout le plan Pro</li>
-        <li><span class="check">&#10003;</span> Multi-exploitation</li>
-        <li><span class="check">&#10003;</span> Tableau de bord consolide</li>
-        <li><span class="check">&#10003;</span> API d'integration</li>
-        <li><span class="check">&#10003;</span> Support prioritaire</li>
-        <li><span class="check">&#10003;</span> Formation sur site</li>
-        <li><span class="check">&#10003;</span> Personnalisation</li>
-        <li><span class="check">&#10003;</span> SLA garanti</li>
+      <div class="price-name">Entreprise</div>
+      <div class="price-desc">Pour coopératives et institutions</div>
+      <div class="price-amount">Sur devis</div>
+      <div class="price-period">Tarification personnalisée</div>
+      <ul class="price-features">
+        <li><span class="ck">&#10003;</span> Tout le plan Pro</li>
+        <li><span class="ck">&#10003;</span> Multi-exploitation</li>
+        <li><span class="ck">&#10003;</span> Tableau de bord consolidé</li>
+        <li><span class="ck">&#10003;</span> API d'intégration</li>
+        <li><span class="ck">&#10003;</span> Support prioritaire</li>
+        <li><span class="ck">&#10003;</span> Formation sur site</li>
+        <li><span class="ck">&#10003;</span> Personnalisation</li>
+        <li><span class="ck">&#10003;</span> SLA garanti</li>
       </ul>
       <a href="mailto:contact@seve-agtech.ma" class="price-btn">Nous contacter</a>
     </div>
@@ -747,42 +642,42 @@ section{padding:100px 40px;position:relative}
 <hr class="section-divider">
 
 <!-- ===== AUDIENCE ===== -->
-<section id="audience">
+<section class="section section-alt" id="audience">
   <div class="section-header">
-    <div class="tag">Pour qui</div>
-    <h2>Concu pour le terrain marocain</h2>
-    <p>Chaque profil trouve dans SEVE les outils adaptes a ses besoins.</p>
+    <span class="badge badge-blue">Pour qui</span>
+    <h2 style="margin-top:20px">Conçu pour le terrain marocain</h2>
+    <p>Chaque profil trouve dans SEVE les outils adaptés à ses besoins.</p>
   </div>
   <div class="audience-grid">
     <div class="audience-card">
-      <div class="ac-icon">&#127981;</div>
+      <span class="audience-icon">&#127981;</span>
       <h3>Jeunes Agriculteurs FDA</h3>
-      <p>Montez votre dossier FDA complet : etude technico-economique, plan de financement, business plan. Pret pour la banque et l'ADA.</p>
+      <p>Montez votre dossier FDA complet : étude technico-économique, plan de financement, business plan. Prêt pour la banque et l'ADA.</p>
     </div>
     <div class="audience-card">
-      <div class="ac-icon">&#128105;&#8205;&#127806;</div>
-      <h3>Agriculteurs en Activite</h3>
-      <p>Optimisez votre irrigation, vos apports NPK et votre tresorerie. Comparez les scenarios avant d'investir.</p>
+      <span class="audience-icon">&#128105;&#8205;&#127806;</span>
+      <h3>Agriculteurs en activité</h3>
+      <p>Optimisez votre irrigation, vos apports NPK et votre trésorerie. Comparez les scénarios avant d'investir.</p>
     </div>
     <div class="audience-card">
-      <div class="ac-icon">&#128187;</div>
+      <span class="audience-icon">&#128187;</span>
       <h3>Techniciens & Conseillers</h3>
-      <p>Generez des rapports professionnels pour vos clients. Simulez des itineraires techniques optimaux par region.</p>
+      <p>Générez des rapports professionnels pour vos clients. Simulez des itinéraires techniques optimaux par région.</p>
     </div>
     <div class="audience-card">
-      <div class="ac-icon">&#127963;</div>
-      <h3>Cooperatives & Agregateurs</h3>
-      <p>Gerez plusieurs exploitations, consolidez les donnees, planifiez les approvisionnements a l'echelle.</p>
+      <span class="audience-icon">&#127963;</span>
+      <h3>Coopératives & Agrégateurs</h3>
+      <p>Gérez plusieurs exploitations, consolidez les données, planifiez les approvisionnements à l'échelle.</p>
     </div>
     <div class="audience-card">
-      <div class="ac-icon">&#127891;</div>
-      <h3>Etudiants & Formation</h3>
-      <p>Apprenez les modeles agronomiques (FAO-56, Liebig) de maniere interactive. Parfait pour les IPSM, IAV, ENA.</p>
+      <span class="audience-icon">&#127891;</span>
+      <h3>Étudiants & Formation</h3>
+      <p>Apprenez les modèles agronomiques (FAO-56, Liebig) de manière interactive. Parfait pour les IPSM, IAV, ENA.</p>
     </div>
     <div class="audience-card">
-      <div class="ac-icon">&#127970;</div>
+      <span class="audience-icon">&#127970;</span>
       <h3>Institutions (ORMVA, DRA)</h3>
-      <p>Outil d'aide a la decision pour le conseil agricole regional. Donnees calibrees par region marocaine.</p>
+      <p>Outil d'aide à la décision pour le conseil agricole régional. Données calibrées par région marocaine.</p>
     </div>
   </div>
 </section>
@@ -790,10 +685,10 @@ section{padding:100px 40px;position:relative}
 <hr class="section-divider">
 
 <!-- ===== FAQ ===== -->
-<section id="faq">
+<section class="section" id="faq">
   <div class="section-header">
-    <div class="tag">FAQ</div>
-    <h2>Questions frequentes</h2>
+    <span class="badge badge-amber">FAQ</span>
+    <h2 style="margin-top:20px">Questions fréquentes</h2>
   </div>
   <div class="faq-list">
     <div class="faq-item">
@@ -801,53 +696,53 @@ section{padding:100px 40px;position:relative}
         SEVE fonctionne-t-il sans connexion internet ?
         <span class="faq-arrow">&#9660;</span>
       </div>
-      <div class="faq-a">Oui, SEVE est une application web progressive (PWA). Une fois chargee, elle fonctionne entierement hors-ligne. Vos simulations sont sauvegardees localement et synchronisees quand vous vous reconnectez.</div>
+      <div class="faq-a">Oui, SEVE est une application web progressive (PWA). Une fois chargée, elle fonctionne entièrement hors-ligne. Vos simulations sont sauvegardées localement et synchronisées quand vous vous reconnectez.</div>
     </div>
     <div class="faq-item">
       <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
-        D'ou viennent les donnees scientifiques ?
+        D'où viennent les données scientifiques ?
         <span class="faq-arrow">&#9660;</span>
       </div>
-      <div class="faq-a">Les modeles de calcul sont bases sur les references FAO-56 (bilan hydrique), la loi de Liebig (nutrition minerale), et les itineraires techniques de l'INRA Meknes, ONCA et ORMVA. Les donnees climatiques couvrent les 48 regions du Maroc.</div>
+      <div class="faq-a">Les modèles de calcul sont basés sur les références FAO-56 (bilan hydrique), la loi de Liebig (nutrition minérale), et les itinéraires techniques de l'INRA Meknès, ONCA et ORMVA. Les données climatiques couvrent les 48 régions du Maroc.</div>
     </div>
     <div class="faq-item">
       <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
         Puis-je utiliser SEVE pour mon dossier FDA ?
         <span class="faq-arrow">&#9660;</span>
       </div>
-      <div class="faq-a">Absolument. Le module "Dossier FDA / Banque" genere un document complet avec etude technico-economique, plan de financement, echeancier de credit et subventions. Il couvre les exigences du programme Generation Green.</div>
+      <div class="faq-a">Absolument. Le module "Dossier FDA / Banque" génère un document complet avec étude technico-économique, plan de financement, échéancier de crédit et subventions. Il couvre les exigences du programme Génération Green.</div>
     </div>
     <div class="faq-item">
       <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
         Combien de cultures sont disponibles ?
         <span class="faq-arrow">&#9660;</span>
       </div>
-      <div class="faq-a">47 cultures couvrant : fruits frais, agrumes, fruits a noyau, fruits a pepins, fruits secs & oleagineux, palmier, maraicheres, cereales, legumineuses, champignons, et elevage (bovin, ovin, caprin, avicole, apicole).</div>
+      <div class="faq-a">47 cultures couvrant : fruits frais, agrumes, fruits à noyau, fruits à pépins, fruits secs & oléagineux, palmier, maraîchères, céréales, légumineuses, champignons, et élevage (bovin, ovin, caprin, avicole, apicole).</div>
     </div>
     <div class="faq-item">
       <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
-        SEVE est-il adapte a ma region ?
+        SEVE est-il adapté à ma région ?
         <span class="faq-arrow">&#9660;</span>
       </div>
-      <div class="faq-a">Oui, les 48 regions du Maroc sont integrees avec leurs donnees climatiques mensuelles (temperature, pluviometrie, ET0). Vous pouvez aussi saisir des donnees meteo personnalisees pour plus de precision.</div>
+      <div class="faq-a">Oui, les 48 régions du Maroc sont intégrées avec leurs données climatiques mensuelles (température, pluviométrie, ET0). Vous pouvez aussi saisir des données météo personnalisées pour plus de précision.</div>
     </div>
     <div class="faq-item">
       <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
         Y a-t-il un engagement sur le plan Pro ?
         <span class="faq-arrow">&#9660;</span>
       </div>
-      <div class="faq-a">Non, aucun engagement. Vous pouvez annuler a tout moment. Le plan annuel offre une reduction de 17% par rapport au tarif mensuel.</div>
+      <div class="faq-a">Non, aucun engagement. Vous pouvez annuler à tout moment. Le plan annuel offre une réduction de 17% par rapport au tarif mensuel.</div>
     </div>
   </div>
 </section>
 
 <!-- ===== CTA ===== -->
-<section class="cta-section">
-  <h2>Pret a optimiser votre exploitation ?</h2>
-  <p>Rejoignez les agriculteurs marocains qui utilisent SEVE pour prendre des decisions basees sur la science.</p>
+<section class="cta">
+  <h2>Prêt à optimiser votre exploitation ?</h2>
+  <p>Rejoignez les agriculteurs marocains qui utilisent SEVE pour prendre des décisions basées sur la science.</p>
   <div class="hero-actions">
-    <a href="modele_seve.html#signup" class="btn-primary">Commencer gratuitement</a>
-    <a href="mailto:contact@seve-agtech.ma" class="btn-secondary">Demander une demo</a>
+    <a href="modele_seve.html" class="btn btn-primary">Commencer gratuitement &rarr;</a>
+    <a href="mailto:contact@seve-agtech.ma" class="btn btn-secondary">Demander une démo</a>
   </div>
 </section>
 
@@ -855,128 +750,95 @@ section{padding:100px 40px;position:relative}
 <footer class="footer">
   <div class="footer-inner">
     <div class="footer-brand">
-      <div class="fb-title">SEVE AgTech</div>
-      <p>Simulation Economique et Vegetale pour l'Entreprise. Plateforme de simulation technico-economique agricole 100% marocaine.</p>
+      <div class="footer-brand-title">SEVE AgTech</div>
+      <p>Simulation Économique et Végétale pour l'Entreprise. Plateforme de simulation technico-économique agricole 100% marocaine.</p>
     </div>
     <div class="footer-col">
       <h4>Produit</h4>
-      <a href="#features">Fonctionnalites</a>
+      <a href="#features">Fonctionnalités</a>
       <a href="#pricing">Tarifs</a>
-      <a href="#how">Comment ca marche</a>
-      <a href="modele_seve.html">Acceder a l'app</a>
+      <a href="#how">Comment ça marche</a>
+      <a href="modele_seve.html">Accéder à l'app</a>
     </div>
     <div class="footer-col">
       <h4>Ressources</h4>
+      <a href="https://github.com/simobouzarki/seve-agtech" target="_blank">GitHub</a>
+      <a href="https://github.com/simobouzarki/seve-agtech/issues" target="_blank">Roadmap</a>
       <a href="#">Documentation</a>
-      <a href="#">Guide de demarrage</a>
       <a href="#">Blog agronomique</a>
-      <a href="#">API (Entreprise)</a>
     </div>
     <div class="footer-col">
       <h4>Contact</h4>
       <a href="mailto:contact@seve-agtech.ma">contact@seve-agtech.ma</a>
+      <a href="https://github.com/simobouzarki" target="_blank">GitHub</a>
       <a href="#">LinkedIn</a>
-      <a href="#">Facebook</a>
     </div>
   </div>
   <div class="footer-bottom">
-    <span>&copy; 2025-2026 SEVE AgTech -- EL BOUZARKI Mohamed. Tous droits reserves.</span>
+    <span>&copy; 2025-2026 SEVE AgTech — EL BOUZARKI Mohamed. Tous droits réservés.</span>
     <span>Fait avec rigueur scientifique au Maroc</span>
   </div>
 </footer>
 
 <script>
 (function(){
-  /* ===== Navbar scroll effect + frosted glass ===== */
-  var navbar = document.getElementById('navbar');
-  var progressBar = document.getElementById('scrollProgress');
+  /* Navbar scroll */
+  var nav=document.getElementById('nav');
+  window.addEventListener('scroll',function(){
+    nav.classList.toggle('scrolled',window.scrollY>20);
+  },{passive:true});
 
-  window.addEventListener('scroll', function(){
-    var scrolled = window.scrollY > 40;
-    navbar.classList.toggle('scrolled', scrolled);
-
-    /* Scroll progress bar */
-    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    var progress = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
-    progressBar.style.width = progress + '%';
-  }, {passive: true});
-
-  /* ===== Smooth scroll for anchor links ===== */
+  /* Smooth scroll */
   document.querySelectorAll('a[href^="#"]').forEach(function(a){
-    a.addEventListener('click', function(e){
-      var target = document.querySelector(this.getAttribute('href'));
-      if(target){
-        e.preventDefault();
-        target.scrollIntoView({behavior:'smooth', block:'start'});
-      }
+    a.addEventListener('click',function(e){
+      var t=document.querySelector(this.getAttribute('href'));
+      if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'})}
       document.querySelector('.nav-links').classList.remove('open');
     });
   });
 
-  /* ===== Counter animation with IntersectionObserver ===== */
-  function animateCounter(el, target, suffix, duration){
-    var start = 0;
-    var startTime = null;
-    var isFloat = target % 1 !== 0;
-
-    function step(timestamp){
-      if(!startTime) startTime = timestamp;
-      var elapsed = timestamp - startTime;
-      var progress = Math.min(elapsed / duration, 1);
-      /* Ease-out cubic */
-      var eased = 1 - Math.pow(1 - progress, 3);
-      var current = eased * target;
-
-      if(isFloat){
-        el.textContent = current.toFixed(1) + suffix;
-      } else {
-        el.textContent = Math.floor(current).toLocaleString('fr-FR') + suffix;
-      }
-
-      if(progress < 1){
-        requestAnimationFrame(step);
-      }
+  /* Counter animation */
+  function animateVal(el,target,suffix,dur){
+    var start=null,isFloat=target%1!==0;
+    function step(ts){
+      if(!start)start=ts;
+      var p=Math.min((ts-start)/dur,1);
+      var e=1-Math.pow(1-p,3);
+      var v=e*target;
+      el.textContent=(isFloat?v.toFixed(1):Math.floor(v).toLocaleString('fr-FR'))+suffix;
+      if(p<1)requestAnimationFrame(step);
     }
     requestAnimationFrame(step);
   }
 
-  /* Observe mockup cards for counter animation */
-  var mockCards = document.querySelectorAll('.mock-card-val[data-target]');
-  var counterObserver = new IntersectionObserver(function(entries){
-    entries.forEach(function(entry){
-      if(entry.isIntersecting){
-        var el = entry.target;
-        var target = parseFloat(el.getAttribute('data-target'));
-        var suffix = el.getAttribute('data-suffix') || '';
-        animateCounter(el, target, suffix, 2000);
-        counterObserver.unobserve(el);
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){
+        var el=en.target;
+        var t=parseFloat(el.getAttribute('data-target'));
+        var s=el.getAttribute('data-suffix')||'';
+        animateVal(el,t,s,2000);
+        obs.unobserve(el);
       }
     });
-  }, {threshold: 0.5});
+  },{threshold:0.5});
 
-  mockCards.forEach(function(card){
-    counterObserver.observe(card);
-  });
+  document.querySelectorAll('[data-target]').forEach(function(el){obs.observe(el)});
 
-  /* ===== Stat counters in hero stats (if any) ===== */
-  var statCounters = document.querySelectorAll('.stat-counter[data-target]');
-  var statObserver = new IntersectionObserver(function(entries){
-    entries.forEach(function(entry){
-      if(entry.isIntersecting){
-        var el = entry.target;
-        var target = parseFloat(el.getAttribute('data-target'));
-        var suffix = el.getAttribute('data-suffix') || '';
-        animateCounter(el, target, suffix, 1800);
-        statObserver.unobserve(el);
-      }
+  /* Preview bars */
+  var barsContainer=document.getElementById('previewBars');
+  if(barsContainer){
+    var heights=[12,18,22,28,32,38,42,48,52,60];
+    heights.forEach(function(h,i){
+      var bar=document.createElement('div');
+      bar.className='preview-bar-item';
+      bar.style.setProperty('--h',h+'px');
+      bar.style.animationDelay=(i*0.1)+'s';
+      barsContainer.appendChild(bar);
     });
-  }, {threshold: 0.5});
+  }
 
-  statCounters.forEach(function(s){
-    statObserver.observe(s);
-  });
-
-  /* ===== Register Service Worker for PWA ===== */
+  /* Service Worker */
   if('serviceWorker' in navigator){
     navigator.serviceWorker.register('sw.js').catch(function(){});
   }
