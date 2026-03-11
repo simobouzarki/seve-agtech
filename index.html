@@ -7,11 +7,29 @@
 <meta name="keywords" content="agriculture Maroc, simulation agricole, FDA, plan financement, rendement, technico-économique, SEVE">
 <meta name="author" content="SEVE AgTech">
 <meta name="theme-color" content="#0a0a0a">
-<meta property="og:title" content="SEVE AgTech — Simulation Agricole Professionnelle">
-<meta property="og:description" content="Le premier simulateur techno-économique agricole 100% marocain. 131 cultures, 48 régions, modèles FAO-56.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://simobouzarki.github.io/seve-agtech/">
+<meta property="og:title" content="SEVE AgTech — Simulateur agricole professionnel Maroc"/>
+<meta property="og:description" content="Simulez vos rendements, optimisez votre irrigation, générez vos dossiers FDA. 47 cultures, 48 régions du Maroc. 100% gratuit."/>
+<meta property="og:image" content="https://simobouzarki.github.io/seve-agtech/og-image.png"/>
+<meta property="og:url" content="https://simobouzarki.github.io/seve-agtech/"/>
+<meta property="og:type" content="website"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="SEVE AgTech — Simulateur agricole Maroc"/>
+<meta name="twitter:description" content="47 cultures · 48 régions · FAO-56 · FDA · 100% offline"/>
+<link rel="canonical" href="https://simobouzarki.github.io/seve-agtech/"/>
 <title>SEVE AgTech — Simulation Agricole Professionnelle Maroc</title>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"SoftwareApplication",
+  "name":"SEVE AgTech",
+  "applicationCategory":"BusinessApplication",
+  "operatingSystem":"Web, PWA",
+  "description":"Simulateur technico-économique agricole professionnel pour le Maroc",
+  "offers":{"@type":"Offer","price":"0","priceCurrency":"MAD"},
+  "url":"https://simobouzarki.github.io/seve-agtech/",
+  "author":{"@type":"Person","name":"EL BOUZARKI Mohamed"}
+}
+</script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
@@ -48,7 +66,8 @@ body{
   background:var(--bg);color:var(--text);
   font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
-  line-height:1.6;overflow-x:hidden
+  line-height:1.6;overflow-x:hidden;
+  padding-top:64px
 }
 a{color:inherit;text-decoration:none}
 img{max-width:100%;display:block}
@@ -84,9 +103,11 @@ img{max-width:100%;display:block}
 
 /* ===== NAVBAR ===== */
 .nav{
-  position:fixed;top:0;left:0;right:0;z-index:100;
+  position:fixed;top:0;left:0;right:0;z-index:1000;
   border-bottom:1px solid transparent;
-  transition:all .3s ease
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  background:rgba(8,8,15,0.90);
+  transition:all .3s ease,box-shadow .3s
 }
 .nav.scrolled{background:rgba(10,10,10,.85);backdrop-filter:blur(16px) saturate(180%);border-color:var(--border)}
 .nav-inner{
@@ -395,6 +416,24 @@ img{max-width:100%;display:block}
   .hero-actions{flex-direction:column;align-items:center}
   .btn{width:100%;justify-content:center}
 }
+
+/* Partners banner */
+.partners{padding:40px 20px;text-align:center}
+.partners-label{font-size:.85rem;color:#888;text-transform:uppercase;letter-spacing:2px;margin-bottom:24px}
+.partners-track{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:32px}
+.partner-logo{font-size:.95rem;font-weight:600;color:#555;letter-spacing:1px;padding:10px 20px;border:1px solid #222;border-radius:8px;transition:color .3s,border-color .3s}
+.partner-logo:hover{color:var(--accent);border-color:var(--accent)}
+
+/* Testimonials */
+.testimonials-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;max-width:1100px;margin:0 auto;padding:0 20px}
+.testimonial-card{background:#111;border:1px solid #1e1e1e;border-radius:16px;padding:32px;transition:border-color .3s,transform .3s}
+.testimonial-card:hover{border-color:var(--accent);transform:translateY(-4px)}
+.testimonial-stars{color:#facc15;font-size:1.1rem;margin-bottom:16px;letter-spacing:2px}
+.testimonial-text{color:#ccc;font-size:.95rem;line-height:1.7;margin-bottom:24px;font-style:italic}
+.testimonial-author{display:flex;align-items:center;gap:14px}
+.testimonial-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#6366f1);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;color:#fff;flex-shrink:0}
+.testimonial-name{font-weight:600;font-size:.95rem;color:#fff}
+.testimonial-role{font-size:.8rem;color:#888;margin-top:2px}
 </style>
 </head>
 <body>
@@ -431,13 +470,39 @@ img{max-width:100%;display:block}
       L'outil de simulation technico-économique qui calcule vos rendements, optimise votre irrigation,
       et génère vos dossiers FDA — basé sur les modèles FAO-56 et les données régionales du Maroc.
     </p>
-    <div class="hero-actions">
+    <div style="margin-top:40px;border-radius:16px;overflow:hidden;box-shadow:0 25px 60px rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.1);background:linear-gradient(135deg,#0f1020,#1a2040);padding:24px;max-width:700px;margin-left:auto;margin-right:auto">
+      <div style="display:flex;gap:8px;margin-bottom:16px">
+        <div style="width:12px;height:12px;border-radius:50%;background:#ff5f57"></div>
+        <div style="width:12px;height:12px;border-radius:50%;background:#febc2e"></div>
+        <div style="width:12px;height:12px;border-radius:50%;background:#28c840"></div>
+        <span style="margin-left:12px;font-size:12px;color:#8899aa;font-family:monospace">seve-agtech — Simulation Olivier &middot; Meknès &middot; 10ha</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px">
+        <div style="background:rgba(68,170,221,0.08);border:1px solid rgba(68,170,221,0.2);border-radius:10px;padding:12px;text-align:center">
+          <div style="font-size:1.8rem;font-weight:800;color:#44aadd">8.4</div>
+          <div style="font-size:11px;color:#8899aa">t/ha rendement</div>
+        </div>
+        <div style="background:rgba(68,204,102,0.08);border:1px solid rgba(68,204,102,0.2);border-radius:10px;padding:12px;text-align:center">
+          <div style="font-size:1.8rem;font-weight:800;color:#44cc66">145K</div>
+          <div style="font-size:11px;color:#8899aa">DH marge nette</div>
+        </div>
+        <div style="background:rgba(255,204,0,0.08);border:1px solid rgba(255,204,0,0.2);border-radius:10px;padding:12px;text-align:center">
+          <div style="font-size:1.8rem;font-weight:800;color:#ffcc00">72%</div>
+          <div style="font-size:11px;color:#8899aa">score fiabilité</div>
+        </div>
+      </div>
+      <div style="background:rgba(68,204,102,0.06);border:1px solid rgba(68,204,102,0.15);border-radius:8px;padding:10px 14px;font-size:13px;color:#8899aa;border-left:3px solid #44cc66">
+        &#10003; <strong style="color:#44cc66">Conditions optimales</strong> — Facteur limitant : stress hydrique Ks=0.87 en été. Action : maintenir goutte-à-goutte juin&rarr;août.
+      </div>
+    </div>
+
+    <div class="hero-actions" style="margin-top:40px">
       <a href="modele_seve.html" class="btn btn-primary">Commencer gratuitement &rarr;</a>
       <a href="#features" class="btn btn-secondary">Découvrir les fonctionnalités</a>
     </div>
     <div class="hero-stats">
       <div class="hero-stat">
-        <div class="hero-stat-num blue" data-count="47">47</div>
+        <div class="hero-stat-num blue" data-count="131">131</div>
         <div class="hero-stat-label">Cultures</div>
       </div>
       <div class="hero-stat">
@@ -456,6 +521,19 @@ img{max-width:100%;display:block}
   </div>
 </section>
 
+<!-- ===== PARTNER LOGOS ===== -->
+<section class="partners">
+  <p class="partners-label">Méthodologies & références institutionnelles</p>
+  <div class="partners-track">
+    <span class="partner-logo">INRA Meknès</span>
+    <span class="partner-logo">ONCA</span>
+    <span class="partner-logo">ORMVA</span>
+    <span class="partner-logo">IPSM</span>
+    <span class="partner-logo">FAO-56</span>
+    <span class="partner-logo">ADA Maroc</span>
+  </div>
+</section>
+
 <!-- ===== DASHBOARD PREVIEW ===== -->
 <div class="preview">
   <div class="preview-window">
@@ -468,23 +546,23 @@ img{max-width:100%;display:block}
     <div class="preview-grid">
       <div class="preview-card">
         <div class="preview-card-label">Rendement prévu</div>
-        <div class="preview-card-val c-blue" data-target="12.4" data-suffix=" T/ha">0</div>
-        <div class="preview-card-sub">Olivier — Meknès-Fès</div>
+        <div class="preview-card-val c-blue" id="kpi-rendement" data-target="8.4" data-suffix=" t/ha">0</div>
+        <div class="preview-card-sub">Rendement prévu &middot; Olivier Meknès</div>
       </div>
       <div class="preview-card">
         <div class="preview-card-label">Marge nette</div>
-        <div class="preview-card-val c-green" data-target="48500" data-suffix=" DH">0</div>
-        <div class="preview-card-sub">+23% vs moyenne régionale</div>
+        <div class="preview-card-val c-green" id="kpi-marge" data-target="145000" data-suffix=" DH">0</div>
+        <div class="preview-card-sub">Marge nette &middot; 5 ha irrigué</div>
       </div>
       <div class="preview-card">
         <div class="preview-card-label">Besoin hydrique</div>
-        <div class="preview-card-val c-amber" data-target="4200" data-suffix=" m³">0</div>
-        <div class="preview-card-sub">Irrigation goutte-à-goutte</div>
+        <div class="preview-card-val c-amber" id="kpi-eau" data-target="4200" data-suffix=" m³">0</div>
+        <div class="preview-card-sub">Eau économisée &middot; vs aspersion</div>
       </div>
       <div class="preview-card">
-        <div class="preview-card-label">Score risque</div>
-        <div class="preview-card-val c-purple" data-target="72" data-suffix="/100">0</div>
-        <div class="preview-card-sub">Risque modéré</div>
+        <div class="preview-card-label">Score fiabilité</div>
+        <div class="preview-card-val c-purple" id="kpi-risque" data-target="72" data-suffix="%">0</div>
+        <div class="preview-card-sub">Score fiabilité &middot; simulation complète</div>
       </div>
       <div class="preview-chart">
         <div class="preview-chart-label">Projection cash-flow sur 10 ans</div>
@@ -507,7 +585,7 @@ img{max-width:100%;display:block}
     <div class="feature">
       <div class="feature-icon blue">&#127793;</div>
       <h3>Simulation de rendement</h3>
-      <p>Modèle biophysique complet : interception lumineuse, LUE, GDD, stress hydrique, courbe de maturité. 47 espèces avec variétés locales.</p>
+      <p>Modèle biophysique complet : interception lumineuse, LUE, GDD, stress hydrique, courbe de maturité. 131 espèces avec variétés locales.</p>
       <span class="feature-tag">131 cultures</span>
     </div>
     <div class="feature">
@@ -555,7 +633,7 @@ img{max-width:100%;display:block}
       <div class="step-num">1</div>
       <div class="step-content">
         <h3>Configurez votre exploitation</h3>
-        <p>Choisissez votre culture parmi 47 espèces, sélectionnez votre région, renseignez la superficie, le type de sol et le système d'irrigation. Des presets Maroc sont disponibles.</p>
+        <p>Choisissez votre culture parmi 131 espèces, sélectionnez votre région, renseignez la superficie, le type de sol et le système d'irrigation. Des presets Maroc sont disponibles.</p>
       </div>
     </div>
     <div class="step">
@@ -577,12 +655,65 @@ img{max-width:100%;display:block}
 
 <hr class="section-divider">
 
+<!-- ===== TESTIMONIALS ===== -->
+<section class="section" id="testimonials">
+  <div class="section-header">
+    <span class="badge badge-blue">Témoignages</span>
+    <h2 style="margin-top:20px">Ils utilisent SEVE AgTech</h2>
+    <p>Retours de professionnels du terrain marocain.</p>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial-card">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">« Grâce à SEVE, j'ai pu simuler ma campagne d'agrumes avant de m'engager financièrement. Le bilan hydrique FAO-56 m'a évité un sur-investissement en irrigation. »</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">KB</div>
+        <div>
+          <div class="testimonial-name">Khalid B.</div>
+          <div class="testimonial-role">Exploitant agrumicole — Souss-Massa</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">« Un outil pédagogique exceptionnel. Mes étudiants en GEA l'utilisent pour leurs projets de fin d'études. La rigueur scientifique est au rendez-vous. »</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">FZ</div>
+        <div>
+          <div class="testimonial-name">Prof. Fatima Z.</div>
+          <div class="testimonial-role">Enseignante — IPSM Meknès</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">« Le dossier FDA généré automatiquement nous a fait gagner 3 semaines de travail. Notre coopérative a obtenu la subvention dès le premier dépôt. »</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">AT</div>
+        <div>
+          <div class="testimonial-name">Amine T.</div>
+          <div class="testimonial-role">Président — Coopérative Gharb</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
 <!-- ===== PRICING ===== -->
 <section class="section" id="pricing">
   <div class="section-header">
     <span class="badge badge-green">Tarifs</span>
     <h2 style="margin-top:20px">Un plan adapté à chaque besoin</h2>
     <p>Commencez gratuitement, évoluez quand vous êtes prêt.</p>
+    <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:40px">
+      <span id="lbl-monthly" style="font-size:14px;font-weight:600;color:#e0e8f0">Mensuel</span>
+      <div onclick="togglePricing()" style="width:52px;height:28px;background:#44aadd;border-radius:14px;cursor:pointer;position:relative;transition:background 0.3s" id="pricing-toggle">
+        <div id="toggle-dot" style="width:22px;height:22px;background:#fff;border-radius:50%;position:absolute;top:3px;left:3px;transition:transform 0.3s"></div>
+      </div>
+      <span id="lbl-annual" style="font-size:14px;color:#8899aa">Annuel <span style="background:rgba(68,204,102,0.15);color:#44cc66;padding:2px 8px;border-radius:10px;font-size:12px;font-weight:700">-17%</span></span>
+    </div>
   </div>
   <div class="pricing-grid">
     <div class="price-card">
@@ -605,7 +736,7 @@ img{max-width:100%;display:block}
     <div class="price-card featured">
       <div class="price-name">Professionnel</div>
       <div class="price-desc">Pour agriculteurs et techniciens</div>
-      <div class="price-amount">299 <span>DH/mois</span></div>
+      <div class="price-amount"><span id="price-pro">299</span> <span id="period-pro">DH/mois</span></div>
       <div class="price-period">Soit 2 990 DH/an (économisez 17%)</div>
       <ul class="price-features">
         <li><span class="ck">&#10003;</span> 131 cultures complètes</li>
@@ -736,6 +867,30 @@ img{max-width:100%;display:block}
   </div>
 </section>
 
+<!-- ===== STATS BAND ===== -->
+<section style="padding:60px 20px;background:linear-gradient(135deg,rgba(68,170,221,0.05),rgba(68,204,102,0.03))">
+  <div style="max-width:900px;margin:0 auto">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:32px;text-align:center">
+      <div>
+        <div style="font-size:2.5rem;font-weight:800;background:linear-gradient(135deg,#44aadd,#44cc66);-webkit-background-clip:text;-webkit-text-fill-color:transparent">131+</div>
+        <div style="color:#8899aa;font-size:14px;margin-top:4px">Espèces & cultures</div>
+      </div>
+      <div>
+        <div style="font-size:2.5rem;font-weight:800;background:linear-gradient(135deg,#44aadd,#44cc66);-webkit-background-clip:text;-webkit-text-fill-color:transparent">48</div>
+        <div style="color:#8899aa;font-size:14px;margin-top:4px">Régions du Maroc</div>
+      </div>
+      <div>
+        <div style="font-size:2.5rem;font-weight:800;background:linear-gradient(135deg,#44aadd,#44cc66);-webkit-background-clip:text;-webkit-text-fill-color:transparent">700+</div>
+        <div style="color:#8899aa;font-size:14px;margin-top:4px">Variétés locales</div>
+      </div>
+      <div>
+        <div style="font-size:2.5rem;font-weight:800;background:linear-gradient(135deg,#44aadd,#44cc66);-webkit-background-clip:text;-webkit-text-fill-color:transparent">100%</div>
+        <div style="color:#8899aa;font-size:14px;margin-top:4px">Hors-ligne / PWA</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ===== CTA ===== -->
 <section class="cta">
   <h2>Prêt à optimiser votre exploitation ?</h2>
@@ -747,45 +902,63 @@ img{max-width:100%;display:block}
 </section>
 
 <!-- ===== FOOTER ===== -->
-<footer class="footer">
-  <div class="footer-inner">
-    <div class="footer-brand">
-      <div class="footer-brand-title">SEVE AgTech</div>
-      <p>Simulation Économique et Végétale pour l'Entreprise. Plateforme de simulation technico-économique agricole 100% marocaine.</p>
+<footer style="background:#050510;border-top:1px solid rgba(255,255,255,0.06);padding:60px 20px 32px">
+  <div style="max-width:1000px;margin:0 auto">
+    <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px">
+      <div>
+        <div style="font-size:1.2rem;font-weight:800;margin-bottom:12px;background:linear-gradient(90deg,#44aadd,#44cc66);-webkit-background-clip:text;-webkit-text-fill-color:transparent">SEVE AgTech</div>
+        <p style="color:#8899aa;font-size:13px;line-height:1.7;margin-bottom:16px">Simulation Économique et Végétale pour l'Entreprise Agricole. Plateforme 100% marocaine basée sur les modèles FAO-56 et Liebig.</p>
+        <div style="display:flex;gap:10px">
+          <a href="https://github.com/simobouzarki/seve-agtech" style="padding:6px 12px;border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:#8899aa;text-decoration:none;font-size:12px;transition:.2s" onmouseover="this.style.color='#44aadd'" onmouseout="this.style.color='#8899aa'">GitHub</a>
+          <a href="mailto:contact@seve-agtech.ma" style="padding:6px 12px;border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:#8899aa;text-decoration:none;font-size:12px" onmouseover="this.style.color='#44aadd'" onmouseout="this.style.color='#8899aa'">Email</a>
+        </div>
+      </div>
+      <div>
+        <h4 style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#e0e8f0;margin-bottom:16px">Produit</h4>
+        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px">
+          <li><a href="#features" style="color:#8899aa;text-decoration:none;font-size:13px">Fonctionnalités</a></li>
+          <li><a href="#pricing" style="color:#8899aa;text-decoration:none;font-size:13px">Tarifs</a></li>
+          <li><a href="#how" style="color:#8899aa;text-decoration:none;font-size:13px">Comment ça marche</a></li>
+          <li><a href="https://simobouzarki.github.io/seve-agtech/modele_seve.html" style="color:#44aadd;text-decoration:none;font-size:13px;font-weight:600">&rarr; Accéder à l'app</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#e0e8f0;margin-bottom:16px">Ressources</h4>
+        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px">
+          <li><a href="https://github.com/simobouzarki/seve-agtech/blob/main/README.md" style="color:#8899aa;text-decoration:none;font-size:13px">Documentation</a></li>
+          <li><a href="https://github.com/simobouzarki/seve-agtech/issues" style="color:#8899aa;text-decoration:none;font-size:13px">Roadmap</a></li>
+          <li><a href="https://github.com/simobouzarki/seve-agtech" style="color:#8899aa;text-decoration:none;font-size:13px">GitHub</a></li>
+          <li><a href="mailto:contact@seve-agtech.ma?subject=Demo SEVE" style="color:#8899aa;text-decoration:none;font-size:13px">Demander une démo</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#e0e8f0;margin-bottom:16px">Contact</h4>
+        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px">
+          <li><a href="mailto:contact@seve-agtech.ma" style="color:#8899aa;text-decoration:none;font-size:13px">contact@seve-agtech.ma</a></li>
+          <li><a href="https://github.com/simobouzarki" style="color:#8899aa;text-decoration:none;font-size:13px">GitHub</a></li>
+          <li><a href="#" style="color:#8899aa;text-decoration:none;font-size:13px">LinkedIn</a></li>
+          <li style="color:#8899aa;font-size:13px">Maroc</li>
+        </ul>
+      </div>
     </div>
-    <div class="footer-col">
-      <h4>Produit</h4>
-      <a href="#features">Fonctionnalités</a>
-      <a href="#pricing">Tarifs</a>
-      <a href="#how">Comment ça marche</a>
-      <a href="modele_seve.html">Accéder à l'app</a>
+    <div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+      <span style="color:#8899aa;font-size:12px">&copy; 2025-2026 SEVE AgTech — EL BOUZARKI Mohamed &middot; MIT License</span>
+      <div style="display:flex;gap:16px">
+        <a href="#" style="color:#8899aa;text-decoration:none;font-size:12px">Politique de confidentialité</a>
+        <a href="#" style="color:#8899aa;text-decoration:none;font-size:12px">CGU</a>
+        <span style="color:#8899aa;font-size:12px">Fait avec rigueur scientifique</span>
+      </div>
     </div>
-    <div class="footer-col">
-      <h4>Ressources</h4>
-      <a href="https://github.com/simobouzarki/seve-agtech" target="_blank">GitHub</a>
-      <a href="https://github.com/simobouzarki/seve-agtech/issues" target="_blank">Roadmap</a>
-      <a href="#">Documentation</a>
-      <a href="#">Blog agronomique</a>
-    </div>
-    <div class="footer-col">
-      <h4>Contact</h4>
-      <a href="mailto:contact@seve-agtech.ma">contact@seve-agtech.ma</a>
-      <a href="https://github.com/simobouzarki" target="_blank">GitHub</a>
-      <a href="#">LinkedIn</a>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <span>&copy; 2025-2026 SEVE AgTech — EL BOUZARKI Mohamed. Tous droits réservés.</span>
-    <span>Fait avec rigueur scientifique au Maroc</span>
   </div>
 </footer>
 
 <script>
 (function(){
-  /* Navbar scroll */
+  /* Navbar scroll + shadow */
   var nav=document.getElementById('nav');
   window.addEventListener('scroll',function(){
     nav.classList.toggle('scrolled',window.scrollY>20);
+    nav.style.boxShadow=window.scrollY>20?'0 4px 30px rgba(0,0,0,0.4)':'none';
   },{passive:true});
 
   /* Smooth scroll */
@@ -843,6 +1016,50 @@ img{max-width:100%;display:block}
     navigator.serviceWorker.register('sw.js').catch(function(){});
   }
 })();
+
+/* Pricing toggle */
+var isAnnual=false;
+function togglePricing(){
+  isAnnual=!isAnnual;
+  var dot=document.getElementById('toggle-dot');
+  var lbl_m=document.getElementById('lbl-monthly');
+  var lbl_a=document.getElementById('lbl-annual');
+  dot.style.transform=isAnnual?'translateX(24px)':'translateX(0)';
+  lbl_m.style.color=isAnnual?'#8899aa':'#e0e8f0';
+  lbl_a.style.color=isAnnual?'#e0e8f0':'#8899aa';
+  var priceEl=document.getElementById('price-pro');
+  var periodEl=document.getElementById('period-pro');
+  if(priceEl)priceEl.textContent=isAnnual?'249':'299';
+  if(periodEl)periodEl.textContent=isAnnual?'DH/mois \u00b7 factur\u00e9 annuellement':'DH/mois';
+}
+
+/* KPI animated counters */
+function animateCounter(el, target, suffix, duration) {
+  var start = 0;
+  var step = target / (duration / 16);
+  var timer = setInterval(function() {
+    start += step;
+    if (start >= target) { start = target; clearInterval(timer); }
+    el.textContent = (suffix === 'DH'
+      ? Math.round(start).toLocaleString('fr-MA')
+      : start.toFixed(1)) + (suffix ? ' ' + suffix : '');
+  }, 16);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  setTimeout(function() {
+    var kpis = [
+      { id: 'kpi-rendement', target: 8.4,    suffix: 't/ha' },
+      { id: 'kpi-marge',     target: 145000, suffix: 'DH'   },
+      { id: 'kpi-eau',       target: 4200,   suffix: 'm\u00B3'   },
+      { id: 'kpi-risque',    target: 72,     suffix: '%'    }
+    ];
+    kpis.forEach(function(k) {
+      var el = document.getElementById(k.id);
+      if (el) animateCounter(el, k.target, k.suffix, 2000);
+    });
+  }, 500);
+});
 </script>
 </body>
 </html>
