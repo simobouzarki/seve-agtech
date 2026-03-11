@@ -412,6 +412,24 @@ body{background:var(--bg);color:var(--txt);font-family:'Segoe UI',system-ui,sans
 .feature-locked::after{content:'Pro';position:absolute;top:8px;right:8px;font-size:.6rem;padding:2px 8px;border-radius:5px;background:rgba(68,170,221,.15);color:var(--accent);font-weight:700;border:1px solid rgba(68,170,221,.2);pointer-events:none}
 .feature-locked>*:not(h2){opacity:.35;pointer-events:none;filter:blur(2px);user-select:none}
 .feature-locked>h2{opacity:.7}
+
+/* Comparateur results */
+.cmp-table{width:100%;border-collapse:collapse;margin-top:12px;font-size:.82rem}
+.cmp-table th{text-align:left;padding:10px 12px;background:rgba(255,255,255,.03);border-bottom:2px solid rgba(255,255,255,.08);color:var(--txt2);font-size:.72rem;text-transform:uppercase;letter-spacing:.5px}
+.cmp-table td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.04)}
+.cmp-table tr:hover{background:rgba(255,255,255,.02)}
+.cmp-best{color:var(--good);font-weight:700}
+.cmp-winner{background:rgba(68,204,102,.06)!important;border-left:3px solid var(--good)}
+
+/* Live weather badge */
+.meteo-live{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:8px;background:rgba(68,170,221,.08);border:1px solid rgba(68,170,221,.15);font-size:.72rem;color:var(--accent);font-weight:600;margin-left:8px}
+.meteo-live .meteo-dot{width:6px;height:6px;border-radius:50%;background:var(--good);animation:pulse 2s infinite}
+@keyframes meteoPulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* Validation error */
+.field.has-error input,.field.has-error select{border-color:var(--bad)!important;box-shadow:0 0 0 2px rgba(221,68,68,.15)}
+.field .field-error{font-size:.68rem;color:var(--bad);margin-top:2px;display:none}
+.field.has-error .field-error{display:block}
 </style>
 </head>
 <body>
@@ -1054,6 +1072,15 @@ body{background:var(--bg);color:var(--txt);font-family:'Segoe UI',system-ui,sans
   </div>
 </div>
 
+<!-- ===== DEMO GUIDEE ===== -->
+<div style="background:linear-gradient(135deg,rgba(68,204,102,.06),rgba(68,170,221,.04));border:2px solid rgba(68,204,102,.2);border-radius:14px;padding:18px 22px;margin-bottom:16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+  <div style="flex:1;min-width:200px">
+    <div style="font-size:.92rem;font-weight:700;color:var(--good);margin-bottom:4px">Nouveau ? Essayez une simulation complete</div>
+    <div style="font-size:.78rem;color:var(--txt2)">Pre-remplit un scenario realiste (Figuier, Taounate, 2 ha) et lance la simulation automatiquement.</div>
+  </div>
+  <button onclick="runGuidedDemo()" style="padding:12px 28px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--good),#2d9e4a);color:#fff;font-size:.88rem;font-weight:700;cursor:pointer;transition:.3s;white-space:nowrap;letter-spacing:.3px">&#9654; Lancer la demo</button>
+</div>
+
 <!-- Farmer Presets -->
 <div class="preset-bar">
   <div class="preset-label">Presets — Scenarios types Maroc</div>
@@ -1065,6 +1092,22 @@ body{background:var(--bg);color:var(--txt);font-family:'Segoe UI',system-ui,sans
   <button class="preset-btn" onclick="applyPreset('palmier_errachidia')">Palmier Errachidia</button>
   <button class="preset-btn" onclick="applyPreset('bovin_gharb')">Bovin Laitier Gharb</button>
   <button class="preset-btn" onclick="applyPreset('poulet_kenitra')">Poulet Kenitra</button>
+</div>
+
+<!-- ===== COMPARATEUR DE CULTURES ===== -->
+<div class="panel" style="margin-bottom:16px;background:linear-gradient(135deg,rgba(170,102,221,.04),rgba(68,170,221,.03))">
+  <h2 style="color:var(--purple);cursor:pointer" onclick="this.parentElement.classList.toggle('collapsed')"><span class="ico">&#9878;</span> Comparateur de Cultures <span style="font-size:.65rem;padding:2px 8px;border-radius:5px;background:rgba(170,102,221,.1);color:var(--purple);margin-left:8px">Aide a la decision</span><span class="collapse-arrow" style="margin-left:auto;font-size:.7rem;color:var(--txt2)">&#9660;</span></h2>
+  <p style="font-size:.8rem;color:var(--txt2);margin-bottom:12px">Comparez jusqu'a 3 cultures sur la meme parcelle pour choisir la plus rentable.</p>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px">
+    <div class="field"><label>Culture 1</label>
+      <select id="cmpSpecies1" style="border-color:rgba(68,170,221,.3)"></select></div>
+    <div class="field"><label>Culture 2</label>
+      <select id="cmpSpecies2" style="border-color:rgba(68,204,102,.3)"></select></div>
+    <div class="field"><label>Culture 3 (optionnel)</label>
+      <select id="cmpSpecies3" style="border-color:rgba(255,204,0,.3)"><option value="">-- Aucune --</option></select></div>
+  </div>
+  <button onclick="compareCultures()" style="padding:10px 24px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--purple),var(--accent));color:#fff;font-size:.85rem;font-weight:700;cursor:pointer;transition:.3s">&#9878; Comparer</button>
+  <div id="compareResults" style="margin-top:16px"></div>
 </div>
 
 <!-- Project management toolbar -->
@@ -15580,6 +15623,312 @@ function getEnrichedPrice(sp_key,species,variety){
     mangue:25,kiwi:20,mandarine:6,citron:5};
   return prices[sp_key]||5;
 }
+
+/* ============================================================
+   GUIDED DEMO — Pre-fill + auto-calculate
+   ============================================================ */
+function runGuidedDemo(){
+  showToast("Chargement de la demo...","ok",1500);
+  /* Make sure input section is visible (V9 layout) */
+  var seveInputs=document.getElementById("seveInputs");
+  if(seveInputs)seveInputs.style.display="block";
+  var dashHome=document.getElementById("dashboardHome");
+  if(dashHome)dashHome.style.display="none";
+
+  /* Apply figuier_taounate preset */
+  applyPreset("figuier_taounate");
+
+  /* Override some fields for a nice demo */
+  setTimeout(function(){
+    var setVal=function(id,v){var el=document.getElementById(id);if(el)el.value=v;};
+    setVal("inSurface","2");
+    setVal("inAge","6");
+    setVal("inDensity","200");
+    setVal("inIrrigation","goutte_a_goutte");
+    setVal("inPruning","bonne");
+    setVal("inFertilization","raisonnee");
+    setVal("inSoilTexture","argilo_limoneux");
+    setVal("inSoilDepth","120");
+    setVal("inHealth","sain");
+    setVal("inFDA","gouttegoutte");
+
+    /* Scroll to results area */
+    showToast("Simulation en cours...","ok",1000);
+
+    /* Auto-calculate after fields are set */
+    setTimeout(function(){
+      calculate();
+      /* Scroll to results smoothly */
+      setTimeout(function(){
+        var out=document.getElementById("outputSection");
+        if(out)out.scrollIntoView({behavior:"smooth",block:"start"});
+        showToast("Demo terminee ! Explorez les 30+ modules de resultats ci-dessous.","ok",5000);
+      },500);
+    },300);
+  },300);
+}
+
+/* ============================================================
+   INPUT VALIDATION
+   ============================================================ */
+function validateInputs(){
+  var errors=[];
+  var clearErrors=function(){
+    document.querySelectorAll(".field.has-error").forEach(function(f){f.classList.remove("has-error");});
+  };
+  clearErrors();
+
+  var checks=[
+    {id:"inSurface",min:0.1,max:1000,label:"Superficie"},
+    {id:"inAge",min:1,max:100,label:"Age"},
+    {id:"inDensity",min:1,max:10000,label:"Densite"},
+    {id:"inSoilDepth",min:10,max:500,label:"Profondeur sol"},
+    {id:"inCout",min:0,max:500000,label:"Cout exploitation"},
+    {id:"inRootDepth",min:10,max:300,label:"Profondeur racinaire"}
+  ];
+
+  for(var i=0;i<checks.length;i++){
+    var el=document.getElementById(checks[i].id);
+    if(!el)continue;
+    var v=parseFloat(el.value);
+    if(isNaN(v)||v<checks[i].min||v>checks[i].max){
+      errors.push(checks[i].label+": valeur hors plage ("+checks[i].min+"-"+checks[i].max+")");
+      var field=el.closest(".field");
+      if(field)field.classList.add("has-error");
+    }
+  }
+
+  if(errors.length>0){
+    showToast("Erreurs de saisie:\n"+errors.join(", "),"err",5000);
+    return false;
+  }
+  return true;
+}
+
+/* ============================================================
+   COMPARATEUR DE CULTURES
+   ============================================================ */
+/* Populate comparator dropdowns on load */
+function initComparator(){
+  var selects=["cmpSpecies1","cmpSpecies2","cmpSpecies3"];
+  var src=document.getElementById("inSpecies");
+  if(!src)return;
+  for(var s=0;s<selects.length;s++){
+    var sel=document.getElementById(selects[s]);
+    if(!sel)continue;
+    /* Keep first option for cmpSpecies3 (-- Aucune --) */
+    if(s===2){
+      var first=sel.options[0];
+      sel.innerHTML="";
+      sel.appendChild(first);
+    } else {
+      sel.innerHTML="";
+    }
+    /* Copy options from main species select */
+    for(var i=0;i<src.options.length;i++){
+      var opt=document.createElement("option");
+      opt.value=src.options[i].value;
+      opt.textContent=src.options[i].textContent;
+      sel.appendChild(opt);
+    }
+  }
+  /* Set defaults */
+  var s1=document.getElementById("cmpSpecies1");
+  var s2=document.getElementById("cmpSpecies2");
+  if(s1)s1.value="figuier";
+  if(s2)s2.value="olivier";
+}
+
+function compareCultures(){
+  var species1=document.getElementById("cmpSpecies1").value;
+  var species2=document.getElementById("cmpSpecies2").value;
+  var species3=document.getElementById("cmpSpecies3").value;
+
+  if(!species1||!species2){showToast("Selectionnez au moins 2 cultures.","warn");return;}
+
+  var region=document.getElementById("inRegion").value||"taounate";
+  var surface=parseFloat(document.getElementById("inSurface").value)||2;
+  var irrigation=document.getElementById("inIrrigation").value||"goutte_a_goutte";
+
+  var regionData=REGIONS[region]||REGIONS["taounate"];
+  var cultures=[species1,species2];
+  if(species3)cultures.push(species3);
+
+  var results=[];
+  var colors=["var(--accent)","var(--good)","var(--gold)"];
+
+  for(var c=0;c<cultures.length;c++){
+    var sp=SPECIES[cultures[c]];
+    if(!sp)continue;
+    var variety=sp.varieties["Generique"]||Object.values(sp.varieties)[0];
+
+    /* Simplified yield calculation */
+    var T_avg=regionData.T_avg||18;
+    var GDD_daily=Math.max(0.1,T_avg-sp.T_base);
+    var season_days=Math.ceil(variety.GDD/GDD_daily);
+    season_days=Math.max(30,Math.min(season_days,210));
+    var PAR_season=(regionData.PAR||9.5)*season_days;
+    var LAI=sp.max_LAI*0.7;
+    var fIPAR=1-Math.exp(-sp.k_ext*LAI);
+    var APAR=PAR_season*fIPAR;
+    var biomass=APAR*sp.LUE*(1-sp.resp_frac);
+    var yieldTha=biomass*variety.HI/1000;
+
+    /* Water needs */
+    var ET0=regionData.ET0||1400;
+    var ETc=ET0*sp.Kc_mid;
+    var precip=regionData.precip||500;
+    var waterNeed=Math.max(0,Math.round(ETc-precip*0.7))*10;
+
+    /* Simple economics */
+    var prix=getDefaultPrice?getDefaultPrice(cultures[c]):8;
+    var revenu=Math.round(yieldTha*1000*prix*surface);
+    var cout=Math.round((sp.annual?8000:12000)*surface);
+    var marge=revenu-cout;
+    var roi=cout>0?Math.round(marge/cout*100):0;
+
+    results.push({
+      key:cultures[c],
+      name:sp.name,
+      yield:Math.round(yieldTha*10)/10,
+      water:waterNeed,
+      revenu:revenu,
+      cout:cout,
+      marge:marge,
+      roi:roi,
+      color:colors[c]
+    });
+  }
+
+  /* Find best by marge */
+  var bestIdx=0;
+  for(var i=1;i<results.length;i++){
+    if(results[i].marge>results[bestIdx].marge)bestIdx=i;
+  }
+
+  /* Render comparison table */
+  var regionName=regionData.name||region;
+  var h='<div style="font-size:.78rem;color:var(--txt2);margin-bottom:8px">Region: <strong style="color:var(--accent)">'+regionName+'</strong> | Surface: <strong>'+surface+' ha</strong> | Irrigation: <strong>'+irrigation+'</strong></div>';
+  h+='<table class="cmp-table"><thead><tr><th>Indicateur</th>';
+  for(var i=0;i<results.length;i++){
+    h+='<th style="color:'+results[i].color+'">'+results[i].name+(i===bestIdx?' &#10003;':'')+'</th>';
+  }
+  h+='</tr></thead><tbody>';
+
+  var rows=[
+    {label:"Rendement",key:"yield",unit:" t/ha",best:"max"},
+    {label:"Besoin eau",key:"water",unit:" m3/ha",best:"min"},
+    {label:"Revenu brut",key:"revenu",unit:" DH",best:"max",fmt:true},
+    {label:"Charges",key:"cout",unit:" DH",best:"min",fmt:true},
+    {label:"Marge nette",key:"marge",unit:" DH",best:"max",fmt:true},
+    {label:"ROI",key:"roi",unit:"%",best:"max"}
+  ];
+
+  for(var r=0;r<rows.length;r++){
+    var row=rows[r];
+    var vals=results.map(function(x){return x[row.key];});
+    var bestVal=row.best==="max"?Math.max.apply(null,vals):Math.min.apply(null,vals);
+    h+='<tr><td style="font-weight:600">'+row.label+'</td>';
+    for(var i=0;i<results.length;i++){
+      var v=results[i][row.key];
+      var isBest=v===bestVal;
+      var display=row.fmt?v.toLocaleString():v;
+      var margeColor=row.key==="marge"?(v>=0?"var(--good)":"var(--bad)"):"";
+      h+='<td class="'+(isBest?"cmp-best":"")+'" style="'+(margeColor?"color:"+margeColor:"")+'">'+
+        (row.key==="marge"&&v>=0?"+":"")+display+row.unit+'</td>';
+    }
+    h+='</tr>';
+  }
+  h+='</tbody></table>';
+
+  /* Recommendation */
+  var best=results[bestIdx];
+  h+='<div style="margin-top:16px;padding:14px 18px;border-radius:10px;background:rgba(68,204,102,.06);border:1px solid rgba(68,204,102,.15)">';
+  h+='<div style="font-size:.85rem;font-weight:700;color:var(--good);margin-bottom:4px">&#10003; Recommandation : '+best.name+'</div>';
+  h+='<div style="font-size:.78rem;color:var(--txt2)">Avec une marge nette de <strong style="color:var(--good)">'+best.marge.toLocaleString()+' DH</strong> et un ROI de <strong>'+best.roi+'%</strong>, ';
+  h+=best.name+' est le choix le plus rentable pour cette parcelle a '+regionName+'.</div></div>';
+
+  document.getElementById("compareResults").innerHTML=h;
+  showToast("Comparaison terminee !","ok");
+}
+
+/* ============================================================
+   METEO OPEN-METEO — Donnees temps reel
+   ============================================================ */
+function fetchLiveMeteo(regionKey){
+  var reg=REGIONS[regionKey];
+  if(!reg||!reg.lat||!reg.lon)return;
+
+  var url="https://api.open-meteo.com/v1/forecast?latitude="+reg.lat+"&longitude="+reg.lon+
+    "&daily=temperature_2m_max,temperature_2m_min,rain_sum,et0_fao_evapotranspiration"+
+    "&timezone=Africa/Casablanca&forecast_days=7";
+
+  fetch(url).then(function(r){return r.json();}).then(function(data){
+    if(!data.daily)return;
+    var temps=data.daily.temperature_2m_max;
+    var tempsMin=data.daily.temperature_2m_min;
+    var rain=data.daily.rain_sum;
+    var et0=data.daily.et0_fao_evapotranspiration;
+
+    /* Calculate 7-day averages */
+    var avgMax=temps.reduce(function(a,b){return a+b;},0)/temps.length;
+    var avgMin=tempsMin.reduce(function(a,b){return a+b;},0)/tempsMin.length;
+    var totalRain=rain.reduce(function(a,b){return a+b;},0);
+    var avgET0=et0.reduce(function(a,b){return a+b;},0)/et0.length;
+
+    /* Show live weather badge */
+    var badge=document.getElementById("meteoBadge");
+    if(!badge){
+      badge=document.createElement("div");
+      badge.id="meteoBadge";
+      badge.className="meteo-live";
+      var regionSel=document.getElementById("inRegion");
+      if(regionSel&&regionSel.parentElement)regionSel.parentElement.appendChild(badge);
+    }
+    badge.innerHTML='<span class="meteo-dot"></span> '+
+      Math.round(avgMin)+'°-'+Math.round(avgMax)+'°C | '+
+      Math.round(totalRain)+' mm/7j | ET0: '+avgET0.toFixed(1)+' mm/j';
+
+    /* Store for potential use in calculations */
+    window._liveMeteo={
+      T_max:Math.round(avgMax*10)/10,
+      T_min:Math.round(avgMin*10)/10,
+      T_avg:Math.round((avgMax+avgMin)/2*10)/10,
+      rain_7d:Math.round(totalRain*10)/10,
+      ET0_daily:Math.round(avgET0*10)/10
+    };
+  }).catch(function(err){
+    console.log("Open-Meteo fetch failed:",err);
+  });
+}
+
+/* ============================================================
+   INIT ENHANCEMENTS — Hook into existing init
+   ============================================================ */
+(function(){
+  var origDOMReady=window.onload;
+  window.addEventListener("load",function(){
+    /* Init comparator dropdowns */
+    setTimeout(function(){
+      initComparator();
+      /* Fetch live meteo for default region */
+      var regSel=document.getElementById("inRegion");
+      if(regSel){
+        fetchLiveMeteo(regSel.value);
+        regSel.addEventListener("change",function(){
+          fetchLiveMeteo(this.value);
+        });
+      }
+    },500);
+  });
+})();
+
+/* Hook validation into calculate */
+var _origCalculate=calculate;
+calculate=function(){
+  if(!validateInputs())return;
+  _origCalculate.apply(this,arguments);
+};
 
 
 </script>
