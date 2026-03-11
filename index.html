@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="SEVE AgTech — Plateforme professionnelle de simulation technico-economique agricole au Maroc. 47 cultures, 48 regions, modeles FAO-56, financement FDA.">
+<meta name="keywords" content="agriculture Maroc, simulation agricole, FDA, plan financement, rendement, technico-economique, SEVE">
+<meta name="author" content="SEVE AgTech">
+<meta name="theme-color" content="#08080f">
+<title>SEVE AgTech — Simulation Agricole Professionnelle Maroc</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#08080f;--bg2:#0c0c18;--card:#0f1020;--card2:#141428;
+  --accent:#44aadd;--accent2:#66cc44;--good:#44cc66;--bad:#dd4444;
+  --warn:#ddaa33;--gold:#ffcc00;--purple:#aa66dd;
+  --txt:#e0e8f0;--txt2:#8899aa;--txt3:#556677;
+  --border:rgba(255,255,255,.06);--glow:rgba(68,170,221,.15)
+}
+body{background:var(--bg);color:var(--txt);font-family:'Segoe UI',system-ui,-apple-system,sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none;transition:.2s}
+a:hover{color:var(--accent2)}
+
+/* ===== NAVBAR ===== */
+.navbar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(8,8,15,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 32px;display:flex;align-items:center;height:60px;transition:.3s}
+.navbar.scrolled{box-shadow:0 4px 24px rgba(0,0,0,.4)}
+.nav-brand{display:flex;align-items:center;gap:10px}
+.nav-logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:800;color:#fff}
+.nav-title{font-size:1rem;font-weight:800;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-sub{font-size:.6rem;color:var(--txt2);margin-top:1px}
+.nav-links{display:flex;gap:28px;margin-left:auto;align-items:center}
+.nav-links a{color:var(--txt2);font-size:.82rem;font-weight:500;padding:6px 0;position:relative}
+.nav-links a:hover{color:var(--txt)}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--accent);transform:scaleX(0);transition:.2s}
+.nav-links a:hover::after{transform:scaleX(1)}
+.nav-cta{padding:8px 20px!important;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff!important;font-weight:700;border:none;cursor:pointer;font-size:.82rem}
+.nav-cta:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(68,170,221,.3)}
+.nav-cta::after{display:none!important}
+.nav-login{padding:7px 16px!important;border-radius:8px;border:1px solid rgba(255,255,255,.12)!important;color:var(--txt)!important;font-weight:600}
+.nav-login:hover{border-color:var(--accent)!important;background:rgba(68,170,221,.06)}
+.nav-mobile{display:none;background:none;border:none;color:var(--txt);font-size:1.4rem;cursor:pointer}
+
+/* ===== HERO ===== */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:80px 32px 60px;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(68,170,221,.06),transparent 60%),radial-gradient(ellipse 60% 40% at 80% 20%,rgba(68,204,102,.04),transparent 50%)}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 70% 60% at 50% 50%,black 20%,transparent 70%)}
+.hero-content{position:relative;max-width:800px;text-align:center;z-index:1}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:20px;background:rgba(68,170,221,.08);border:1px solid rgba(68,170,221,.2);font-size:.72rem;color:var(--accent);font-weight:600;margin-bottom:24px;letter-spacing:.5px}
+.hero-badge .pulse{width:6px;height:6px;border-radius:50%;background:var(--good);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.hero h1{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:900;line-height:1.15;margin-bottom:20px}
+.hero h1 .gradient{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero h1 .line2{display:block;font-size:.65em;color:var(--txt2);font-weight:400;-webkit-text-fill-color:var(--txt2);margin-top:6px}
+.hero-desc{font-size:1.05rem;color:var(--txt2);max-width:560px;margin:0 auto 36px;line-height:1.7}
+.hero-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn-primary{padding:14px 32px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:.95rem;font-weight:700;border:none;cursor:pointer;transition:.3s;letter-spacing:.3px}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(68,170,221,.3)}
+.btn-secondary{padding:14px 32px;border-radius:12px;background:transparent;color:var(--txt);font-size:.95rem;font-weight:600;border:1px solid rgba(255,255,255,.12);cursor:pointer;transition:.3s}
+.btn-secondary:hover{border-color:var(--accent);background:rgba(68,170,221,.06)}
+.hero-stats{display:flex;gap:40px;justify-content:center;margin-top:52px;flex-wrap:wrap}
+.hero-stat{text-align:center}
+.hero-stat .hs-val{font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-stat .hs-lbl{font-size:.72rem;color:var(--txt2);margin-top:4px;text-transform:uppercase;letter-spacing:.5px}
+
+/* ===== SECTIONS ===== */
+section{padding:80px 32px}
+.section-header{text-align:center;max-width:600px;margin:0 auto 52px}
+.section-header .tag{display:inline-block;font-size:.72rem;padding:4px 14px;border-radius:20px;background:rgba(68,170,221,.08);color:var(--accent);border:1px solid rgba(68,170,221,.15);font-weight:600;margin-bottom:16px;letter-spacing:.5px;text-transform:uppercase}
+.section-header h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;margin-bottom:14px}
+.section-header p{font-size:.92rem;color:var(--txt2);line-height:1.7}
+
+/* ===== FEATURES ===== */
+#features{background:var(--bg2)}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;max-width:1100px;margin:0 auto}
+.feature-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;transition:.3s;position:relative;overflow:hidden}
+.feature-card:hover{border-color:rgba(68,170,221,.2);transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.3)}
+.feature-card .fc-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:16px}
+.feature-card:nth-child(1) .fc-icon{background:rgba(68,170,221,.1)}
+.feature-card:nth-child(2) .fc-icon{background:rgba(68,204,102,.1)}
+.feature-card:nth-child(3) .fc-icon{background:rgba(221,170,51,.1)}
+.feature-card:nth-child(4) .fc-icon{background:rgba(170,102,221,.1)}
+.feature-card:nth-child(5) .fc-icon{background:rgba(221,68,68,.1)}
+.feature-card:nth-child(6) .fc-icon{background:rgba(255,204,0,.1)}
+.feature-card h3{font-size:1rem;font-weight:700;margin-bottom:8px}
+.feature-card p{font-size:.82rem;color:var(--txt2);line-height:1.6}
+.feature-card .fc-tag{position:absolute;top:16px;right:16px;font-size:.62rem;padding:3px 8px;border-radius:6px;background:rgba(68,204,102,.1);color:var(--good);font-weight:700}
+
+/* ===== HOW IT WORKS ===== */
+.steps-container{max-width:800px;margin:0 auto}
+.step-row{display:flex;gap:24px;margin-bottom:32px;align-items:flex-start}
+.step-num{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:800;color:#fff;flex-shrink:0}
+.step-body h3{font-size:1rem;font-weight:700;margin-bottom:6px}
+.step-body p{font-size:.85rem;color:var(--txt2);line-height:1.6}
+.step-connector{width:2px;height:24px;background:linear-gradient(to bottom,rgba(68,170,221,.3),transparent);margin-left:23px}
+
+/* ===== PRICING ===== */
+#pricing{background:var(--bg2)}
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;max-width:1020px;margin:0 auto}
+.price-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:36px 28px;text-align:center;transition:.3s;position:relative}
+.price-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.3)}
+.price-card.popular{border-color:rgba(68,170,221,.3);background:linear-gradient(135deg,rgba(68,170,221,.04),rgba(68,204,102,.02))}
+.price-card.popular::before{content:'Le Plus Populaire';position:absolute;top:-12px;left:50%;transform:translateX(-50%);padding:4px 16px;border-radius:20px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:.68rem;font-weight:700;letter-spacing:.5px;white-space:nowrap}
+.price-card .pc-name{font-size:1.1rem;font-weight:700;margin-bottom:4px}
+.price-card .pc-desc{font-size:.78rem;color:var(--txt2);margin-bottom:20px}
+.price-card .pc-price{font-size:2.8rem;font-weight:900;margin-bottom:4px}
+.price-card .pc-price span{font-size:.85rem;font-weight:400;color:var(--txt2)}
+.price-card .pc-period{font-size:.72rem;color:var(--txt2);margin-bottom:24px}
+.price-card ul{list-style:none;text-align:left;margin-bottom:28px}
+.price-card li{font-size:.82rem;padding:8px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.price-card li:last-child{border-bottom:none}
+.price-card li .check{color:var(--good);font-weight:700;font-size:.9rem}
+.price-card li .cross{color:var(--txt3);font-size:.9rem}
+.price-card li.disabled{color:var(--txt3)}
+.price-btn{display:block;width:100%;padding:12px;border-radius:10px;border:1px solid var(--accent);background:rgba(68,170,221,.08);color:var(--accent);cursor:pointer;font-size:.88rem;font-weight:700;transition:.3s}
+.price-btn:hover{background:rgba(68,170,221,.18);transform:translateY(-1px)}
+.price-card.popular .price-btn{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none}
+.price-card.popular .price-btn:hover{box-shadow:0 4px 20px rgba(68,170,221,.3)}
+
+/* ===== AUDIENCE ===== */
+.audience-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;max-width:1020px;margin:0 auto}
+.audience-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;text-align:center;transition:.3s}
+.audience-card:hover{border-color:rgba(68,170,221,.15);transform:translateY(-2px)}
+.audience-card .ac-icon{font-size:2rem;margin-bottom:12px}
+.audience-card h3{font-size:.9rem;font-weight:700;margin-bottom:6px}
+.audience-card p{font-size:.78rem;color:var(--txt2);line-height:1.5}
+
+/* ===== FAQ ===== */
+#faq{background:var(--bg2)}
+.faq-list{max-width:700px;margin:0 auto}
+.faq-item{border-bottom:1px solid var(--border);padding:20px 0}
+.faq-q{font-size:.92rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;user-select:none}
+.faq-q:hover{color:var(--accent)}
+.faq-q .faq-arrow{transition:.3s;color:var(--txt2);font-size:.7rem}
+.faq-item.open .faq-arrow{transform:rotate(180deg)}
+.faq-a{max-height:0;overflow:hidden;transition:.3s;font-size:.84rem;color:var(--txt2);line-height:1.7}
+.faq-item.open .faq-a{max-height:300px;margin-top:12px}
+
+/* ===== CTA ===== */
+.cta-section{text-align:center;padding:100px 32px;background:linear-gradient(135deg,rgba(68,170,221,.04),rgba(68,204,102,.02));border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.cta-section h2{font-size:clamp(1.6rem,3vw,2.4rem);font-weight:800;margin-bottom:14px}
+.cta-section p{font-size:.95rem;color:var(--txt2);margin-bottom:32px;max-width:500px;margin-left:auto;margin-right:auto}
+
+/* ===== FOOTER ===== */
+.footer{padding:48px 32px 32px;border-top:1px solid var(--border)}
+.footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap}
+.footer-brand .fb-title{font-size:1rem;font-weight:800;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}
+.footer-brand p{font-size:.76rem;color:var(--txt2);max-width:280px;line-height:1.5}
+.footer-col h4{font-size:.78rem;font-weight:700;margin-bottom:12px;color:var(--txt);text-transform:uppercase;letter-spacing:.5px}
+.footer-col a{display:block;font-size:.78rem;color:var(--txt2);padding:4px 0;transition:.2s}
+.footer-col a:hover{color:var(--accent)}
+.footer-bottom{max-width:1100px;margin:32px auto 0;padding-top:24px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:.72rem;color:var(--txt3);flex-wrap:wrap;gap:12px}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+  .navbar{padding:0 16px}
+  .nav-links{display:none;position:absolute;top:60px;left:0;right:0;background:rgba(8,8,15,.98);backdrop-filter:blur(20px);flex-direction:column;padding:20px;gap:12px;border-bottom:1px solid var(--border)}
+  .nav-links.open{display:flex}
+  .nav-mobile{display:block}
+  .hero{padding:100px 20px 60px;min-height:auto}
+  .hero h1{font-size:1.8rem}
+  .hero-stats{gap:20px}
+  section{padding:60px 20px}
+  .pricing-grid{grid-template-columns:1fr}
+  .step-row{flex-direction:column;align-items:center;text-align:center}
+  .footer-inner{flex-direction:column;gap:24px}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar" id="navbar">
+  <div class="nav-brand">
+    <div class="nav-logo">S</div>
+    <div>
+      <div class="nav-title">SEVE AgTech</div>
+      <div class="nav-sub">Simulation Agricole Maroc</div>
+    </div>
+  </div>
+  <button class="nav-mobile" onclick="document.querySelector('.nav-links').classList.toggle('open')">&#9776;</button>
+  <div class="nav-links">
+    <a href="#features">Fonctionnalites</a>
+    <a href="#how">Comment ca marche</a>
+    <a href="#pricing">Tarifs</a>
+    <a href="#audience">Pour qui</a>
+    <a href="#faq">FAQ</a>
+    <a href="modele_seve.html" class="nav-login">Se connecter</a>
+    <a href="modele_seve.html#signup" class="nav-cta">Essai gratuit</a>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="pulse"></span>
+      Plateforme 100% Marocaine
+    </div>
+    <h1>
+      Simulez. Planifiez. <span class="gradient">Rentabilisez.</span>
+      <span class="line2">L'outil de simulation technico-economique pour l'agriculture marocaine</span>
+    </h1>
+    <p class="hero-desc">
+      SEVE calcule vos rendements, optimise votre irrigation, genere vos dossiers FDA
+      et projette votre business plan sur 10 ans. Le tout base sur les modeles
+      scientifiques FAO-56 et les donnees regionales du Maroc.
+    </p>
+    <div class="hero-actions">
+      <a href="modele_seve.html#signup" class="btn-primary">Commencer gratuitement</a>
+      <a href="#features" class="btn-secondary">Decouvrir les fonctionnalites</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="hs-val">47</div><div class="hs-lbl">Cultures</div></div>
+      <div class="hero-stat"><div class="hs-val">48</div><div class="hs-lbl">Regions Maroc</div></div>
+      <div class="hero-stat"><div class="hs-val">30+</div><div class="hs-lbl">Modules d'Analyse</div></div>
+      <div class="hero-stat"><div class="hs-val">FAO-56</div><div class="hs-lbl">Modele Scientifique</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FEATURES ===== -->
+<section id="features">
+  <div class="section-header">
+    <div class="tag">Fonctionnalites</div>
+    <h2>Tout ce qu'il faut pour piloter votre exploitation</h2>
+    <p>De la simulation du rendement au montage du dossier bancaire — un seul outil integre.</p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="fc-icon">&#127793;</div>
+      <h3>Simulation de Rendement</h3>
+      <p>Modele biophysique complet : interception lumineuse, LUE, GDD, stress hydrique, courbe de maturite. 47 especes avec varietes locales.</p>
+      <span class="fc-tag">47 cultures</span>
+    </div>
+    <div class="feature-card">
+      <div class="fc-icon">&#128167;</div>
+      <h3>Bilan Hydrique FAO-56</h3>
+      <p>ET0, ETc par stade Kc, pluie efficace, deficit hydrique, coefficient de stress Ks. Calendrier d'irrigation mensuel automatique.</p>
+      <span class="fc-tag">FAO-56</span>
+    </div>
+    <div class="feature-card">
+      <div class="fc-icon">&#129716;</div>
+      <h3>Nutrition NPK — Loi de Liebig</h3>
+      <p>Bilan nutritif complet : exportations vs apports, facteur limitant, programme de fertigation par stade phenologique.</p>
+      <span class="fc-tag">Liebig</span>
+    </div>
+    <div class="feature-card">
+      <div class="fc-icon">&#128176;</div>
+      <h3>Plan de Financement & FDA</h3>
+      <p>CAPEX, OPEX, BFR, echeancier credit, subventions FDA/Generation Green. Dossier technique complet pret pour la banque.</p>
+      <span class="fc-tag">FDA</span>
+    </div>
+    <div class="feature-card">
+      <div class="fc-icon">&#128200;</div>
+      <h3>Business Plan 10 Ans</h3>
+      <p>Projection multi-annuelle avec variabilite climatique, courbe de maturite des arbres, seuil de rentabilite et ROI.</p>
+    </div>
+    <div class="feature-card">
+      <div class="fc-icon">&#128202;</div>
+      <h3>Analyse de Risques</h3>
+      <p>Scoring multi-facteurs : climat, marche, phytosanitaire, financier. Scenarios changement climatique GIEC. Aide a la decision.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== HOW IT WORKS ===== -->
+<section id="how">
+  <div class="section-header">
+    <div class="tag">Comment ca marche</div>
+    <h2>Du champ au business plan en 3 etapes</h2>
+    <p>Aucune connaissance technique requise. Selectionnez, simulez, exportez.</p>
+  </div>
+  <div class="steps-container">
+    <div class="step-row">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3>Configurez votre exploitation</h3>
+        <p>Choisissez votre culture parmi 47 especes, selectionnez votre region, renseignez la superficie, le type de sol et le systeme d'irrigation. Des presets Maroc sont disponibles pour demarrer rapidement.</p>
+      </div>
+    </div>
+    <div class="step-connector"></div>
+    <div class="step-row">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3>Lancez la simulation</h3>
+        <p>SEVE calcule automatiquement : rendement previsionnel, besoins en eau et fertilisants, couts d'exploitation, tresorerie mensuelle, et projections sur 10 ans. 30+ panneaux d'analyse detaillee.</p>
+      </div>
+    </div>
+    <div class="step-connector"></div>
+    <div class="step-row">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h3>Exportez vos rapports</h3>
+        <p>Generez un dossier technique FDA complet, un business plan pour la banque, un rapport PDF professionnel. Comparez vos scenarios et prenez les bonnes decisions.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PRICING ===== -->
+<section id="pricing">
+  <div class="section-header">
+    <div class="tag">Tarifs</div>
+    <h2>Un plan adapte a chaque besoin</h2>
+    <p>Commencez gratuitement, evoluez quand vous etes pret.</p>
+  </div>
+  <div class="pricing-grid">
+    <!-- FREE -->
+    <div class="price-card">
+      <div class="pc-name">Decouverte</div>
+      <div class="pc-desc">Pour explorer et apprendre</div>
+      <div class="pc-price">0 <span>DH</span></div>
+      <div class="pc-period">Gratuit pour toujours</div>
+      <ul>
+        <li><span class="check">&#10003;</span> 5 cultures disponibles</li>
+        <li><span class="check">&#10003;</span> 1 parcelle</li>
+        <li><span class="check">&#10003;</span> Simulation de rendement</li>
+        <li><span class="check">&#10003;</span> Bilan hydrique de base</li>
+        <li><span class="check">&#10003;</span> 3 simulations / mois</li>
+        <li class="disabled"><span class="cross">&#10005;</span> Export PDF</li>
+        <li class="disabled"><span class="cross">&#10005;</span> Dossier FDA</li>
+        <li class="disabled"><span class="cross">&#10005;</span> Business Plan 10 ans</li>
+      </ul>
+      <a href="modele_seve.html#signup" class="price-btn">S'inscrire gratuitement</a>
+    </div>
+    <!-- PRO -->
+    <div class="price-card popular">
+      <div class="pc-name">Professionnel</div>
+      <div class="pc-desc">Pour les agriculteurs et techniciens</div>
+      <div class="pc-price">299 <span>DH/mois</span></div>
+      <div class="pc-period">Soit 2 990 DH/an (economisez 17%)</div>
+      <ul>
+        <li><span class="check">&#10003;</span> 47 cultures completes</li>
+        <li><span class="check">&#10003;</span> Parcelles illimitees</li>
+        <li><span class="check">&#10003;</span> Simulations illimitees</li>
+        <li><span class="check">&#10003;</span> Bilan FAO-56 complet</li>
+        <li><span class="check">&#10003;</span> NPK Liebig + Fertigation</li>
+        <li><span class="check">&#10003;</span> Export PDF professionnel</li>
+        <li><span class="check">&#10003;</span> Dossier FDA / Banque</li>
+        <li><span class="check">&#10003;</span> Business Plan 10 ans</li>
+      </ul>
+      <a href="modele_seve.html#signup-pro" class="price-btn">Commencer l'essai Pro</a>
+    </div>
+    <!-- ENTERPRISE -->
+    <div class="price-card">
+      <div class="pc-name">Entreprise</div>
+      <div class="pc-desc">Pour cooperatives et institutions</div>
+      <div class="pc-price">Sur devis</div>
+      <div class="pc-period">Tarification personnalisee</div>
+      <ul>
+        <li><span class="check">&#10003;</span> Tout le plan Pro</li>
+        <li><span class="check">&#10003;</span> Multi-exploitation</li>
+        <li><span class="check">&#10003;</span> Tableau de bord consolide</li>
+        <li><span class="check">&#10003;</span> API d'integration</li>
+        <li><span class="check">&#10003;</span> Support prioritaire</li>
+        <li><span class="check">&#10003;</span> Formation sur site</li>
+        <li><span class="check">&#10003;</span> Personnalisation</li>
+        <li><span class="check">&#10003;</span> SLA garanti</li>
+      </ul>
+      <a href="mailto:contact@seve-agtech.ma" class="price-btn">Nous contacter</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== AUDIENCE ===== -->
+<section id="audience">
+  <div class="section-header">
+    <div class="tag">Pour qui</div>
+    <h2>Concu pour le terrain marocain</h2>
+    <p>Chaque profil trouve dans SEVE les outils adaptes a ses besoins.</p>
+  </div>
+  <div class="audience-grid">
+    <div class="audience-card">
+      <div class="ac-icon">&#127981;</div>
+      <h3>Jeunes Agriculteurs FDA</h3>
+      <p>Montez votre dossier FDA complet : etude technico-economique, plan de financement, business plan. Pret pour la banque et l'ADA.</p>
+    </div>
+    <div class="audience-card">
+      <div class="ac-icon">&#128105;&#8205;&#127806;</div>
+      <h3>Agriculteurs en Activite</h3>
+      <p>Optimisez votre irrigation, vos apports NPK et votre tresorerie. Comparez les scenarios avant d'investir.</p>
+    </div>
+    <div class="audience-card">
+      <div class="ac-icon">&#128187;</div>
+      <h3>Techniciens & Conseillers</h3>
+      <p>Generez des rapports professionnels pour vos clients. Simulez des itineraires techniques optimaux par region.</p>
+    </div>
+    <div class="audience-card">
+      <div class="ac-icon">&#127963;</div>
+      <h3>Cooperatives & Agregateurs</h3>
+      <p>Gerez plusieurs exploitations, consolidez les donnees, planifiez les approvisionnements a l'echelle.</p>
+    </div>
+    <div class="audience-card">
+      <div class="ac-icon">&#127891;</div>
+      <h3>Etudiants & Formation</h3>
+      <p>Apprenez les modeles agronomiques (FAO-56, Liebig) de maniere interactive. Parfait pour les IPSM, IAV, ENA.</p>
+    </div>
+    <div class="audience-card">
+      <div class="ac-icon">&#127970;</div>
+      <h3>Institutions (ORMVA, DRA)</h3>
+      <p>Outil d'aide a la decision pour le conseil agricole regional. Donnees calibrees par region marocaine.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section id="faq">
+  <div class="section-header">
+    <div class="tag">FAQ</div>
+    <h2>Questions frequentes</h2>
+  </div>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        SEVE fonctionne-t-il sans connexion internet ?
+        <span class="faq-arrow">&#9660;</span>
+      </div>
+      <div class="faq-a">Oui, SEVE est une application web progressive (PWA). Une fois chargee, elle fonctionne entierement hors-ligne. Vos simulations sont sauvegardees localement et synchronisees quand vous vous reconnectez.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        D'ou viennent les donnees scientifiques ?
+        <span class="faq-arrow">&#9660;</span>
+      </div>
+      <div class="faq-a">Les modeles de calcul sont bases sur les references FAO-56 (bilan hydrique), la loi de Liebig (nutrition minerale), et les itineraires techniques de l'INRA Meknes, ONCA et ORMVA. Les donnees climatiques couvrent les 48 regions du Maroc.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        Puis-je utiliser SEVE pour mon dossier FDA ?
+        <span class="faq-arrow">&#9660;</span>
+      </div>
+      <div class="faq-a">Absolument. Le module "Dossier FDA / Banque" genere un document complet avec etude technico-economique, plan de financement, echeancier de credit et subventions. Il couvre les exigences du programme Generation Green.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        Combien de cultures sont disponibles ?
+        <span class="faq-arrow">&#9660;</span>
+      </div>
+      <div class="faq-a">47 cultures couvrant : fruits frais, agrumes, fruits a noyau, fruits a pepins, fruits secs & oleagineux, palmier, maraicheres, cereales, legumineuses, champignons, et elevage (bovin, ovin, caprin, avicole, apicole).</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        SEVE est-il adapte a ma region ?
+        <span class="faq-arrow">&#9660;</span>
+      </div>
+      <div class="faq-a">Oui, les 48 regions du Maroc sont integrees avec leurs donnees climatiques mensuelles (temperature, pluviometrie, ET0). Vous pouvez aussi saisir des donnees meteo personnalisees pour plus de precision.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        Y a-t-il un engagement sur le plan Pro ?
+        <span class="faq-arrow">&#9660;</span>
+      </div>
+      <div class="faq-a">Non, aucun engagement. Vous pouvez annuler a tout moment. Le plan annuel offre une reduction de 17% par rapport au tarif mensuel.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="cta-section">
+  <h2>Pret a optimiser votre exploitation ?</h2>
+  <p>Rejoignez les agriculteurs marocains qui utilisent SEVE pour prendre des decisions basees sur la science.</p>
+  <div class="hero-actions">
+    <a href="modele_seve.html#signup" class="btn-primary">Commencer gratuitement</a>
+    <a href="mailto:contact@seve-agtech.ma" class="btn-secondary">Demander une demo</a>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="fb-title">SEVE AgTech</div>
+      <p>Simulation Economique et Vegetale pour l'Entreprise. Plateforme de simulation technico-economique agricole 100% marocaine.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Produit</h4>
+      <a href="#features">Fonctionnalites</a>
+      <a href="#pricing">Tarifs</a>
+      <a href="#how">Comment ca marche</a>
+      <a href="modele_seve.html">Acceder a l'app</a>
+    </div>
+    <div class="footer-col">
+      <h4>Ressources</h4>
+      <a href="#">Documentation</a>
+      <a href="#">Guide de demarrage</a>
+      <a href="#">Blog agronomique</a>
+      <a href="#">API (Entreprise)</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <a href="mailto:contact@seve-agtech.ma">contact@seve-agtech.ma</a>
+      <a href="#">LinkedIn</a>
+      <a href="#">Facebook</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2025-2026 SEVE AgTech — EL BOUZARKI Mohamed. Tous droits reserves.</span>
+    <span>Fait avec rigueur scientifique au Maroc</span>
+  </div>
+</footer>
+
+<script>
+/* Navbar scroll effect */
+window.addEventListener('scroll',function(){
+  document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>40);
+});
+
+/* Smooth scroll for anchor links */
+document.querySelectorAll('a[href^="#"]').forEach(function(a){
+  a.addEventListener('click',function(e){
+    var target=document.querySelector(this.getAttribute('href'));
+    if(target){e.preventDefault();target.scrollIntoView({behavior:'smooth',block:'start'});}
+    document.querySelector('.nav-links').classList.remove('open');
+  });
+});
+
+/* Register Service Worker for PWA */
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('sw.js').catch(function(){});
+}
+</script>
+</body>
+</html>
