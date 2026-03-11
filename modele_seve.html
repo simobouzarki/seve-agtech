@@ -17,6 +17,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--bg:#0a0a0a;--card:#161616;--accent:#3b82f6;--accent1:#3b82f6;--good:#22c55e;--bad:#ef4444;--warn:#f59e0b;--gold:#eab308;--txt:#ededed;--txt2:#888;--accent2:#22c55e;--purple:#a855f7;--border:#222;--border-light:#2a2a2a;--sidebar-w:270px;--kpi-w:290px;--topbar-h:54px}
+[data-theme="light"]{--bg:#f5f7fa;--card:#ffffff;--accent:#1a5276;--accent1:#1a5276;--good:#27ae60;--bad:#c0392b;--warn:#f39c12;--gold:#d4a017;--txt:#1a2332;--txt2:#5a6a7a;--accent2:#27ae60;--purple:#7c3aed;--border:#d4dbe4;--border-light:#e2e8f0}
+[data-theme="light"] body{background:var(--bg);color:var(--txt)}
+[data-theme="light"] .top-bar{background:rgba(245,247,250,.92);border-color:var(--border)}
+[data-theme="light"] .sidenav{background:var(--bg);border-color:var(--border)}
+[data-theme="light"] .kpi-panel{background:var(--bg);border-color:var(--border)}
+[data-theme="light"] .panel{background:var(--card);border-color:var(--border)}
+[data-theme="light"] .step{background:var(--card);border-color:var(--border)}
+[data-theme="light"] table th{background:rgba(26,82,118,.06)}
+[data-theme="light"] input,[data-theme="light"] select,[data-theme="light"] textarea{background:var(--card);border-color:var(--border);color:var(--txt)}
+[data-theme="light"] .toc-btn{background:var(--card);color:var(--txt2);border-color:var(--border)}
+[data-theme="light"] .toc-btn.active{background:var(--accent);color:#fff}
+[data-theme="light"] .calc-btn{background:var(--accent);color:#fff}
 body{background:var(--bg);color:var(--txt);font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;-webkit-font-smoothing:antialiased}
 .top-bar{position:fixed;top:0;left:0;right:0;height:var(--topbar-h);z-index:100;background:rgba(10,10,10,.9);backdrop-filter:blur(16px) saturate(180%);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;gap:16px}
 .top-bar h1{font-size:1rem;font-weight:800;color:var(--txt)}
@@ -458,6 +470,7 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',-apple-system,Bli
   <h1>SEVE AgTech &mdash; Simulateur Agricole</h1>
   <button class="info-btn" onclick="showAbout()" title="A propos du modele">i</button>
   <span class="tag" id="speciesTag">Figuier</span>
+  <button class="lang-btn" id="themeToggle" onclick="toggleTheme()" title="Basculer clair/sombre" style="font-size:.95rem;padding:3px 10px">&#9728;&#65039;</button>
   <button class="lang-btn active" onclick="setLang('fr')">FR</button>
   <button class="lang-btn" onclick="setLang('en')">EN</button>
   <button class="lang-btn" onclick="setLang('ar')">عربية</button>
@@ -653,7 +666,7 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',-apple-system,Bli
 <!-- UPGRADE BANNER (shown for free plan only) -->
 <div class="upgrade-banner" id="upgradeBanner" style="display:none">
   <div class="ub-text">
-    Vous utilisez le plan <strong>Decouverte</strong> (5 cultures, 3 simulations/mois).
+    Vous utilisez le plan <strong>Decouverte</strong> (10 cultures, 5 simulations/mois).
     Passez au <strong>Pro</strong> pour debloquer les 131 cultures, l'export PDF, le dossier FDA et le business plan 10 ans.
   </div>
   <button class="ub-btn" onclick="seveAuth.showUpgrade()">Passer au Pro — 299 DH/mois</button>
@@ -2108,7 +2121,7 @@ function showAbout(){
     "</div>"+
 
     "<div class='about-stats'>"+
-      "<div class='about-stat'><div class='as-val'>47</div><div class='as-lbl'>Especes<br>vegetales &amp; animales</div></div>"+
+      "<div class='about-stat'><div class='as-val'>131</div><div class='as-lbl'>Especes<br>vegetales &amp; animales</div></div>"+
       "<div class='about-stat'><div class='as-val'>48</div><div class='as-lbl'>Regions<br>du Maroc</div></div>"+
       "<div class='about-stat'><div class='as-val'>36</div><div class='as-lbl'>Modules<br>d'analyse</div></div>"+
       "<div class='about-stat'><div class='as-val'>7 300</div><div class='as-lbl'>Lignes<br>de code</div></div>"+
@@ -6073,6 +6086,29 @@ var LANG={
   }
 };
 
+/* ── Dark / Light toggle ── */
+function toggleTheme(){
+  var html=document.documentElement;
+  var btn=document.getElementById("themeToggle");
+  if(html.getAttribute("data-theme")==="light"){
+    html.removeAttribute("data-theme");
+    if(btn)btn.innerHTML="&#9728;&#65039;";
+    localStorage.setItem("seve-theme","dark");
+  }else{
+    html.setAttribute("data-theme","light");
+    if(btn)btn.textContent="\uD83C\uDF19";
+    localStorage.setItem("seve-theme","light");
+  }
+}
+(function(){
+  var saved=localStorage.getItem("seve-theme");
+  if(saved==="light"){
+    document.documentElement.setAttribute("data-theme","light");
+    var btn=document.getElementById("themeToggle");
+    if(btn)btn.textContent="\uD83C\uDF19";
+  }
+})();
+
 var currentLang="fr";
 function setLang(lang){
   currentLang=lang;
@@ -7347,7 +7383,7 @@ var CONSERV_DEFAULT={temp_opt:4,humid:85,shelf_cold:14,shelf_ambient:5,pertes_mo
   refs:["Kader A.A. (2002) Postharvest Technology, UC Davis"]};
 
 /* ============================================================
-   BONNES PRATIQUES AGRICOLES (BPA) — 47 especes
+   BONNES PRATIQUES AGRICOLES (BPA) — 131 especes
    Sources: INRA Maroc, FAO, ONCA, ORMVA, manuels techniques
    ============================================================ */
 var BONNES_PRATIQUES={
