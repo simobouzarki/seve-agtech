@@ -2,7 +2,7 @@
    SEVE AgTech — Service Worker (PWA Offline)
    Cache-first strategy for full offline capability
    ============================================================ */
-var CACHE_NAME = 'seve-agtech-v8';
+var CACHE_NAME = 'seve-agtech-v9';
 var ASSETS = [
   '/',
   '/index.html',

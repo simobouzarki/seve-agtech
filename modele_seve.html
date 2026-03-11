@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5">
-<meta name="description" content="SEVE — Outil professionnel de simulation technico-economique agricole. 47 cultures, 48 regions Maroc, bilan hydrique FAO-56, Liebig NPK, plan financement FDA.">
+<meta name="description" content="SEVE — Outil professionnel de simulation technico-economique agricole. 131 cultures, 48 regions Maroc, bilan hydrique FAO-56, Liebig NPK, plan financement FDA.">
 <meta name="author" content="EL BOUZARKI Mohamed — IPSM Mohammedia GEA 2025-2026">
 <meta name="theme-color" content="#0a0a0a">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -455,8 +455,7 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',-apple-system,Bli
 <body>
 
 <div class="top-bar">
-  <a href="quiz.html">&larr; Quiz</a>
-  <h1>Modele Seve &rarr; Fruit v4 GEA</h1>
+  <h1>SEVE AgTech &mdash; Simulateur Agricole</h1>
   <button class="info-btn" onclick="showAbout()" title="A propos du modele">i</button>
   <span class="tag" id="speciesTag">Figuier</span>
   <button class="lang-btn active" onclick="setLang('fr')">FR</button>
@@ -583,7 +582,7 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',-apple-system,Bli
       </div>
     </div>
     <ul style="list-style:none;margin:16px 0">
-      <li style="padding:6px 0;font-size:.82rem;color:var(--txt2)"><span style="color:var(--good);margin-right:8px">&#10003;</span> 47 cultures completes</li>
+      <li style="padding:6px 0;font-size:.82rem;color:var(--txt2)"><span style="color:var(--good);margin-right:8px">&#10003;</span> 131 cultures completes</li>
       <li style="padding:6px 0;font-size:.82rem;color:var(--txt2)"><span style="color:var(--good);margin-right:8px">&#10003;</span> Parcelles et simulations illimitees</li>
       <li style="padding:6px 0;font-size:.82rem;color:var(--txt2)"><span style="color:var(--good);margin-right:8px">&#10003;</span> Export PDF professionnel</li>
       <li style="padding:6px 0;font-size:.82rem;color:var(--txt2)"><span style="color:var(--good);margin-right:8px">&#10003;</span> Dossier FDA / Banque</li>
@@ -1371,7 +1370,7 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',-apple-system,Bli
   <div class="section-divider"><span class="sd-icon">&#128218;</span><span class="sd-title">Itineraire Technique & Conduite</span><span class="sd-count">3 modules</span></div>
 
   <div class="panel" id="bpaPanel">
-  <h2><span class="ico">&#127793;</span> Bonnes Pratiques Agricoles <span style="font-size:.65rem;padding:2px 8px;border-radius:5px;background:rgba(68,204,102,.1);color:var(--good);margin-left:8px">47 cultures</span></h2>
+  <h2><span class="ico">&#127793;</span> Bonnes Pratiques Agricoles <span style="font-size:.65rem;padding:2px 8px;border-radius:5px;background:rgba(68,204,102,.1);color:var(--good);margin-left:8px">131 cultures</span></h2>
   <p style="font-size:.8rem;color:var(--txt2);margin-bottom:4px">Itineraire technique, stades phenologiques, calendrier cultural, recommandations climat et sol</p>
   <div id="bpaContent"></div>
 </div>
@@ -2228,7 +2227,7 @@ function showAbout(){
    ============================================================ */
 function showOnboarding(){
   var steps=[
-    {icon:"&#127793;",title:"Bienvenue sur SEVE",text:"Outil professionnel de simulation technico-economique agricole. 47 cultures, 48 regions du Maroc, analyse complete du rendement a la rentabilite."},
+    {icon:"&#127793;",title:"Bienvenue sur SEVE",text:"Outil professionnel de simulation technico-economique agricole. 131 cultures, 48 regions du Maroc, analyse complete du rendement a la rentabilite."},
     {icon:"&#9881;",title:"Etape 1 : Parametrez",text:"Choisissez votre <strong>culture</strong>, <strong>region</strong>, <strong>variete</strong>, type d'<strong>irrigation</strong> et sol. Plus c'est precis, meilleure est la simulation."},
     {icon:"&#128178;",title:"Etape 2 : Donnees exploitation",text:"Renseignez la <strong>surface</strong>, les <strong>couts</strong>, le <strong>prix de vente</strong>, la <strong>source d'eau</strong>, le <strong>type de main-d'oeuvre</strong> et la <strong>subvention FDA</strong>."},
     {icon:"&#128200;",title:"Etape 3 : Calculez",text:"Cliquez <strong>Calculer</strong>. SEVE genere 30+ modules: rendement, bilan hydrique, NPK, risques, plan financement, dossier FDA, et plus."},
